@@ -65,7 +65,7 @@ class AOC2020 {
     }
 
     fun String.slope(width: Int, height: Int, dx: Int, dy: Int) =
-            (0 until height step dy).count { this[it * width + (it / dy * dx) % width] == '#' }
+        (0 until height step dy).count { this[it * width + (it / dy * dx) % width] == '#' }
 
     fun p4(lines: List<String>) {
         val passports = mutableListOf(mutableMapOf<String, String>())
@@ -79,19 +79,19 @@ class AOC2020 {
             }
         }
         val mandatory = mapOf<String, (String) -> Boolean>(
-                "byr" to { (it.toIntOrNull() ?: 0) in 1920..2002 },
-                "iyr" to { (it.toIntOrNull() ?: 0) in 2010..2020 },
-                "eyr" to { (it.toIntOrNull() ?: 0) in 2020..2030 },
-                "hgt" to {
-                    when {
-                        it.endsWith("cm") -> it.removeSuffix("cm").toInt() in 150..193
-                        it.endsWith("in") -> it.removeSuffix("in").toInt() in 59..76
-                        else -> false
-                    }
-                },
-                "hcl" to { it.matches("#[0-9a-f]{6}".toRegex()) },
-                "ecl" to { it in listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth") },
-                "pid" to { it.matches("[0-9]{9}".toRegex()) }
+            "byr" to { (it.toIntOrNull() ?: 0) in 1920..2002 },
+            "iyr" to { (it.toIntOrNull() ?: 0) in 2010..2020 },
+            "eyr" to { (it.toIntOrNull() ?: 0) in 2020..2030 },
+            "hgt" to {
+                when {
+                    it.endsWith("cm") -> it.removeSuffix("cm").toInt() in 150..193
+                    it.endsWith("in") -> it.removeSuffix("in").toInt() in 59..76
+                    else -> false
+                }
+            },
+            "hcl" to { it.matches("#[0-9a-f]{6}".toRegex()) },
+            "ecl" to { it in listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth") },
+            "pid" to { it.matches("[0-9]{9}".toRegex()) }
         )
         passports.count { (it.keys intersect mandatory.keys).size == 7 }.log()
         passports.count { passport ->
@@ -102,10 +102,10 @@ class AOC2020 {
     fun p5(lines: List<String>) {
         val ids = lines.map {
             it.replace('F', '0')
-                    .replace('B', '1')
-                    .replace('L', '0')
-                    .replace('R', '1')
-                    .toInt(2)
+                .replace('B', '1')
+                .replace('L', '0')
+                .replace('R', '1')
+                .toInt(2)
         }.sorted()
         ids.max().log()
         (ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1).log()
@@ -139,10 +139,10 @@ class AOC2020 {
     }
 
     fun Map<String, List<Pair<Int, String>>>.contains(container: String, name: String): Boolean =
-            getValue(container).any { it.second == name || contains(it.second, name) }
+        getValue(container).any { it.second == name || contains(it.second, name) }
 
     fun Map<String, List<Pair<Int, String>>>.count(container: String): Int =
-            getValue(container).map { it.first * (1 + count(it.second)) }.sum()
+        getValue(container).map { it.first * (1 + count(it.second)) }.sum()
 
     fun p8(lines: List<String>) {
         val code = lines.map { it.split(" ") }.map { (op, arg) -> Ins(op, arg.toInt()) }
@@ -216,7 +216,7 @@ class AOC2020 {
         val adapters = lines.map { it.toInt() }.sortedDescending()
         val links = adapters + 0
         val groups = links.groupBy({ it }) { v -> links.filter { it in v - 3..v - 1 } }
-                .mapValues { it.value.flatten() }
+            .mapValues { it.value.flatten() }
         val list = mutableListOf(links.first())
         while (list.last() != 0) {
             list.add(groups[list.last()]!!.first())
