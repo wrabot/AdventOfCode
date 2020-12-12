@@ -10,7 +10,7 @@ open class BaseTest(private val root: String) {
         val name = "$root/${testName.methodName}"
         log("start day $name")
         for (index in 1..inputCount) {
-            log("start day part $index")
+            log("start day input $index")
             block(resource("/$name/input$index.txt").lines())
         }
     }
