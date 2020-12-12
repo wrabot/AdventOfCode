@@ -8,9 +8,9 @@ open class BaseTest(private val root: String) {
 
     fun test(inputCount: Int, block: (List<String>) -> Unit) {
         val name = "$root/${testName.methodName}"
-        log("start test $name")
+        log("start day $name")
         for (index in 1..inputCount) {
-            log("start test $index")
+            log("start day part $index")
             block(resource("/$name/input$index.txt").lines())
         }
     }

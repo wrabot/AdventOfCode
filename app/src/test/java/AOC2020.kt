@@ -1,53 +1,20 @@
 import org.junit.Test
+import kotlin.math.abs
 
-class AOC2020 {
-    val root = "AOC2020"
-
+class AOC2020 : BaseTest("AOC2020") {
     @Test
-    fun test1() = test("$root/test1", 1, ::p1)
-
-    @Test
-    fun test2() = test("$root/test2", 1, ::p2)
-
-    @Test
-    fun test3() = test("$root/test3", 1, ::p3)
-
-    @Test
-    fun test4() = test("$root/test4", 1, ::p4)
-
-    @Test
-    fun test5() = test("$root/test5", 1, ::p5)
-
-    @Test
-    fun test6() = test("$root/test6", 1, ::p6)
-
-    @Test
-    fun test7() = test("$root/test7", 1, ::p7)
-
-    @Test
-    fun test8() = test("$root/test8", 1, ::p8)
-
-    @Test
-    fun test9() = test("$root/test9", 1, ::p9)
-
-    @Test
-    fun test10() = test("$root/test10", 3, ::p10)
-
-    @Test
-    fun test11() = test("$root/test11", 2, ::p11)
-
-    @Test
-    fun test12() = test("$root/test12", 1, ::p12)
-
-    fun p1(lines: List<String>) {
+    fun day1() = test(1) { lines ->
         val numbers = lines.map { it.toInt() }.sorted()
         numbers.product(2020)!!.log()
-        numbers.mapIndexedNotNull { index: Int, i: Int -> numbers.drop(index + 1).product(2020 - i)?.let { it * i } }.first().log()
+        numbers.mapIndexedNotNull { index: Int, i: Int ->
+            numbers.drop(index + 1).product(2020 - i)?.let { it * i }
+        }.first().log()
     }
 
-    fun List<Int>.product(sum: Int) = find { v -> findLast { it + v == sum } != null }?.let { it * (sum - it) }
+    private fun List<Int>.product(sum: Int) = find { v -> findLast { it + v == sum } != null }?.let { it * (sum - it) }
 
-    fun p2(lines: List<String>) {
+    @Test
+    fun day2() = test(1) { lines ->
         lines.map { it.split("-", " ", ": ") }.count { (min, max, letter, password) ->
             password.count { it.toString() == letter } in min.toInt()..max.toInt()
         }.log()
@@ -56,24 +23,27 @@ class AOC2020 {
         }.log()
     }
 
-    fun p3(lines: List<String>) {
+    @Test
+    fun day3() = test(1) { lines ->
         val width = lines[0].length
         val height = lines.size
         val map = lines.joinToString("")
         map.slope(width, height, 3, 1).log()
-        listOf(1 to 1, 3 to 1, 5 to 1, 7 to 1, 1 to 2).map { map.slope(width, height, it.first, it.second) }.reduce { acc, i -> acc * i }.log()
+        listOf(1 to 1, 3 to 1, 5 to 1, 7 to 1, 1 to 2).map { map.slope(width, height, it.first, it.second) }
+            .reduce { acc, i -> acc * i }.log()
     }
 
-    fun String.slope(width: Int, height: Int, dx: Int, dy: Int) =
+    private fun String.slope(width: Int, height: Int, dx: Int, dy: Int) =
         (0 until height step dy).count { this[it * width + (it / dy * dx) % width] == '#' }
 
-    fun p4(lines: List<String>) {
+    @Test
+    fun day4() = test(1) { lines ->
         val passports = mutableListOf(mutableMapOf<String, String>())
-        lines.forEach {
-            if (it.isBlank()) {
+        lines.forEach { line ->
+            if (line.isBlank()) {
                 passports.add(mutableMapOf())
             } else {
-                it.split(" ").map { it.split(":") }.forEach { (key, value) ->
+                line.split(" ").map { it.split(":") }.forEach { (key, value) ->
                     passports.last()[key] = value
                 }
             }
@@ -99,7 +69,8 @@ class AOC2020 {
         }.log()
     }
 
-    fun p5(lines: List<String>) {
+    @Test
+    fun day5() = test(1) { lines ->
         val ids = lines.map {
             it.replace('F', '0')
                 .replace('B', '1')
@@ -111,7 +82,8 @@ class AOC2020 {
         (ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1).log()
     }
 
-    fun p6(lines: List<String>) {
+    @Test
+    fun day6() = test(1) { lines ->
         val groups = mutableListOf(mutableListOf<String>())
         lines.forEach {
             if (it.isBlank()) {
@@ -121,10 +93,11 @@ class AOC2020 {
             }
         }
         groups.map { it.reduce { acc, s -> acc + s }.toSet().count() }.sum().log()
-        groups.map { it.map { it.toSet() }.reduce { acc, s -> acc intersect s }.count() }.sum().log()
+        groups.map { g -> g.map { it.toSet() }.reduce { acc, s -> acc intersect s }.count() }.sum().log()
     }
 
-    fun p7(lines: List<String>) {
+    @Test
+    fun day7() = test(1) { lines ->
         val rules = lines.map { it.split(" bags contain ") }.map { (a, b) ->
             a to if (b.startsWith("no")) emptyList() else b.split(", ").map {
                 it.split(" ").let { (n, u, v) -> n.toInt() to "$u $v" }
@@ -138,13 +111,14 @@ class AOC2020 {
         rules.count("shiny gold").log()
     }
 
-    fun Map<String, List<Pair<Int, String>>>.contains(container: String, name: String): Boolean =
+    private fun Map<String, List<Pair<Int, String>>>.contains(container: String, name: String): Boolean =
         getValue(container).any { it.second == name || contains(it.second, name) }
 
-    fun Map<String, List<Pair<Int, String>>>.count(container: String): Int =
+    private fun Map<String, List<Pair<Int, String>>>.count(container: String): Int =
         getValue(container).map { it.first * (1 + count(it.second)) }.sum()
 
-    fun p8(lines: List<String>) {
+    @Test
+    fun day8() = test(1) { lines ->
         val code = lines.map { it.split(" ") }.map { (op, arg) -> Ins(op, arg.toInt()) }
         code.run().second.log()
         for (fixIndex in code.indices) {
@@ -166,7 +140,7 @@ class AOC2020 {
         }
     }
 
-    fun List<Ins>.run(): Pair<Int, Int> {
+    private fun List<Ins>.run(): Pair<Int, Int> {
         forEach { it.used = false }
         var acc = 0
         var index = 0
@@ -183,7 +157,8 @@ class AOC2020 {
 
     data class Ins(var op: String, val arg: Int, var used: Boolean = false)
 
-    fun p9(lines: List<String>) {
+    @Test
+    fun day9() = test(1) { lines ->
         val numbers = lines.map { it.toLong() }
         var invalid = 0L
         find@ for (i in 25 until numbers.size) {
@@ -212,14 +187,15 @@ class AOC2020 {
         }
     }
 
-    fun p10(lines: List<String>) {
+    @Test
+    fun day10() = test(3) { lines ->
         val adapters = lines.map { it.toInt() }.sortedDescending()
         val links = adapters + 0
-        val groups = links.groupBy({ it }) { v -> links.filter { it in v - 3..v - 1 } }
+        val groups = links.groupBy({ it }) { v -> links.filter { it in v - 3 until v } }
             .mapValues { it.value.flatten() }
         val list = mutableListOf(links.first())
         while (list.last() != 0) {
-            list.add(groups[list.last()]!!.first())
+            list.add(groups.getValue(list.last()).first())
         }
         val diff = list.zipWithNext { a, b -> a - b }
         val result = diff.count { it == 1 } * (diff.count { it == 3 } + 1)
@@ -231,7 +207,8 @@ class AOC2020 {
         counts[adapters.first()].log()
     }
 
-    fun p11(lines: List<String>) {
+    @Test
+    fun day11() = test(2) { lines ->
         val width = lines[0].length
         val height = lines.size
 
@@ -248,21 +225,21 @@ class AOC2020 {
         map.count { it == '#' }.log()
     }
 
-    fun List<Char>.step2(width: Int, height: Int): List<Char>? {
+    private fun List<Char>.step2(width: Int, height: Int): List<Char>? {
         var modified = false
         val map = mapIndexed { index, c ->
             val x = index % width
             val y = index / width
             when (c) {
-                'L' -> if (adjacents2(width, height, x, y) == 0) '#' else 'L'
-                '#' -> if (adjacents2(width, height, x, y) >= 5) 'L' else '#'
+                'L' -> if (adjacent2(width, height, x, y) == 0) '#' else 'L'
+                '#' -> if (adjacent2(width, height, x, y) >= 5) 'L' else '#'
                 else -> c
             }.apply { if (c != this) modified = true }
         }
         return if (modified) map else null
     }
 
-    fun List<Char>.adjacents2(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
+    private fun List<Char>.adjacent2(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
         var d = 1
         var occupied: Boolean? = null
         while (occupied == null) {
@@ -280,30 +257,25 @@ class AOC2020 {
         occupied
     }
 
-    fun List<Char>.step1(width: Int, height: Int): List<Char>? {
+    private fun List<Char>.step1(width: Int, height: Int): List<Char>? {
         var modified = false
         val map = mapIndexed { index, c ->
             val x = index % width
             val y = index / width
             when (c) {
-                'L' -> if (adjacents1(width, height, x, y) == 0) '#' else 'L'
-                '#' -> if (adjacents1(width, height, x, y) >= 4) 'L' else '#'
+                'L' -> if (adjacent1(width, height, x, y) == 0) '#' else 'L'
+                '#' -> if (adjacent1(width, height, x, y) >= 4) 'L' else '#'
                 else -> c
             }.apply { if (c != this) modified = true }
         }
         return if (modified) map else null
     }
 
-    fun List<Char>.adjacents1(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
+    private fun List<Char>.adjacent1(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
         val x = x0 + it.first
         val y = y0 + it.second
         (x in 0 until width) && (y in 0 until height) && (get(y * width + x) == '#')
     }
 
-    val directions = listOf(1 to 0, 1 to -1, 0 to -1, -1 to -1, -1 to 0, -1 to 1, 0 to 1, 1 to 1)
-
-    fun List<Char>.log(width: Int) = apply { println(chunked(width) { it.joinToString("") }.joinToString("\n")) }
-
-    fun p12(lines: List<String>) {
-    }
+    private val directions = listOf(1 to 0, 1 to -1, 0 to -1, -1 to -1, -1 to 0, -1 to 1, 0 to 1, 1 to 1)
 }
