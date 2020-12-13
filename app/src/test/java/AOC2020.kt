@@ -1,4 +1,5 @@
 import org.junit.Test
+import java.math.BigInteger
 import kotlin.math.abs
 
 class AOC2020 : BaseTest("AOC2020") {
@@ -347,6 +348,28 @@ class AOC2020 : BaseTest("AOC2020") {
     }
 
     @Test
-    fun day13() = test(1) { lines ->
+    fun day13() = test(2) { lines ->
+        // all ids are prime !!!
+        day13part1(lines)
+        day13part2(lines)
+    }
+
+    private fun day13part1(lines: List<String>) {
+        val min = lines[0].toInt()
+        lines[1].split(",").filter { it != "x" }.map { it.toInt() }.map { it to (it - min % it) % it }
+            .minBy { it.second }!!.let { it.first * it.second }.log()
+    }
+
+    private fun day13part2(lines: List<String>) {
+        val buses = lines[1].split(",")
+            .mapIndexedNotNull { index, s -> if (s == "x") null else s.toBigInteger() to index.toBigInteger() }
+        val timestamp = buses.reduce { acc, v ->
+            val f = (1 until v.first.toInt()).map { it.toBigInteger() } // is always small
+                .first { (it * acc.first) % v.first == BigInteger.ONE }
+            val a = acc.first * v.first
+            val b = acc.second - acc.first * f * (v.second + acc.second)
+            a to (b % a + a) % a
+        }.second.log()
+        buses.all { (timestamp + it.second) % it.first == BigInteger.ZERO }.log()
     }
 }
