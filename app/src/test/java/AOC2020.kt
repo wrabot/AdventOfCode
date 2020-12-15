@@ -424,4 +424,24 @@ class AOC2020 : BaseTest("AOC2020") {
         }
         mem.values.sum().log()
     }
+
+    @Test
+    fun day15() = test(1) { lines ->
+        lines.map { it.split(",").map { it.toInt() } }.run {
+            forEach { it.memory(2020).log() }
+            forEach { it.memory(30000000).log() }
+        }
+    }
+
+    private fun List<Int>.memory(turns: Int): Int {
+        val numbers = mapIndexed { index, n -> n to index + 1 }.toMap().toMutableMap()
+        var last = last()
+        numbers.remove(last)
+        (size until turns).forEach {
+            val index = numbers[last]
+            numbers[last] = it
+            last = if (index == null) 0 else it - index
+        }
+        return last
+    }
 }
