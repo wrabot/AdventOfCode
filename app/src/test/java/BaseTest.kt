@@ -6,10 +6,12 @@ open class BaseTest(private val root: String) {
     @JvmField
     val testName = TestName()
 
-    fun test(input: Int, block: (List<String>) -> Unit) {
+    fun test(vararg inputs: Int, block: (List<String>) -> Unit) {
         val name = "$root/${testName.methodName}"
-        log("start day $name input $input")
-        block(resource("/$name/input$input.txt").lines())
+        inputs.forEach {
+            log("start day $name input $it")
+            block(resource("/$name/input$it.txt").lines())
+        }
     }
 
     fun log(message: Any?) = System.err.println("!!!$message")
