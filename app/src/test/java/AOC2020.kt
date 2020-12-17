@@ -471,4 +471,61 @@ class AOC2020 : BaseTest("AOC2020") {
         }
         validIndices.filter { it.key.startsWith("departure") }.log().map { myTicket[it.value.first()].toLong() }.log().reduce { acc, s -> acc * s }.log()
     }
+
+    @Test
+    fun day17() = test(2) { lines ->
+        val initialCells = lines.mapIndexed { y, s -> s.mapIndexedNotNull { x, c -> if (c == '#') Cell(x, y, 0, 0) else null } }.flatten()
+
+        //part 1
+        var cells = initialCells
+        repeat(6) {
+            cells = cells.cycle(false)
+        }
+        cells.count().log()
+
+        //part 2
+        cells = initialCells
+        repeat(6) {
+            cells = cells.cycle(true)
+        }
+        cells.count().log()
+    }
+
+    data class Cell(val x: Int, val y: Int, val z: Int, val w: Int)
+
+    private fun List<Cell>.cycle(hyper: Boolean): List<Cell> {
+        val cells = mutableListOf<Cell>()
+        for (x in range(Cell::x)) {
+            for (y in range(Cell::y)) {
+                for (z in range(Cell::z)) {
+                    for (w in if (hyper) range(Cell::w) else 0..0) {
+                        val cell = Cell(x, y, z, w)
+                        when (neighbors(cell, hyper)) {
+                            2 -> if (cell in this) cells.add(cell)
+                            3 -> cells.add(cell)
+                        }
+                    }
+                }
+            }
+        }
+        return cells
+    }
+
+    private fun List<Cell>.range(block: Cell.() -> Int) = map(block).run { (min()!! - 1)..(max()!! + 1) }
+
+    private fun List<Cell>.neighbors(cell: Cell, hyper: Boolean): Int {
+        var count = 0
+        for (x in -1..1) {
+            for (y in -1..1) {
+                for (z in -1..1) {
+                    for (w in if (hyper) -1..1 else 0..0) {
+                        if (x != 0 || y != 0 || z != 0 || w != 0) {
+                            if (Cell(cell.x + x, cell.y + y, cell.z + z, cell.w + w) in this) count++
+                        }
+                    }
+                }
+            }
+        }
+        return count
+    }
 }
