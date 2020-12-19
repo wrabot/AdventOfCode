@@ -79,7 +79,7 @@ class AOC2020 : BaseTest("AOC2020") {
                 .replace('R', '1')
                 .toInt(2)
         }.sorted()
-        ids.max().log()
+        ids.maxOrNull().log()
         (ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1).log()
     }
 
@@ -179,7 +179,7 @@ class AOC2020 : BaseTest("AOC2020") {
                 if (sum > invalid) continue@sum
                 if (sum == invalid) {
                     val block = numbers.subList(i, j)
-                    val weakness = block.min()!! + block.max()!!
+                    val weakness = block.minOrNull()!! + block.maxOrNull()!!
                     weakness.log()
                     break@sum
                 }
@@ -357,7 +357,7 @@ class AOC2020 : BaseTest("AOC2020") {
     private fun day13part1(lines: List<String>) {
         val min = lines[0].toInt()
         lines[1].split(",").filter { it != "x" }.map { it.toInt() }.map { it to (it - min % it) % it }
-            .minBy { it.second }!!.let { it.first * it.second }.log()
+            .minByOrNull { it.second }!!.let { it.first * it.second }.log()
     }
 
     private fun day13part2(lines: List<String>) {
@@ -427,7 +427,7 @@ class AOC2020 : BaseTest("AOC2020") {
 
     @Test
     fun day15() = test(1) { lines ->
-        lines.map { it.split(",").map { it.toInt() } }.run {
+        lines.map { it.split(",").toInts() }.run {
             forEach { it.memory(2020).log() }
             forEach { it.memory(30000000).log() }
         }
@@ -448,10 +448,10 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day16() = test(2) { lines ->
         val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->
-            name to rule.split(" or ").map { it.split("-").map { it.toInt() } }.map { (first, last) -> first..last }
+            name to rule.split(" or ").map { it.split("-").toInts() }.map { (first, last) -> first..last }
         }.toMap()
-        val myTicket = lines[2 + rules.size].split(",").map { it.toInt() }.log()
-        val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1).map { it.split(",").map { it.toInt() } }
+        val myTicket = lines[2 + rules.size].split(",").toInts().log()
+        val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1).map { it.split(",").toInts() }
 
         // part 1
         val validRules = rules.values.flatten()
@@ -511,7 +511,7 @@ class AOC2020 : BaseTest("AOC2020") {
         return cells
     }
 
-    private fun List<Cell>.range(block: Cell.() -> Int) = map(block).run { (min()!! - 1)..(max()!! + 1) }
+    private fun List<Cell>.range(block: Cell.() -> Int) = map(block).run { (minOrNull()!! - 1)..(maxOrNull()!! + 1) }
 
     private fun List<Cell>.neighbors(cell: Cell, hyper: Boolean): Int {
         var count = 0

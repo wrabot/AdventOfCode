@@ -85,14 +85,12 @@ class AOC2015 : BaseTest("AOC2015") {
     fun day5() = test(2) { lines ->
         val required = List(26) { ('a' + it).toString().repeat(2) }
         val forbidden = listOf("ab", "cd", "pq", "xy")
-        lines.count {
-            it.count { it in "aeiou" } >= 3 && it.findAnyOf(required) != null && it.findAnyOf(forbidden) == null
-        }.log()
+        lines.count { line -> line.count { it in "aeiou" } >= 3 && line.findAnyOf(required) != null && line.findAnyOf(forbidden) == null }.log()
         lines.count { word ->
             var ok = false
             for (i in 0 until word.length - 1) {
                 val sub = word.substring(i, i + 2)
-                if (word.lastIndexOf(sub) >= i+2) {
+                if (word.lastIndexOf(sub) >= i + 2) {
                     ok = true
                     break
                 }
@@ -100,7 +98,7 @@ class AOC2015 : BaseTest("AOC2015") {
             if (ok) {
                 ok = false
                 for (i in 0 until word.length - 2) {
-                    if (word[i]== word[i+2]) {
+                    if (word[i] == word[i + 2]) {
                         ok = true
                         break
                     }
