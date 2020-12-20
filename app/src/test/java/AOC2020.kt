@@ -1,6 +1,7 @@
 import org.junit.Test
 import java.math.BigInteger
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 class AOC2020 : BaseTest("AOC2020") {
     @Test
@@ -583,4 +584,128 @@ class AOC2020 : BaseTest("AOC2020") {
 
     private fun Map<String, List<List<String>>>.createRegex(id: String): String =
         this[id]?.joinToString("|", "(?:", ")") { rule -> rule.joinToString("") { createRegex(it) } } ?: id
+
+    @Test
+    fun day20() = test(2) { lines ->
+        val images = lines.chunked(12).map { it[0].split(" ", ":")[1].toLong() to it.drop(1).dropLast(1) }.toMap()
+        val borders = images.mapValues { (_, pixels) ->
+            val top = pixels.first()
+            val bottom = pixels.last()
+            val left = pixels.joinToString("") { it.first().toString() }
+            val right = pixels.joinToString("") { it.last().toString() }
+            listOf(top, bottom, left, right, top.reversed(), bottom.reversed(), left.reversed(), right.reversed())
+        }
+        val links = borders.mapValues { image ->
+            borders.filter { it.key != image.key && (it.value intersect image.value).isNotEmpty() }.keys.map { key ->
+                key to (0..3).map { it to borders[key]!!.indexOf(image.value[it]) }.first { it.second != -1 }
+            }.toMap()
+        }
+
+        // check input: borders are unique !!!
+        (links.count { it.value.size == 2 } + links.count { it.value.size == 3 } + links.count { it.value.size == 4 } == images.size).log()
+
+        //part1
+        links.filter { it.value.size == 2 }.map { it.key }.reduce { acc, i -> acc * i }.log()
+
+        //part2
+        // top left is not rotated !!! find (1, 3)
+        val size = sqrt(images.size.toFloat()).toInt()
+        val imageIds = mutableListOf<Long>()
+        val imageBlocks = mutableListOf<List<String>>()
+        var nextVBorder = 1
+        var nextHBorder = 3
+        var vFlip = false
+        (0 until size).forEach { row ->
+            var hFlip = false
+            if (row == 0) {
+                val id = links.filter { it.value.size == 2 && it.value.values.map { it.first }.toSet() == setOf(1, 3) }.keys.first()
+                imageIds.add(id)
+                imageBlocks.add(images[id]!!)
+            } else {
+                val previousId = imageIds[(row - 1) * size]
+                val id = links[previousId]!!.filter { it.value.first == nextVBorder }.keys.first()
+                imageIds.add(id)
+                if (links[id]!![previousId]!!.second >= 4) vFlip = !vFlip
+                val inBorder = links[id]!![previousId]!!.first
+                imageBlocks.add(images[id]!!.run {
+                    when (inBorder) {
+                        0 -> this
+                        1 -> flipV()
+                        2 -> flipD()
+                        3 -> flipD().flipV()
+                        else -> error("impossible")
+                    }
+                }.let { if (vFlip) it.flipH() else it })
+                nextVBorder = inBorder.nextBorder()
+                nextHBorder = links[id]!!.values.map { it.first }.first { it !in listOf(inBorder, nextVBorder) }
+                hFlip = when (inBorder) {
+                    0 -> false
+                    1 -> true
+                    2 -> false
+                    3 -> true
+                    else -> error("impossible")
+                }
+            }
+            (1 until size).forEach { column ->
+                val previousId = imageIds[column - 1 + row * size]
+                val id = links[previousId]!!.filter { it.value.first == nextHBorder }.keys.first()
+                imageIds.add(id)
+                if (links[id]!![previousId]!!.second >= 4) hFlip = !hFlip
+                val inBorder = links[id]!![previousId]!!.first
+                imageBlocks.add(images[id]!!.run {
+                    when (inBorder) {
+                        2 -> this
+                        3 -> flipH()
+                        0 -> flipD()
+                        1 -> flipD().flipH()
+                        else -> error("impossible")
+                    }
+                }.let { if (hFlip) it.flipV() else it })
+                nextHBorder = inBorder.nextBorder()
+            }
+        }
+
+        val blockIndices = 0..9
+        val blocks = imageBlocks.chunked(size).map { row ->
+            blockIndices.joinToString("\n") { index ->
+                row.joinToString(" ") { it[index] }
+            }
+        }.joinToString("\n\n")
+        val image = imageBlocks.chunked(size).flatMap { row ->
+            blockIndices.map { index ->
+                row.joinToString("") { it[index].drop(1).dropLast(1) }
+            }.drop(1).dropLast(1)
+        }
+        //println(blocks)
+        //println("-----------------")
+        //println(image.joinToString("\n"))
+
+        val imageWeight = image.map { it.count { it == '#' } }.sum()
+        val pattern = listOf("                  #", "#    ##    ##    ###", " #  #  #  #  #  #")
+        val patternWeight = pattern.map { it.count { it == '#' } }.sum()
+        val patternWidth = pattern.maxOf { it.length }
+        var count = 0
+        image.allOrientations().forEach { i ->
+            for (y in 0 until image.size - pattern.size) {
+                for (x in 0 until image.size - patternWidth) {
+                    if (pattern[0].match(i[y], x) && pattern[1].match(i[y + 1], x) && pattern[2].match(i[y + 2], x)) count++
+                }
+            }
+        }
+        //count.log()
+        (imageWeight - count * patternWeight).log()
+    }
+
+    private fun List<String>.allOrientations() = listOf(this, flipD(), flipV(), flipD().flipV(), flipH(), flipD().flipH(), flipV().flipH(), flipD().flipV().flipH())
+    private fun String.match(s: String, start: Int) = zip(s.substring(start)).all { it.first == ' ' || it.first == it.second }
+    private fun List<String>.flipD() = indices.map { index -> joinToString("") { it[index].toString() } }
+    private fun List<String>.flipH() = map { it.reversed() }
+    private fun List<String>.flipV() = reversed()
+    private fun Int.nextBorder() = when (this) {
+        0 -> 1
+        1 -> 0
+        2 -> 3
+        3 -> 2
+        else -> error("impossible")
+    }
 }
