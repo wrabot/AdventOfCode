@@ -661,4 +661,29 @@ class AOC2020 : BaseTest("AOC2020") {
     private fun List<String>.flipD() = indices.map { index -> joinToString("") { it[index].toString() } }
     private fun List<String>.flipH() = map { it.reversed() }
     private fun List<String>.flipV() = reversed()
+
+    @Test
+    fun day21() = test(2) { lines ->
+        val foods = lines.map { it.removeSuffix(")").split(" (contains ") }.map { (ingredients, allergens) ->
+            ingredients.split(" ") to allergens.split(", ")
+        }
+        val allergens = foods.flatMap { it.second }.distinct()
+        val allergensMap = allergens.map { allergen ->
+            allergen to foods.filter { allergen in it.second }.map { it.first }.reduce { acc, list -> (acc intersect list).toList() }.toMutableList()
+        }.toMap()
+        while (true) {
+            var modified = false
+            allergensMap.values.mapNotNull { it.singleOrNull() }.forEach { found ->
+                allergensMap.forEach { if (it.value.size != 1) modified = modified || it.value.remove(found) }
+            }
+            if (!modified) break
+        }
+        val foodWithAllergens = allergensMap.toSortedMap().flatMap { it.value } // sorted for part2
+
+        //part1
+        foods.map { it.first.minus(foodWithAllergens).size }.sum().log()
+
+        //part2
+        foodWithAllergens.joinToString(",").log()
+    }
 }
