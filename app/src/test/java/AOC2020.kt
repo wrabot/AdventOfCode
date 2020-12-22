@@ -587,96 +587,53 @@ class AOC2020 : BaseTest("AOC2020") {
 
     @Test
     fun day20() = test(2) { lines ->
-        val images = lines.chunked(12).map { it[0].split(" ", ":")[1].toLong() to it.drop(1).dropLast(1) }.toMap()
-        val borders = images.mapValues { (_, pixels) ->
-            val top = pixels.first()
-            val bottom = pixels.last()
-            val left = pixels.joinToString("") { it.first().toString() }
-            val right = pixels.joinToString("") { it.last().toString() }
-            listOf(top, bottom, left, right, top.reversed(), bottom.reversed(), left.reversed(), right.reversed())
+        val chunks = lines.chunked(12)
+        val size = sqrt(chunks.size.toFloat()).toInt()
+        val blocks = chunks.flatMap { data ->
+            val id = data[0].split(" ", ":")[1].toLong()
+            data.drop(1).dropLast(1).allOrientations().map {
+                val flipD = it.flipD()
+                Block(id, it, it.first(), it.last(), flipD.first(), flipD.last())
+            }
         }
-        val links = borders.mapValues { image ->
-            borders.filter { it.key != image.key && (it.value intersect image.value).isNotEmpty() }.keys.map { key ->
-                key to (0..3).map { it to borders[key]!!.indexOf(image.value[it]) }.first { it.second != -1 }
-            }.toMap()
-        }
+        val links = blocks.map { block ->
+            block to listOf(
+                blocks.find { it.id != block.id && it.bottom == block.top },
+                blocks.find { it.id != block.id && it.top == block.bottom },
+                blocks.find { it.id != block.id && it.right == block.left },
+                blocks.find { it.id != block.id && it.left == block.right }
+            )
+        }.toMap()
 
         // check input: borders are unique !!!
-        (links.count { it.value.size == 2 } + links.count { it.value.size == 3 } + links.count { it.value.size == 4 } == images.size).log()
+        (links.count { it.value.countNotNull() == 2 } + links.count { it.value.countNotNull() == 3 } + links.count { it.value.countNotNull() == 4 } == blocks.size).log()
 
         //part1
-        links.filter { it.value.size == 2 }.map { it.key }.reduce { acc, i -> acc * i }.log()
+        val corners = links.filter { it.value.countNotNull() == 2 }
+        corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }.log()
 
         //part2
-        // top left is not rotated !!! find (1, 3)
-        val size = sqrt(images.size.toFloat()).toInt()
-        val imageIds = mutableListOf<Long>()
-        val imageBlocks = mutableListOf<List<String>>()
-        var nextVBorder = 1
-        var nextHBorder = 3
-        var vFlip = false
-        (0 until size).forEach { row ->
-            var hFlip = false
-            if (row == 0) {
-                val id = links.filter { it.value.size == 2 && it.value.values.map { it.first }.toSet() == setOf(1, 3) }.keys.first()
-                imageIds.add(id)
-                imageBlocks.add(images[id]!!)
-            } else {
-                val previousId = imageIds[(row - 1) * size]
-                val id = links[previousId]!!.filter { it.value.first == nextVBorder }.keys.first()
-                imageIds.add(id)
-                if (links[id]!![previousId]!!.second >= 4) vFlip = !vFlip
-                val inBorder = links[id]!![previousId]!!.first
-                imageBlocks.add(images[id]!!.run {
-                    when (inBorder) {
-                        0 -> this
-                        1 -> flipV()
-                        2 -> flipD()
-                        3 -> flipD().flipV()
-                        else -> error("impossible")
-                    }
-                }.let { if (vFlip) it.flipH() else it })
-                nextVBorder = inBorder.nextBorder()
-                nextHBorder = links[id]!!.values.map { it.first }.first { it !in listOf(inBorder, nextVBorder) }
-                hFlip = when (inBorder) {
-                    0 -> false
-                    1 -> true
-                    2 -> false
-                    3 -> true
-                    else -> error("impossible")
-                }
-            }
-            (1 until size).forEach { column ->
-                val previousId = imageIds[column - 1 + row * size]
-                val id = links[previousId]!!.filter { it.value.first == nextHBorder }.keys.first()
-                imageIds.add(id)
-                if (links[id]!![previousId]!!.second >= 4) hFlip = !hFlip
-                val inBorder = links[id]!![previousId]!!.first
-                imageBlocks.add(images[id]!!.run {
-                    when (inBorder) {
-                        2 -> this
-                        3 -> flipH()
-                        0 -> flipD()
-                        1 -> flipD().flipH()
-                        else -> error("impossible")
-                    }
-                }.let { if (hFlip) it.flipV() else it })
-                nextHBorder = inBorder.nextBorder()
-            }
+
+        // creates block image
+        val blockImage = mutableListOf<Block>()
+        blockImage.add(corners.filter { it.value[1] != null && it.value[3] != null }.keys.first())
+        (0 until size - 1).forEach { blockImage.add(links.getValue(blockImage[it])[3]!!) }
+        for (i in 0 until size * size - size) {
+            blockImage.add(links.getValue(blockImage[i])[1]!!)
         }
 
         val blockIndices = 0..9
-        val blocks = imageBlocks.chunked(size).map { row ->
+        val debugImage = blockImage.chunked(size).map { row ->
             blockIndices.joinToString("\n") { index ->
-                row.joinToString(" ") { it[index] }
+                row.joinToString(" ") { it.image[index] }
             }
         }.joinToString("\n\n")
-        val image = imageBlocks.chunked(size).flatMap { row ->
+        val image = blockImage.chunked(size).flatMap { row ->
             blockIndices.map { index ->
-                row.joinToString("") { it[index].drop(1).dropLast(1) }
+                row.joinToString("") { it.image[index].drop(1).dropLast(1) }
             }.drop(1).dropLast(1)
         }
-        //println(blocks)
+        //println(debugImage)
         //println("-----------------")
         //println(image.joinToString("\n"))
 
@@ -696,16 +653,12 @@ class AOC2020 : BaseTest("AOC2020") {
         (imageWeight - count * patternWeight).log()
     }
 
+    data class Block(val id: Long, val image: List<String>, val top: String, val bottom: String, val left: String, val right: String)
+
+    private fun List<Block?>.countNotNull() = count { it != null }
     private fun List<String>.allOrientations() = listOf(this, flipD(), flipV(), flipD().flipV(), flipH(), flipD().flipH(), flipV().flipH(), flipD().flipV().flipH())
     private fun String.match(s: String, start: Int) = zip(s.substring(start)).all { it.first == ' ' || it.first == it.second }
     private fun List<String>.flipD() = indices.map { index -> joinToString("") { it[index].toString() } }
     private fun List<String>.flipH() = map { it.reversed() }
     private fun List<String>.flipV() = reversed()
-    private fun Int.nextBorder() = when (this) {
-        0 -> 1
-        1 -> 0
-        2 -> 3
-        3 -> 2
-        else -> error("impossible")
-    }
 }
