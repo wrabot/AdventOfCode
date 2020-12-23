@@ -1,5 +1,6 @@
 import org.junit.Test
 import java.math.BigInteger
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -737,5 +738,55 @@ class AOC2020 : BaseTest("AOC2020") {
     private fun score(deck1: List<Int>, deck2: List<Int>): Pair<Boolean, Int> {
         val player1Wins = deck1.isNotEmpty()
         return player1Wins to (if (player1Wins) deck1 else deck2).reversed().mapIndexed { index, card -> (index + 1) * card }.sum()
+    }
+
+    @Test
+    fun day23() = test(1) { lines ->
+        val cups = lines[1].map { it.toString().toInt() }
+        day23part1(cups)
+        day23part2(cups, 10000000, 1000000)
+    }
+
+    private fun day23part1(firstCups: List<Int>) {
+        val cups = firstCups.toMutableList()
+        repeat(100) {
+            val triple = listOf(cups.removeAt(1), cups.removeAt(1), cups.removeAt(1))
+            var destination = cups[0]
+            do {
+                if (destination == 1) destination = 9 else destination--
+            } while (destination in triple)
+            cups.addAll(cups.indexOf(destination) + 1, triple)
+            cups.add(cups.removeFirst())
+        }
+        Collections.rotate(cups, -cups.indexOf(1))
+        cups.drop(1).joinToString("").log()
+    }
+
+    private fun day23part2(firstCups: List<Int>, turns: Int, max: Int) {
+        val cups = List(max) { Cup(if (it < firstCups.size) firstCups[it] else it + 1) }
+        cups.forEachIndexed { index, cup -> cup.next = cups[(index + 1) % max] }
+        var current = cups.first()
+
+        repeat(turns) {
+            val first = current.next
+            val second = first.next
+            val third = second.next
+
+            var destinationValue = current.value
+            do {
+                if (destinationValue == 1) destinationValue = max else destinationValue--
+            } while (destinationValue == first.value || destinationValue == second.value || destinationValue == third.value)
+            val destinationCup = if (destinationValue <= firstCups.size) cups.find { it.value == destinationValue }!! else cups[destinationValue - 1]
+
+            current.next = third.next // remove first to third
+            third.next = destinationCup.next.apply { destinationCup.next = first } // insert first to third after destination
+            current = current.next // next
+        }
+
+        cups.find { it.value == 1 }!!.run { next.value * next.next.value }.log()
+    }
+
+    data class Cup(val value: Int) {
+        lateinit var next: Cup
     }
 }
