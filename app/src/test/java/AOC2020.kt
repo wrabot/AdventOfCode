@@ -789,4 +789,37 @@ class AOC2020 : BaseTest("AOC2020") {
     data class Cup(val value: Int) {
         lateinit var next: Cup
     }
+
+    @Test
+    fun day24() = test(3) { lines ->
+        //part1
+        val blacks = mutableSetOf<Pair<Int, Int>>()
+        lines.forEach { it.goToTile(Pair(0, 0)).run { if (!blacks.remove(this)) blacks.add(this) } }
+        blacks.size.log()
+
+        //part2
+        repeat(100) {
+            val blacksNeighbors = blacks.map { it to neighbors(it).partition(blacks::contains) }
+            blacks.addAll(blacksNeighbors.flatMap { it.second.second }.filter { neighbors(it).count(blacks::contains) == 2 })
+            blacks.removeAll(blacksNeighbors.filter { it.second.first.size !in 1..2 }.map { it.first })
+        }
+        blacks.size.log()
+    }
+
+    private fun neighbors(start: Pair<Int, Int>) = listOf("e", "w", "ne", "nw", "se", "sw").map { it.goToTile(start) }
+    private fun String.goToTile(start: Pair<Int, Int>): Pair<Int, Int> {
+        var x = start.first
+        var y = start.second
+        var previous: Char? = null
+        forEach {
+            when (it) {
+                'n' -> y--
+                's' -> y++
+                'e' -> if (previous != 's') x++
+                'w' -> if (previous != 'n') x--
+            }
+            previous = it
+        }
+        return Pair(x, y)
+    }
 }
