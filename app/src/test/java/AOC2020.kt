@@ -822,4 +822,33 @@ class AOC2020 : BaseTest("AOC2020") {
         }
         return Pair(x, y)
     }
+
+    @Test
+    fun day25() = test(2) { lines ->
+        val card = lines[0].toInt()
+        val door = lines[1].toInt()
+
+        var count = 0
+        var value = 1
+        while (true) {
+            value = next(value, 7)
+            count++
+            when (value) {
+                card -> loop(1, door, count).log()
+                door -> loop(1, card, count).log()
+                else -> continue
+            }
+            break
+        }
+    }
+
+    private fun loop(value: Int, subject: Int, count: Int): Int {
+        var v = value
+        repeat(count) {
+            v = next(v, subject)
+        }
+        return v
+    }
+
+    private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()
 }
