@@ -624,23 +624,27 @@ class AOC2020 : BaseTest("AOC2020") {
         }
 
         val blockIndices = 0..9
-        val debugImage = blockImage.chunked(size).map { row ->
+
+        /*
+        val debugImage = blockImage.chunked(size).joinToString("\n\n") { row ->
             blockIndices.joinToString("\n") { index ->
                 row.joinToString(" ") { it.image[index] }
             }
-        }.joinToString("\n\n")
+        }
+        println(debugImage)
+        println("-----------------")
+        */
+
         val image = blockImage.chunked(size).flatMap { row ->
             blockIndices.map { index ->
                 row.joinToString("") { it.image[index].drop(1).dropLast(1) }
             }.drop(1).dropLast(1)
         }
-        //println(debugImage)
-        //println("-----------------")
         //println(image.joinToString("\n"))
 
-        val imageWeight = image.map { it.count { it == '#' } }.sum()
+        val imageWeight = image.map { line -> line.count { it == '#' } }.sum()
         val pattern = listOf("                  #", "#    ##    ##    ###", " #  #  #  #  #  #")
-        val patternWeight = pattern.map { it.count { it == '#' } }.sum()
+        val patternWeight = pattern.map { line -> line.count { it == '#' } }.sum()
         val patternWidth = pattern.maxOf { it.length }
         var count = 0
         image.allOrientations().forEach { i ->
@@ -744,7 +748,7 @@ class AOC2020 : BaseTest("AOC2020") {
     fun day23() = test(1) { lines ->
         val cups = lines[1].map { it.toString().toInt() }
         day23part1(cups)
-        day23part2(cups, 10000000, 1000000)
+        day23part2(cups)
     }
 
     private fun day23part1(firstCups: List<Int>) {
@@ -762,19 +766,19 @@ class AOC2020 : BaseTest("AOC2020") {
         cups.drop(1).joinToString("").log()
     }
 
-    private fun day23part2(firstCups: List<Int>, turns: Int, max: Int) {
-        val cups = List(max) { Cup(if (it < firstCups.size) firstCups[it] else it + 1) }
-        cups.forEachIndexed { index, cup -> cup.next = cups[(index + 1) % max] }
+    private fun day23part2(firstCups: List<Int>) {
+        val cups = List(1000000) { Cup(if (it < firstCups.size) firstCups[it] else it + 1) }
+        cups.forEachIndexed { index, cup -> cup.next = cups[(index + 1) % cups.size] }
         var current = cups.first()
 
-        repeat(turns) {
+        repeat(10000000) {
             val first = current.next
             val second = first.next
             val third = second.next
 
             var destinationValue = current.value
             do {
-                if (destinationValue == 1) destinationValue = max else destinationValue--
+                if (destinationValue == 1) destinationValue = cups.size else destinationValue--
             } while (destinationValue == first.value || destinationValue == second.value || destinationValue == third.value)
             val destinationCup = if (destinationValue <= firstCups.size) cups.find { it.value == destinationValue }!! else cups[destinationValue - 1]
 
@@ -834,20 +838,20 @@ class AOC2020 : BaseTest("AOC2020") {
             value = next(value, 7)
             count++
             when (value) {
-                card -> loop(1, door, count).log()
-                door -> loop(1, card, count).log()
+                card -> loop(door, count).log()
+                door -> loop(card, count).log()
                 else -> continue
             }
             break
         }
     }
 
-    private fun loop(value: Int, subject: Int, count: Int): Int {
-        var v = value
+    private fun loop(subject: Int, count: Int): Int {
+        var value = 1
         repeat(count) {
-            v = next(v, subject)
+            value = next(value, subject)
         }
-        return v
+        return value
     }
 
     private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()
