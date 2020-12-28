@@ -8,7 +8,11 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day1() = test(1) { lines ->
         val numbers = lines.map { it.toInt() }.sorted()
+
+        //part1
         numbers.product(2020)!!.log()
+
+        //part2
         numbers.mapIndexedNotNull { index: Int, i: Int ->
             numbers.drop(index + 1).product(2020 - i)?.let { it * i }
         }.first().log()
@@ -18,10 +22,15 @@ class AOC2020 : BaseTest("AOC2020") {
 
     @Test
     fun day2() = test(1) { lines ->
-        lines.map { it.split("-", " ", ": ") }.count { (min, max, letter, password) ->
+        val rules = lines.map { it.split("-", " ", ": ") }
+
+        //part1
+        rules.count { (min, max, letter, password) ->
             password.count { it.toString() == letter } in min.toInt()..max.toInt()
         }.log()
-        lines.map { it.split("-", " ", ": ") }.count { (first, second, letter, password) ->
+
+        //part2
+        rules.count { (first, second, letter, password) ->
             listOf(first, second).count { password[it.toInt() - 1].toString() == letter } == 1
         }.log()
     }
@@ -31,7 +40,11 @@ class AOC2020 : BaseTest("AOC2020") {
         val width = lines[0].length
         val height = lines.size
         val map = lines.joinToString("")
+
+        //part1
         map.slope(width, height, 3, 1).log()
+
+        //part2
         listOf(1 to 1, 3 to 1, 5 to 1, 7 to 1, 1 to 2).map { map.slope(width, height, it.first, it.second) }
             .reduce { acc, i -> acc * i }.log()
     }
@@ -66,7 +79,11 @@ class AOC2020 : BaseTest("AOC2020") {
             "ecl" to { it in listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth") },
             "pid" to { it.matches("[0-9]{9}".toRegex()) }
         )
+
+        //part1
         passports.count { (it.keys intersect mandatory.keys).size == 7 }.log()
+
+        //part2
         passports.count { passport ->
             mandatory.all { it.value(passport[it.key].orEmpty()) }
         }.log()
@@ -81,7 +98,11 @@ class AOC2020 : BaseTest("AOC2020") {
                 .replace('R', '1')
                 .toInt(2)
         }.sorted()
+
+        //part1
         ids.maxOrNull().log()
+
+        //part2
         (ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1).log()
     }
 
@@ -95,7 +116,11 @@ class AOC2020 : BaseTest("AOC2020") {
                 groups.last().add(it)
             }
         }
+
+        //part1
         groups.map { it.reduce { acc, s -> acc + s }.toSet().count() }.sum().log()
+
+        //part2
         groups.map { g -> g.map { it.toSet() }.reduce { acc, s -> acc intersect s }.count() }.sum().log()
     }
 
@@ -106,11 +131,15 @@ class AOC2020 : BaseTest("AOC2020") {
                 it.split(" ").let { (n, u, v) -> n.toInt() to "$u $v" }
             }
         }.toMap()
+
+        //part1
         val bags = mutableSetOf<String>()
         rules.keys.forEach {
             if (rules.contains(it, "shiny gold")) bags.add(it)
         }
         bags.count().log()
+
+        //part2
         rules.count("shiny gold").log()
     }
 
@@ -123,7 +152,11 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day8() = test(1) { lines ->
         val code = lines.map { it.split(" ") }.map { (op, arg) -> Ins(op, arg.toInt()) }
+
+        //part1
         code.run().second.log()
+
+        //part2
         for (fixIndex in code.indices) {
             val original = code[fixIndex].op
             val fixOp = when (original) {
@@ -163,6 +196,8 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day9() = test(1) { lines ->
         val numbers = lines.map { it.toLong() }
+
+        //part1
         var invalid = 0L
         find@ for (i in 25 until numbers.size) {
             for (first in 1..25) {
@@ -174,6 +209,8 @@ class AOC2020 : BaseTest("AOC2020") {
             break
         }
         invalid.log()
+
+        //part2
         sum@ for (i in numbers.indices) {
             var sum = 0L
             for (j in i until numbers.size) {
@@ -196,6 +233,8 @@ class AOC2020 : BaseTest("AOC2020") {
         val links = adapters + 0
         val groups = links.groupBy({ it }) { v -> links.filter { it in v - 3 until v } }
             .mapValues { it.value.flatten() }
+
+        //part1
         val list = mutableListOf(links.first())
         while (list.last() != 0) {
             list.add(groups.getValue(list.last()).first())
@@ -203,6 +242,8 @@ class AOC2020 : BaseTest("AOC2020") {
         val diff = list.zipWithNext { a, b -> a - b }
         val result = diff.count { it == 1 } * (diff.count { it == 3 } + 1)
         result.log()
+
+        //part2
         val counts = mutableMapOf(0 to 1L)
         adapters.reversed().forEach {
             counts[it] = groups.getValue(it).fold(0L) { acc, i -> acc + counts[i]!! }
@@ -214,14 +255,17 @@ class AOC2020 : BaseTest("AOC2020") {
     fun day11() = test(2) { lines ->
         val width = lines[0].length
         val height = lines.size
+        val initialMap = lines.flatMap { it.toList() }
 
-        var map = lines.flatMap { it.toList() }
+        //part1
+        var map = initialMap
         while (true) {
             map = map.step1(width, height) ?: break
         }
         map.count { it == '#' }.log()
 
-        map = lines.flatMap { it.toList() }
+        //part2
+        map = initialMap
         while (true) {
             map = map.step2(width, height) ?: break
         }
@@ -428,9 +472,11 @@ class AOC2020 : BaseTest("AOC2020") {
     }
 
     @Test
-    fun day15() = test(1) { lines ->
+    fun day15() = test(2) { lines ->
         lines.map { it.split(",").toInts() }.run {
+            //part1
             forEach { it.memory(2020).log() }
+            //part2
             forEach { it.memory(30000000).log() }
         }
     }
