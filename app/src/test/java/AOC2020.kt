@@ -482,13 +482,11 @@ class AOC2020 : BaseTest("AOC2020") {
     }
 
     private fun List<Int>.memory(turns: Int): Int {
-        val numbers = mapIndexed { index, n -> n to index + 1 }.toMap().toMutableMap()
+        val numbers = IntArray(turns) { 0 }
+        dropLast(1).forEachIndexed { index, n -> numbers[n] = index + 1 }
         var last = last()
-        numbers.remove(last)
         (size until turns).forEach {
-            val index = numbers[last]
-            numbers[last] = it
-            last = if (index == null) 0 else it - index
+            last = numbers[last].apply { numbers[last] = it }.run { if (this == 0) 0 else it - this }
         }
         return last
     }
