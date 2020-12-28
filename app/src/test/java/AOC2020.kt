@@ -525,18 +525,10 @@ class AOC2020 : BaseTest("AOC2020") {
         val initialCells = lines.mapIndexed { y, s -> s.mapIndexedNotNull { x, c -> if (c == '#') Cell(x, y, 0, 0) else null } }.flatten()
 
         //part 1
-        var cells = initialCells
-        repeat(6) {
-            cells = cells.cycle(false)
-        }
-        cells.count().log()
+        repeat(6, initialCells) { it.cycle(false) }.count().log()
 
         //part 2
-        cells = initialCells
-        repeat(6) {
-            cells = cells.cycle(true)
-        }
-        cells.count().log()
+        repeat(6, initialCells) { it.cycle(true) }.count().log()
     }
 
     data class Cell(val x: Int, val y: Int, val z: Int, val w: Int)
@@ -884,20 +876,12 @@ class AOC2020 : BaseTest("AOC2020") {
             value = next(value, 7)
             count++
             when (value) {
-                card -> loop(door, count).log()
-                door -> loop(card, count).log()
+                card -> repeat(count, 1) { next(it, door) }.log()
+                door -> repeat(count, 1) { next(it, card) }.log()
                 else -> continue
             }
             break
         }
-    }
-
-    private fun loop(subject: Int, count: Int): Int {
-        var value = 1
-        repeat(count) {
-            value = next(value, subject)
-        }
-        return value
     }
 
     private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()

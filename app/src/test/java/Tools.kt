@@ -11,3 +11,9 @@ fun <T> T.log() = apply { log(this) }
 fun Iterable<BigInteger>.sum() = reduce { acc, bi -> acc + bi }
 
 fun Iterable<String>.toInts() = map { it.toInt() }
+
+fun <T> repeat(count: Int, init: T, next: (T) -> T): T {
+    var t = init
+    repeat(count) { t = next(t) }
+    return t
+}
