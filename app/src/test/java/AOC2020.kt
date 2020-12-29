@@ -520,52 +520,38 @@ class AOC2020 : BaseTest("AOC2020") {
 
     @Test
     fun day17() = test(2) { lines ->
-        val initialCells = lines.mapIndexed { y, s -> s.mapIndexedNotNull { x, c -> if (c == '#') Cell(x, y, 0, 0) else null } }.flatten()
-
         //part 1
-        repeat(6, initialCells) { it.cycle(false) }.count().log()
+        repeat(6, lines.createCells(null)) { cycle(it) }.count().log()
 
         //part 2
-        repeat(6, initialCells) { it.cycle(true) }.count().log()
+        repeat(6, lines.createCells(0)) { cycle(it) }.count().log()
     }
 
-    data class Cell(val x: Int, val y: Int, val z: Int, val w: Int)
+    private fun List<String>.createCells(w: Int?) = mapIndexed { y, s ->
+        s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }
+    }.flatten().toSet()
 
-    private fun List<Cell>.cycle(hyper: Boolean): List<Cell> {
-        val cells = mutableListOf<Cell>()
-        for (x in range(Cell::x)) {
-            for (y in range(Cell::y)) {
-                for (z in range(Cell::z)) {
-                    for (w in if (hyper) range(Cell::w) else 0..0) {
-                        val cell = Cell(x, y, z, w)
-                        when (neighbors(cell, hyper)) {
-                            2 -> if (cell in this) cells.add(cell)
-                            3 -> cells.add(cell)
+    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null) {
+        val neighbors: Set<Position> by lazy {
+            mutableSetOf<Position>().apply {
+                for (dx in -1..1) {
+                    for (dy in -1..1) {
+                        for (dz in -1..1) {
+                            for (dw in if (w != null) -1..1 else 0..0) {
+                                if (dx != 0 || dy != 0 || dz != 0 || dw != 0) {
+                                    add(Position(x + dx, y + dy, z + dz, w?.let { it + dw }))
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        return cells
     }
 
-    private fun List<Cell>.range(block: Cell.() -> Int) = map(block).run { (minOrNull()!! - 1)..(maxOrNull()!! + 1) }
-
-    private fun List<Cell>.neighbors(cell: Cell, hyper: Boolean): Int {
-        var count = 0
-        for (x in -1..1) {
-            for (y in -1..1) {
-                for (z in -1..1) {
-                    for (w in if (hyper) -1..1 else 0..0) {
-                        if (x != 0 || y != 0 || z != 0 || w != 0) {
-                            if (Cell(cell.x + x, cell.y + y, cell.z + z, cell.w + w) in this) count++
-                        }
-                    }
-                }
-            }
-        }
-        return count
-    }
+    private fun cycle(cells: Set<Position>) =
+        cells.filter { cell -> cell.neighbors.filter { it in cells }.size in 2..3 }.toSet() +
+                cells.flatMap { it.neighbors }.groupingBy { it }.eachCount().filter { it.value == 3 }.map { it.key }
 
     @Test
     fun day18() = test(2) { lines ->
