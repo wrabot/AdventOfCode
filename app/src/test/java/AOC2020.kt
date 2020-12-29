@@ -550,7 +550,9 @@ class AOC2020 : BaseTest("AOC2020") {
     }
 
     private fun cycle(cells: Set<Position>) =
+        // keep cells for with 2 or 3 neighbors
         cells.filter { cell -> cell.neighbors.filter { it in cells }.size in 2..3 }.toSet() +
+                // create cell with 3 neighbors : if a neighbor appears 3 times, this is a new cell
                 cells.flatMap { it.neighbors }.groupingBy { it }.eachCount().filter { it.value == 3 }.map { it.key }
 
     @Test
