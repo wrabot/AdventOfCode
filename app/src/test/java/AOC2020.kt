@@ -753,8 +753,8 @@ class AOC2020 : BaseTest("AOC2020") {
 
     private fun day22part2(deck1: MutableList<Int>, deck2: MutableList<Int>, level: Int): Pair<Boolean, Int> {
         //log("$level $deck1 $deck2")
-        val deck1s = mutableListOf<List<Int>>()
-        val deck2s = mutableListOf<List<Int>>()
+        val deck1s = mutableSetOf<List<Int>>()
+        val deck2s = mutableSetOf<List<Int>>()
         while (deck1.isNotEmpty() && deck2.isNotEmpty()) {
             if (deck1 in deck1s && deck2 in deck2s) return Pair(true, 0)
             deck1s.add(deck1.toList())
