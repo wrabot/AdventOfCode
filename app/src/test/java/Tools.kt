@@ -1,4 +1,6 @@
 import java.math.BigInteger
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 fun log(message: Any?) = System.err.println("!!!$message")
 
@@ -7,6 +9,9 @@ fun List<Char>.log(width: Int) = apply {
 }
 
 fun <T> T.log() = apply { log(this) }
+
+@OptIn(ExperimentalTime::class)
+fun <T> logDuration(prefix: String = "", block: () -> T) = measureTimedValue(block).apply { log("$prefix$duration") }.value
 
 fun Iterable<BigInteger>.sum() = reduce { acc, bi -> acc + bi }
 
