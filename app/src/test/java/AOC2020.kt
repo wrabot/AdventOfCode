@@ -258,73 +258,45 @@ class AOC2020 : BaseTest("AOC2020") {
         val initialMap = lines.flatMap { it.toList() }
 
         //part1
-        var map = initialMap
-        while (true) {
-            map = map.step1(width, height) ?: break
-        }
-        map.count { it == '#' }.log()
+        Seats(initialMap, width, height, 4) { seat, direction ->
+            get(seat.first + direction.first, seat.second + direction.second) == '#'
+        }.update()
 
         //part2
-        map = initialMap
-        while (true) {
-            map = map.step2(width, height) ?: break
-        }
-        map.count { it == '#' }.log()
+        Seats(initialMap, width, height, 5) { seat, direction ->
+            var x = seat.first
+            var y = seat.second
+            var c: Char?
+            do {
+                x += direction.first
+                y += direction.second
+                c = get(x, y)
+            } while (c == '.')
+            c == '#'
+        }.update()
     }
 
-    private fun List<Char>.step2(width: Int, height: Int): List<Char>? {
-        var modified = false
-        val map = mapIndexed { index, c ->
-            val x = index % width
-            val y = index / width
-            when (c) {
-                'L' -> if (adjacent2(width, height, x, y) == 0) '#' else 'L'
-                '#' -> if (adjacent2(width, height, x, y) >= 5) 'L' else '#'
-                else -> c
-            }.apply { if (c != this) modified = true }
-        }
-        return if (modified) map else null
-    }
-
-    private fun List<Char>.adjacent2(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
-        var d = 1
-        var occupied: Boolean? = null
-        while (occupied == null) {
-            val x = x0 + it.first * d
-            val y = y0 + it.second * d
-            occupied = if ((x in 0 until width) && (y in 0 until height)) {
-                when (get(y * width + x)) {
-                    '#' -> true
-                    'L' -> false
-                    else -> null
+    data class Seats(private var map: List<Char>, val width: Int, val height: Int, val min: Int, val occupied: Seats.(Pair<Int, Int>, Pair<Int, Int>) -> Boolean) {
+        fun update() {
+            do {
+                var modified = false
+                map = map.mapIndexed { index, c ->
+                    val seat = Pair(index % width, index / width)
+                    when (c) {
+                        'L' -> if (adjacent(seat) == 0) '#' else 'L'
+                        '#' -> if (adjacent(seat) >= min) 'L' else '#'
+                        else -> c
+                    }.apply { if (c != this) modified = true }
                 }
-            } else false
-            d++
+            } while (modified)
+            map.count { it == '#' }.log()
         }
-        occupied
-    }
 
-    private fun List<Char>.step1(width: Int, height: Int): List<Char>? {
-        var modified = false
-        val map = mapIndexed { index, c ->
-            val x = index % width
-            val y = index / width
-            when (c) {
-                'L' -> if (adjacent1(width, height, x, y) == 0) '#' else 'L'
-                '#' -> if (adjacent1(width, height, x, y) >= 4) 'L' else '#'
-                else -> c
-            }.apply { if (c != this) modified = true }
-        }
-        return if (modified) map else null
-    }
+        fun get(x: Int, y: Int) = if (x in 0 until width && y in 0 until height) map[y * width + x] else null
 
-    private fun List<Char>.adjacent1(width: Int, height: Int, x0: Int, y0: Int) = directions.count {
-        val x = x0 + it.first
-        val y = y0 + it.second
-        (x in 0 until width) && (y in 0 until height) && (get(y * width + x) == '#')
+        private val directions = listOf(1 to 0, 1 to -1, 0 to -1, -1 to -1, -1 to 0, -1 to 1, 0 to 1, 1 to 1)
+        private fun adjacent(seat: Pair<Int, Int>) = directions.count { occupied(seat, it) }
     }
-
-    private val directions = listOf(1 to 0, 1 to -1, 0 to -1, -1 to -1, -1 to 0, -1 to 1, 0 to 1, 1 to 1)
 
     @Test
     fun day12() = test(2) { lines ->
