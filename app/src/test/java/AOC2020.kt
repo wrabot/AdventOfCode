@@ -567,7 +567,7 @@ class AOC2020 : BaseTest("AOC2020") {
         // rule 8 and 11 only used by rule 0
         // 0: 8 11
         // 8: 42 | 8
-        // 11: 42 11 31
+        // 11: 42 31 | 42 11 31
         // the rule 0 can be transform as 0: 42 8 31 | 42 0 31
         val regex42 = rules.createRegex("42")
         val regex31 = rules.createRegex("31")
