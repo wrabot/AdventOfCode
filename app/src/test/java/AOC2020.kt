@@ -503,28 +503,27 @@ class AOC2020 : BaseTest("AOC2020") {
         s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }
     }.flatten().toSet()
 
-    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null)
-
-    private fun cycle(init: Set<Position>) {
-        val neighbors = mutableMapOf<Position, List<Position>>()
-        repeat(6, init) { cells ->
-            cells.flatMap { cell ->
-                neighbors.getOrPut(cell) {
-                    mutableListOf<Position>().apply {
-                        for (dx in -1..1) {
-                            for (dy in -1..1) {
-                                for (dz in -1..1) {
-                                    for (dw in if (cell.w != null) -1..1 else 0..0) {
-                                        if (dx != 0 || dy != 0 || dz != 0 || dw != 0) {
-                                            add(Position(cell.x + dx, cell.y + dy, cell.z + dz, cell.w?.let { it + dw }))
-                                        }
-                                    }
-                                }
+    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null) {
+        fun neighbors(): List<Position> = mutableListOf<Position>().apply {
+            for (dx in -1..1) {
+                for (dy in -1..1) {
+                    for (dz in -1..1) {
+                        for (dw in if (w != null) -1..1 else 0..0) {
+                            if (dx != 0 || dy != 0 || dz != 0 || dw != 0) {
+                                add(Position(x + dx, y + dy, z + dz, w?.let { it + dw }))
                             }
                         }
                     }
                 }
-            }.groupingBy { it }.eachCount().filter { it.value == 3 || (it.value == 2 && it.key in cells) }.keys
+            }
+        }
+    }
+
+    private fun cycle(init: Set<Position>) {
+        val neighbors = mutableMapOf<Position, List<Position>>()
+        repeat(6, init) { cells ->
+            cells.flatMap { cell -> neighbors.getOrPut(cell) { cell.neighbors() } }.groupingBy { it }.eachCount()
+                .filter { it.value == 3 || (it.value == 2 && it.key in cells) }.keys
         }.count().log()
     }
 
