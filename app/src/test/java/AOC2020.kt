@@ -493,39 +493,40 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day17() = test(2) { lines ->
         //part 1
-        repeat(6, lines.createCells(null)) { cycle(it) }.count().log()
+        cycle(lines.createCells(null))
 
         //part 2
-        repeat(6, lines.createCells(0)) { cycle(it) }.count().log()
+        cycle(lines.createCells(0))
     }
 
     private fun List<String>.createCells(w: Int?) = mapIndexed { y, s ->
         s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }
     }.flatten().toSet()
 
-    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null) {
-        val neighbors: Set<Position> by lazy {
-            mutableSetOf<Position>().apply {
-                for (dx in -1..1) {
-                    for (dy in -1..1) {
-                        for (dz in -1..1) {
-                            for (dw in if (w != null) -1..1 else 0..0) {
-                                if (dx != 0 || dy != 0 || dz != 0 || dw != 0) {
-                                    add(Position(x + dx, y + dy, z + dz, w?.let { it + dw }))
+    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null)
+
+    private fun cycle(init: Set<Position>) {
+        val neighbors = mutableMapOf<Position, List<Position>>()
+        repeat(6, init) { cells ->
+            cells.flatMap { cell ->
+                neighbors.getOrPut(cell) {
+                    mutableListOf<Position>().apply {
+                        for (dx in -1..1) {
+                            for (dy in -1..1) {
+                                for (dz in -1..1) {
+                                    for (dw in if (cell.w != null) -1..1 else 0..0) {
+                                        if (dx != 0 || dy != 0 || dz != 0 || dw != 0) {
+                                            add(Position(cell.x + dx, cell.y + dy, cell.z + dz, cell.w?.let { it + dw }))
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-        }
+            }.groupingBy { it }.eachCount().filter { it.value == 3 || (it.value == 2 && it.key in cells) }.keys
+        }.count().log()
     }
-
-    private fun cycle(cells: Set<Position>) =
-        // keep cells for with 2 or 3 neighbors
-        cells.filter { cell -> cell.neighbors.filter { it in cells }.size in 2..3 }.toSet() +
-                // create cell with 3 neighbors : if a neighbor appears 3 times, this is a new cell
-                cells.flatMap { it.neighbors }.groupingBy { it }.eachCount().filter { it.value == 3 }.map { it.key }
 
     @Test
     fun day18() = test(2) { lines ->
