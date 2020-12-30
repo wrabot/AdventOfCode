@@ -717,9 +717,7 @@ class AOC2020 : BaseTest("AOC2020") {
         val deck1s = mutableSetOf<List<Int>>()
         val deck2s = mutableSetOf<List<Int>>()
         while (deck1.isNotEmpty() && deck2.isNotEmpty()) {
-            if (deck1 in deck1s && deck2 in deck2s) return Pair(true, 0)
-            deck1s.add(deck1.toList())
-            deck2s.add(deck2.toList())
+            if (!deck1s.add(deck1.toList()) && !deck2s.add(deck2.toList())) return Pair(true, 0)
             val card1 = deck1.removeAt(0)
             val card2 = deck2.removeAt(0)
             //log("$level $card1 $card2")
