@@ -203,4 +203,22 @@ class AOC2015 : BaseTest("AOC2015") {
         }.sumBy { it.length }).log()
         (lines.map { it.replace("\\", "\\\\").replace("\"", "\\\"") }.sumBy { it.length + 2 } - lines.sumBy { it.length }).log()
     }
+
+    @Test
+    fun day9() = test(2) { lines ->
+        lines.map { it.split(" to ", " = ") }.forEach { (a, b, d) ->
+            cities.add(a)
+            cities.add(b)
+            d.toInt().run {
+                distances[listOf(a, b)] = this
+                distances[listOf(b, a)] = this
+            }
+        }
+        distances.log()
+    }
+
+    private val distances = mutableMapOf<List<String>, Int>()
+    private val cities = mutableSetOf<String>()
+
+    private fun Set<String>.findShortestPath() :List<String> = this + (cities - this).minByOrNull { distances[it]!!  }!!
 }
