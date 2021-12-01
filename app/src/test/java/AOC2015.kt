@@ -219,6 +219,4 @@ class AOC2015 : BaseTest("AOC2015") {
 
     private val distances = mutableMapOf<List<String>, Int>()
     private val cities = mutableSetOf<String>()
-
-    private fun Set<String>.findShortestPath() :List<String> = this + (cities - this).minByOrNull { distances[it]!!  }!!
 }
