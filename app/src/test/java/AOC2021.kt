@@ -64,7 +64,7 @@ class AOC2021 : BaseTest("AOC2021") {
         (oxygen * co2).log()
     }
 
-    private fun List<String>.day3Part2(mostZeroBit: Char, leastOrEqualZeroBit: Char) : Int {
+    private fun List<String>.day3Part2(mostZeroBit: Char, leastOrEqualZeroBit: Char): Int {
         val length = this[0].length
         var current = this
         for (position in 0 until length) {
@@ -74,5 +74,68 @@ class AOC2021 : BaseTest("AOC2021") {
             current = current.filter { it[position] == bit }
         }
         return current.first().toInt(2)
+    }
+
+    @Test
+    fun day4() = test(1, 2) { lines ->
+        val numbers = lines[0].split(",").map { it.toInt() }
+
+        val boards = lines.drop(1).chunked(6).map { board ->
+            Day4Board(board.drop(1).map { row ->
+                row.chunked(3).map { Day4Board.Cell(it.trim().toInt()) }
+            })
+        }
+
+        day4part1(numbers, boards)
+        day4part2(numbers, boards)
+    }
+
+    private fun day4part1(numbers: List<Int>, boards: List<Day4Board>) {
+        numbers.forEach { number ->
+            boards.forEach { board ->
+                board.draw(number)
+                if (board.isComplete) {
+                    val score = board.score() * number
+                    score.log()
+                    return
+                }
+            }
+        }
+    }
+
+    private fun day4part2(numbers: List<Int>, boards: List<Day4Board>) {
+        numbers.forEach { number ->
+            boards.forEach { board ->
+                board.draw(number)
+                if (board.isComplete && boards.all { it.isComplete }) {
+                    val score = board.score() * number
+                    score.log()
+                    return
+                }
+            }
+        }
+    }
+
+    data class Day4Board(val rows: List<List<Cell>>) {
+        private val size = 5
+        private val cells: List<Cell> = rows.flatten()
+        private val columns: List<List<Cell>> = (0 until size).map { column -> rows.map { it[column] } }
+        var isComplete = false
+            private set
+
+        data class Cell(val value: Int, var marked: Boolean = false)
+
+        fun draw(number: Int) {
+            if (isComplete) return
+            cells.forEach {
+                if (it.value == number)
+                    it.marked = true
+            }
+            isComplete = rows.any { it.isComplete() } || columns.any { it.isComplete() }
+        }
+
+        fun score() = cells.sumBy { if (it.marked) 0 else it.value }
+
+        private fun List<Cell>.isComplete() = all { it.marked }
     }
 }
