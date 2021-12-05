@@ -2,6 +2,8 @@ import java.math.BigInteger
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
+data class Point(val x: Int, val y: Int)
+
 fun log(message: Any?) = System.err.println("!!!$message")
 
 fun List<Char>.log(width: Int) = apply {
