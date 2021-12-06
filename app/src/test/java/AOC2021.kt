@@ -182,4 +182,20 @@ class AOC2021 : BaseTest("AOC2021") {
         board.count { it.value > 1 }.log()
     }
 
+    @Test
+    fun day6() = test(1, 2) { lines ->
+        var generation = LongArray(9) { 0 }
+        lines[0].split(",").map { generation[it.toInt()]++ }
+        repeat(256) {
+            generation = LongArray(9) { timer ->
+                when (timer) {
+                    8 -> generation[0]
+                    6 -> generation[0] + generation[7]
+                    else -> generation[timer + 1]
+                }
+            }
+            if (it == 79) generation.sum().log() // part1
+        }
+        generation.sum().log() // part2
+    }
 }
