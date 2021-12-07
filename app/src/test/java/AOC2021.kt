@@ -1,4 +1,5 @@
 import org.junit.Test
+import kotlin.math.absoluteValue
 
 class AOC2021 : BaseTest("AOC2021") {
     @Test
@@ -197,5 +198,27 @@ class AOC2021 : BaseTest("AOC2021") {
             if (it == 79) generation.sum().log() // part1
         }
         generation.sum().log() // part2
+    }
+
+    @Test
+    fun day7() = test(1, 2) { lines ->
+        val positions = lines[0].split(",").map { it.toInt() }.groupingBy { it }.eachCount()
+        val min = positions.minOf { it.key }
+        val max = positions.maxOf { it.key }
+
+        // part1
+        (min..max).minOf { target ->
+            positions.entries.sumBy {
+                (it.key - target).absoluteValue * it.value
+            }
+        }.log()
+
+        // part2
+        (min..max).minOf { target ->
+            positions.entries.sumBy {
+                val n = (it.key - target).absoluteValue
+                n * (n + 1) / 2 * it.value
+            }
+        }.log()
     }
 }
