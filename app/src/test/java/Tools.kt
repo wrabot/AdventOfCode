@@ -6,7 +6,7 @@ import kotlin.time.measureTimedValue
 
 data class Point(val x: Int, val y: Int)
 
-class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
+class Board<T>(val width: Int, val height: Int, private val cells: List<T>) {
     val points = (0 until height).flatMap { y ->
         (0 until width).map { x ->
             Point(x, y)
@@ -17,10 +17,12 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         if (cells.size != width * height) throw Error("invalid board")
     }
 
-    fun isValid(point: Point) = point.y in 0 until height && point.x in 0 until width
-
-    operator fun get(point: Point) =
-        if (isValid(point)) cells[point.y * width + point.x] else throw Error("invalid point")
+    fun isValid(x: Int, y: Int) = x in 0 until width && y in 0 until height
+    fun getOrNull(x: Int, y: Int) = if (isValid(x, y)) cells[y * width + x] else null
+    operator fun get(x: Int, y: Int) = getOrNull(x, y) ?: throw Error("invalid cell")
+    fun isValid(point: Point) = isValid(point.x, point.y)
+    fun getOrNull(point: Point) = getOrNull(point.x, point.y)
+    operator fun get(point: Point) = get(point.x, point.y)
 
     fun neighbors4(point: Point) =
         listOfNotNull(
