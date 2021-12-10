@@ -6,7 +6,7 @@ import kotlin.time.measureTimedValue
 
 data class Point(val x: Int, val y: Int)
 
-class Board<T>(val width: Int, val height: Int, private val cells: List<T>) {
+class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     val points = (0 until height).flatMap { y ->
         (0 until width).map { x ->
             Point(x, y)
@@ -16,6 +16,8 @@ class Board<T>(val width: Int, val height: Int, private val cells: List<T>) {
     init {
         if (cells.size != width * height) throw Error("invalid board")
     }
+
+    fun log() = log(cells.chunked(width) { it.joinToString("") }.joinToString("\n"))
 
     fun isValid(x: Int, y: Int) = x in 0 until width && y in 0 until height
     fun getOrNull(x: Int, y: Int) = if (isValid(x, y)) cells[y * width + x] else null
@@ -39,9 +41,24 @@ class Board<T>(val width: Int, val height: Int, private val cells: List<T>) {
             Point(point.x + 1, point.y - 1),
             Point(point.x - 1, point.y - 1)
         ).filter { isValid(it) }
+
+    fun zone4(point: Point, predicate: (Point) -> Boolean) =
+        zone(point) { neighbors4(it).filter(predicate) }
+
+    fun zone8(point: Point, predicate: (Point) -> Boolean) =
+        zone(point) { neighbors8(it).filter(predicate) }
+
+    fun zone(point: Point, neighbors: (Point) -> List<Point>): List<Point> {
+        val zone = mutableListOf(point)
+        var index = 0
+        while (index < zone.size) {
+            zone.addAll(neighbors(zone[index++]).filter { it !in zone })
+        }
+        return zone
+    }
 }
 
-fun log(message: Any?) = System.err.println("!!!$message")
+fun log(message: Any?) = System.err.println(message)
 
 fun List<Char>.log(width: Int) = apply {
     log(chunked(width) { it.joinToString("") }.joinToString("\n"))
