@@ -265,11 +265,14 @@ class AOC2021 : BaseTest("AOC2021") {
         lowPoints.sumBy { board[it] + 1 }.log()
 
         // part2
-        fun findBasin(basin: Set<Point>, point: Point): Set<Point> =
-            if (board[point] == 9 || point in basin) basin else board.neighbors4(point).fold(basin + point, ::findBasin)
-
-        lowPoints.map { findBasin(emptySet(), it).count() }.sortedDescending().take(3).reduce(Int::times).log()
+        lowPoints.map { lowPoint ->
+            val basin = mutableListOf(lowPoint)
+            var index = 0
+            while (index < basin.size) basin.addAll(board.neighbors4(basin[index++]).filter { board[it] != 9 && it !in basin })
+            basin.count()
+        }.sortedDescending().take(3).reduce(Int::times).log()
     }
+
 
     @Test
     fun day10() = test(1, 2) { lines ->
