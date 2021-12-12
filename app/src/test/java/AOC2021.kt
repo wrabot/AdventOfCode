@@ -319,4 +319,24 @@ class AOC2021 : BaseTest("AOC2021") {
         }
         step.log()
     }
+
+    @Test
+    fun day12() = test(1, 2, 3, 4) { lines ->
+        val links = lines.flatMap { it.split("-").let { (a, b) -> listOf(a to b, b to a) } }
+            .filter { it.second != "start" }
+
+        fun countPaths(path: List<String>, acceptTwoSmallInPath: Boolean): Int =
+            links.sumBy {
+                when {
+                    it.first != path.last() -> 0
+                    it.second == "end" -> 1
+                    it.second[0].isUpperCase() || it.second !in path -> countPaths(path + it.second, acceptTwoSmallInPath)
+                    acceptTwoSmallInPath -> countPaths(path + it.second, false)
+                    else -> 0
+                }
+            }
+
+        countPaths(listOf("start"), false).log()
+        countPaths(listOf("start"), true).log()
+    }
 }
