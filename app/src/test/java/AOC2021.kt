@@ -339,4 +339,56 @@ class AOC2021 : BaseTest("AOC2021") {
         countPaths(listOf("start"), false).log()
         countPaths(listOf("start"), true).log()
     }
+
+    @Test
+    fun day13() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day14() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day15() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day16() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day17() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day18() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day19() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day20() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day21() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day22() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day23() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day24() = test(1, 2) { lines ->
+    }
+
+    @Test
+    fun day25() = test(1, 2) { lines ->
+    }
 }
