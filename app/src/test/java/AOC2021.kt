@@ -373,6 +373,26 @@ class AOC2021 : BaseTest("AOC2021") {
 
     @Test
     fun day14() = test(1, 2) { lines ->
+        val template = lines[0]
+        val rules = lines.drop(2).map {
+            it.split(" -> ").let { (pattern, insert) -> pattern.zipWithNext().first() to insert[0] }
+        }.toMap()
+
+        var generation = template.zipWithNext().groupingBy { it }.eachCount().mapValues { it.value.toLong() }
+
+        fun <T> List<Pair<T, Long>>.cumulate() = groupBy { it.first }.mapValues { entry -> entry.value.sumOf { it.second } }
+
+        fun difference() = (generation.map { it.key.first to it.value } + (template.last() to 1L))
+            .cumulate().values.sorted().let { it.last() - it.first() }
+
+        repeat(40) { count ->
+            generation = generation.flatMap {
+                val insert = rules[it.key]
+                if (insert == null) listOf(it.key to it.value) else listOf((it.key.first to insert) to it.value, (insert to it.key.second) to it.value)
+            }.cumulate()
+            if (count == 9) difference().log() // part 1
+        }
+        difference().log() // part 2
     }
 
     @Test
