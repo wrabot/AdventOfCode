@@ -342,7 +342,7 @@ class AOC2021 : BaseTest("AOC2021") {
 
     @Test
     fun day13() = test(1, 2) { lines ->
-        val dots = lines.takeWhile { it != "" }.map { it.split(",").map { it.toInt() } }
+        val dots = lines.takeWhile { it != "" }.map { line -> line.split(",").map { it.toInt() } }
         val folds = lines.takeLastWhile { it != "" }.map {
             it.split("=").let { (a, b) -> a.removePrefix("fold along ") to b.toInt() }
         }
