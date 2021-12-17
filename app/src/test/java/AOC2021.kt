@@ -566,33 +566,49 @@ class AOC2021 : BaseTest("AOC2021") {
 
     @Test
     fun day18() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 
     @Test
     fun day19() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 
     @Test
     fun day20() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 
     @Test
     fun day21() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 
     @Test
     fun day22() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 
     @Test
     fun day23() = test(1, 2) { lines ->
+        log("part1: ")
+        log("part2: ")
     }
 
     @Test
     fun day24() = test(1, 2) { lines ->
+        log("part1: ")
+        log("part2: ")
     }
 
     @Test
     fun day25() = test(1, 2) { lines ->
+        log("part 1: ")
+        log("part 2: ")
     }
 }
