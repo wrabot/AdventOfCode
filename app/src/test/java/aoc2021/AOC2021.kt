@@ -566,8 +566,119 @@ class AOC2021 : BaseTest("AOC2021") {
 
     @Test
     fun day18() = test(1, 2) { lines ->
+        abstract class NumberPart {
+            abstract fun magnitude(): Int
+        }
+
+        data class NumberValue(var value: Int) : NumberPart() {
+            override fun toString() = value.toString()
+            override fun magnitude() = value
+        }
+
+        data class NumberPair(var first: NumberPart, var second: NumberPart, var left: NumberValue? = null, var rigth: NumberValue? = null) : NumberPart() {
+            override fun toString() = "[$first,$second]"
+            override fun magnitude() = first.magnitude() * 3 + second.magnitude() * 2
+        }
+
+        data class ParseResult(val number: NumberPart, val offset: Int)
+
+        fun parseNumber(input: String): ParseResult = when (input.first()) {
+            '[' -> {
+                val first = parseNumber(input.drop(1))
+                val second = parseNumber(input.drop(first.offset + 1))
+                ParseResult(NumberPair(first.number, second.number), first.offset + 1 + second.offset + 1)
+            }
+            else -> ParseResult(NumberValue(input.first().toString().toInt()), 2)
+        }
+
+        fun NumberPair.updateLeft(outsideLeft: NumberValue? = null): NumberValue? {
+            left = outsideLeft
+            val insideLeft = first.let {
+                when (it) {
+                    is NumberPair -> it.updateLeft(outsideLeft)
+                    is NumberValue -> it
+                    else -> null
+                }
+            }
+            return second.let {
+                when (it) {
+                    is NumberPair -> it.updateLeft(insideLeft)
+                    is NumberValue -> it
+                    else -> null
+                }
+            }
+        }
+
+        fun NumberPair.updateRight(outsideRight: NumberValue? = null): NumberValue? {
+            rigth = outsideRight
+            val insideRight = second.let {
+                when (it) {
+                    is NumberPair -> it.updateRight(outsideRight)
+                    is NumberValue -> it
+                    else -> null
+                }
+            }
+            return first.let {
+                when (it) {
+                    is NumberPair -> it.updateRight(insideRight)
+                    is NumberValue -> it
+                    else -> null
+                }
+            }
+        }
+
+        fun NumberPair.explode(level: Int = 0, onExplode: () -> Unit = {}): Boolean {
+            return if (level >= 4 && first is NumberValue && second is NumberValue) {
+                left?.apply { value += (first as NumberValue).value }
+                rigth?.apply { value += (second as NumberValue).value }
+                onExplode()
+                true
+            } else {
+                first.let { it is NumberPair && it.explode(level + 1) { first = NumberValue(0) } } ||
+                        second.let { it is NumberPair && it.explode(level + 1) { second = NumberValue(0) } }
+            }
+        }
+
+        fun NumberPair.split(): Boolean = first.let {
+            when {
+                it is NumberPair -> it.split()
+                it is NumberValue && it.value > 9 -> {
+                    first = NumberPair(NumberValue(it.value / 2), NumberValue((it.value + 1) / 2))
+                    true
+                }
+                else -> false
+            }
+        } || second.let {
+            when {
+                it is NumberPair -> it.split()
+                it is NumberValue && it.value > 9 -> {
+                    second = NumberPair(NumberValue(it.value / 2), NumberValue((it.value + 1) / 2))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        fun add(a: NumberPart, b: NumberPart): NumberPart {
+            val addition = NumberPair(a, b)
+            do {
+                addition.apply {
+                    updateLeft(null)
+                    updateRight(null)
+                }
+            } while (addition.explode() || addition.split())
+            return addition
+        }
+
         log("part 1: ")
+        lines.map { parseNumber(it).number }.reduce { acc, number -> add(acc, number) }.apply { magnitude().log() }
+
         log("part 2: ")
+        lines.indices.maxOf { first ->
+            lines.indices.maxOf { second ->
+                if (first == second) 0 else add(parseNumber(lines[first]).number, parseNumber(lines[second]).number).magnitude()
+            }
+        }.log()
     }
 
     @Test
