@@ -39,14 +39,14 @@ object Day18 {
         }
 
         abstract fun updateLeftNeighbor(outsideLeft: NumberValue? = null): NumberValue?
-        abstract fun updateRightNeighbor(outsideLeft: NumberValue? = null): NumberValue?
+        abstract fun updateRightNeighbor(outsideRight: NumberValue? = null): NumberValue?
     }
 
     data class NumberValue(var value: Int) : NumberPart() {
         override fun toString() = value.toString()
         override fun magnitude() = value
         override fun updateLeftNeighbor(outsideLeft: NumberValue?) = this
-        override fun updateRightNeighbor(outsideLeft: NumberValue?) = this
+        override fun updateRightNeighbor(outsideRight: NumberValue?) = this
     }
 
     data class NumberPair(var left: NumberPart, var right: NumberPart, var leftNeighbor: NumberValue? = null, var rightNeighbor: NumberValue? = null) : NumberPart() {
