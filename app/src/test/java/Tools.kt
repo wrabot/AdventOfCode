@@ -4,7 +4,13 @@ import java.math.BigInteger
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
-data class Point(val x: Int, val y: Int)
+data class Point(val x: Int, val y: Int, val z: Int = 0) {
+    fun rotateX() = Point(x, -z, y)
+    fun rotateY() = Point(z, y, -x)
+    fun rotateZ() = Point(-y, x, z)
+    operator fun minus(other: Point) = Point(x - other.x, y - other.y, z - other.z)
+    operator fun plus(other: Point) = Point(x + other.x, y + other.y, z + other.z)
+}
 
 class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     val points = (0 until height).flatMap { y ->
