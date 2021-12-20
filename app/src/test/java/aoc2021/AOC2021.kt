@@ -587,7 +587,7 @@ class AOC2021 : BaseTest("AOC2021") {
                 .flatMap { (1..2).runningFold(it) { points, _ -> points.map(Point::rotateZ) } }
                 //.apply { count().log() }
                 .distinct()
-                //.apply { count().log() }
+        //.apply { count().log() }
 
 
         val rotateScanners = scanners.drop(1).map { it.rotate() }.toMutableList()
@@ -635,8 +635,35 @@ class AOC2021 : BaseTest("AOC2021") {
 
     @Test
     fun day20() = test(1, 2) { lines ->
+        fun createImage(rows: List<String>, outside: Char): Board<Char> {
+            val width = rows[0].length + 2
+            val separator = outside.toString().repeat(width).toList()
+            return Board(width, rows.size + 2, separator + rows.flatMap { "$outside$it$outside".toList() } + separator)
+        }
+
+        fun Board<Char>.displayResult() = cells.count { it == '#' }.log()
+
+        fun Board<Char>.enhance(algo : String): Board<Char> {
+            val outside = cells[0]
+            val rows = points.map { point ->
+                (-1..1).flatMap { dy -> (-1..1).map { dx -> getOrNull(point.x + dx, point.y + dy) ?: outside } }
+                    .joinToString("") { if (it == '#') "1" else "0" }
+                    .toInt(2)
+                    .let { algo[it] }
+            }.chunked(width) { it.joinToString("") }
+            return createImage(rows, if ((algo[0] == '#') xor (outside == '#')) '#' else '.')
+        }
+
+        val algo = lines[0]
+        var image = createImage(lines.drop(2), '.')
+
         log("part 1: ")
+        repeat(2) { image = image.enhance(algo) }
+        image.displayResult()
+
         log("part 2: ")
+        repeat(48) { image = image.enhance(algo) }
+        image.displayResult()
     }
 
     @Test
