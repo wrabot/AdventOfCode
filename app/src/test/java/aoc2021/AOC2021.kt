@@ -1,4 +1,9 @@
-import aoc2021.Day18
+package aoc2021
+
+import BaseTest
+import Board
+import Point
+import log
 import org.junit.Test
 import kotlin.math.absoluteValue
 
@@ -94,7 +99,7 @@ class AOC2021 : BaseTest("AOC2021") {
             boards.forEach { board ->
                 board.key.cells.forEach { if (it.value == number) it.marked = true }
                 if (board.value.any { line -> line.all { it.marked } }) {
-                    val score = board.key.cells.sumBy { if (it.marked) 0 else it.value } * number
+                    val score = board.key.cells.sumOf { if (it.marked) 0 else it.value } * number
                     if (completeBoards.isEmpty()) score.log() // part 1
                     if (completeBoards.size == boards.size - 1 && board.key !in completeBoards) score.log() // part 2
                     completeBoards.add(board.key)
@@ -171,14 +176,14 @@ class AOC2021 : BaseTest("AOC2021") {
 
         // part1
         (min..max).minOf { target ->
-            positions.entries.sumBy {
+            positions.entries.sumOf {
                 (it.key - target).absoluteValue * it.value
             }
         }.log()
 
         // part2
         (min..max).minOf { target ->
-            positions.entries.sumBy {
+            positions.entries.sumOf {
                 val n = (it.key - target).absoluteValue
                 n * (n + 1) / 2 * it.value
             }
@@ -194,7 +199,7 @@ class AOC2021 : BaseTest("AOC2021") {
         }
 
         // part 1
-        entries.sumBy { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }.log()
+        entries.sumOf { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }.log()
 
         //part2
         entries.sumOf { entry ->
@@ -225,7 +230,7 @@ class AOC2021 : BaseTest("AOC2021") {
         }
 
         // part1
-        lowPoints.sumBy { board[it] + 1 }.log()
+        lowPoints.sumOf { board[it] + 1 }.log()
 
         // part2
         lowPoints.map { lowPoint -> board.zone4(lowPoint) { board[it] != 9 }.count() }
@@ -249,14 +254,14 @@ class AOC2021 : BaseTest("AOC2021") {
         }
 
         //part1
-        simplifiedChunks.sumBy { chunk ->
+        simplifiedChunks.sumOf { chunk ->
             when (chunk.find { it in listOf(')', ']', '}', '>') }) {
                 ')' -> 3
                 ']' -> 57
                 '}' -> 1197
                 '>' -> 25137
                 else -> 0  // not corrupted
-            }
+            }.toInt()
         }.log()
 
         //part2
@@ -327,7 +332,7 @@ class AOC2021 : BaseTest("AOC2021") {
             .filter { it.second != "start" }
 
         fun countPaths(path: List<String>, acceptTwoSmallInPath: Boolean): Int =
-            links.sumBy {
+            links.sumOf {
                 when {
                     it.first != path.last() -> 0
                     it.second == "end" -> 1
@@ -643,7 +648,7 @@ class AOC2021 : BaseTest("AOC2021") {
 
         fun Board<Char>.displayResult() = cells.count { it == '#' }.log()
 
-        fun Board<Char>.enhance(algo : String): Board<Char> {
+        fun Board<Char>.enhance(algo: String): Board<Char> {
             val outside = cells[0]
             val rows = points.map { point ->
                 (-1..1).flatMap { dy -> (-1..1).map { dx -> getOrNull(point.x + dx, point.y + dy) ?: outside } }

@@ -6,7 +6,7 @@ class AOC2019 : BaseTest("AOC2019") {
     @Test
     fun day1() = test(2) { lines ->
         lines.map { it.toInt() / 3 - 2 }.sum().log()
-        lines.map { generateSequence(it.toInt()) { (it / 3 - 2).takeIf { it > 0 } }.drop(1).sum() }.sum().log()
+        lines.map { line -> generateSequence(line.toInt()) { (it / 3 - 2).takeIf { it > 0 } }.drop(1).sum() }.sum().log()
     }
 
     @Test
