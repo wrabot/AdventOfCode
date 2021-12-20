@@ -47,7 +47,7 @@ class AOC2019 : BaseTest("AOC2019") {
             }
         }
         val intersections = wires.reduce { acc, list -> (acc intersect list).toList() }.minus(0 to 0).minus(0 to 0)
-        intersections.map { abs(it.first) + abs(it.second) }.min().log()
-        intersections.map { point -> wires.map { it.indexOf(point) }.sum() }.min().log()
+        intersections.map { abs(it.first) + abs(it.second) }.minOrNull().log()
+        intersections.map { point -> wires.map { it.indexOf(point) }.sum() }.minOrNull().log()
     }
 }
