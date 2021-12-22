@@ -424,7 +424,7 @@ class AOC2021 : BaseTest("AOC2021") {
                         if (it !in todo) todo.add(it)
                     }
                 }
-                todo.sortBy { cave[it].minRisk + end.x - it.x + end.y - it.y }
+                todo.sortBy { cave[it].minRisk }
             }
             return cave[end].minRisk
         }
