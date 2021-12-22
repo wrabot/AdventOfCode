@@ -672,7 +672,7 @@ class AOC2021 : BaseTest("AOC2021") {
     }
 
     @Test
-    fun day21() = test(1) { lines ->
+    fun day21() = test(1) { _ ->
         log("part 1: ")
         data class Player(var position: Int, var score: Int = 0) {
             fun move(dice: Int) {
@@ -681,10 +681,10 @@ class AOC2021 : BaseTest("AOC2021") {
             }
         }
 
-        //var player1 = Player(4)
-        //var player2 = Player(8)
-        var player1 = Player(10)
-        var player2 = Player(9)
+        //val player1 = Player(4)
+        //val player2 = Player(8)
+        val player1 = Player(10)
+        val player2 = Player(9)
 
         var round = 1
         while (true) {
