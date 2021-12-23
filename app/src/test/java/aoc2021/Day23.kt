@@ -4,6 +4,7 @@ import log
 import kotlin.math.absoluteValue
 
 object Day23 {
+    @Suppress("SpellCheckingInspection")
     fun solve() {
         log("part1: ")
         solve(mapOf('A' to "AB", 'B' to "DC", 'C' to "CB", 'D' to "AD"))
@@ -18,7 +19,7 @@ object Day23 {
     private val roomOutputs = mapOf('A' to 2, 'B' to 4, 'C' to 6, 'D' to 8)
     private val types = roomOutputs.keys.toCharArray()
     private var minCost = Int.MAX_VALUE
-    
+
     private fun solve(rooms: Map<Char, String>) {
         minCost = Int.MAX_VALUE
         solve(0, 0, rooms, empty.toString().repeat(11))
