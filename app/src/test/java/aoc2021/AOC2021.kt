@@ -1,7 +1,6 @@
 package aoc2021
 
 import BaseTest
-import Block
 import Board
 import Point
 import log
@@ -673,217 +672,17 @@ class AOC2021 : BaseTest("AOC2021") {
     }
 
     @Test
-    fun day21() = test(1) { _ ->
-        log("part 1: ")
-        data class Player(var position: Int, var score: Int = 0) {
-            fun move(dice: Int) {
-                position = (position + dice - 1) % 10 + 1
-                score += position
-            }
-        }
-
-        //val player1 = Player(4)
-        //val player2 = Player(8)
-        val player1 = Player(10)
-        val player2 = Player(9)
-
-        var round = 1
-        while (true) {
-            player1.move(round * 9 - 3)
-            if (player1.score >= 1000) {
-                (player2.score * round * 3).log()
-                break
-            }
-            round++
-
-            player2.move(round * 9 - 3)
-            if (player2.score >= 1000) {
-                (player1.score * round * 3).log()
-                break
-            }
-            round++
-        }
-
-
-        log("part 2: ")
-        data class PlayerState(val position: Int, val score: Int = 0)
-        data class GameState(val players: List<PlayerState>)
-
-        //var universes = mapOf(GameState(listOf(PlayerState(4), PlayerState(8))) to 1L)
-        var universes = mapOf(GameState(listOf(PlayerState(10), PlayerState(9))) to 1L)
-        val diceSums = (1..3).flatMap { dice1 -> (1..3).flatMap { dice2 -> (1..3).map { dice3 -> dice1 + dice2 + dice3 } } }
-        val playerWins = Array(2) { 0L }
-        var currentPlayerIndex = 0
-        while (universes.isNotEmpty()) {
-            val next = mutableMapOf<GameState, Long>()
-            universes.forEach { universe ->
-                val currentPlayer = universe.key.players[currentPlayerIndex]
-                diceSums.map {
-                    val position = (currentPlayer.position + it - 1) % 10 + 1
-                    val score = currentPlayer.score + position
-                    when {
-                        score >= 21 -> playerWins[currentPlayerIndex] += universe.value
-                        else -> {
-                            val gameState = GameState(universe.key.players.mapIndexed { index, playerState ->
-                                if (index == currentPlayerIndex) PlayerState(position, score) else playerState
-                            })
-                            next[gameState] = next.getOrDefault(gameState, 0L) + universe.value
-                        }
-                    }
-                }
-            }
-            universes = next
-            currentPlayerIndex = (currentPlayerIndex + 1) % 2
-        }
-        playerWins.maxOrNull().log()
-    }
-
+    fun day21() = Day21.solve()
 
     @Test
-    fun day22() = test(1, 2) { lines ->
-        data class Step(val mode: Boolean, val cuboid: Block)
-
-        val procedure = lines.map { line ->
-            "(on|off) x=(-?\\d*)\\.\\.(-?\\d*),y=(-?\\d*)\\.\\.(-?\\d*),z=(-?\\d*)\\.\\.(-?\\d*)".toRegex()
-                .matchEntire(line)?.groupValues.orEmpty().drop(1).let {
-                    Step(
-                        it[0] == "on",
-                        Block(
-                            Point(it[1].toInt(), it[3].toInt(), it[5].toInt()),
-                            Point(it[2].toInt(), it[4].toInt(), it[6].toInt())
-                        )
-                    )
-                }
-        }
-
-        log("part 1: ")
-        val reactorSize = 50
-        val reactorFullSize = reactorSize * 2 + 1
-        val reactor = Array(reactorFullSize * reactorFullSize * reactorFullSize) { false }
-        val reactorBlock = Block(Point(-reactorSize, -reactorSize, -reactorSize), Point(reactorSize, reactorSize, reactorSize))
-        procedure.forEach {
-            val block = it.cuboid.intersect(reactorBlock)
-            if (block != null)
-                for (x in block.start.x..block.end.x)
-                    for (y in block.start.y..block.end.y)
-                        for (z in block.start.z..block.end.z)
-                            reactor[((z + reactorSize) * reactorFullSize + (y + reactorSize)) * reactorFullSize + (x + reactorSize)] = it.mode
-        }
-        reactor.count { it }.log()
-
-        log("part 2: ")
-        fun List<Block>.sum(): Long =
-            if (isEmpty()) 0 else first().size() + drop(1).sum() - drop(1).mapNotNull { it.intersect(first()) }.sum()
-
-        var count = 0L
-        val exclusions = mutableListOf<Block>()
-        procedure.reversed().forEach { step ->
-            if (step.mode) {
-                count += step.cuboid.size() - exclusions.mapNotNull { it.intersect(step.cuboid) }.sum()
-            }
-            exclusions.add(step.cuboid)
-        }
-        count.log()
-    }
+    fun day22() = test(1, 2) { Day22.solve(it) }
 
     @Test
-    fun day23() = test(1) { _ ->
-        val empty = '.'
-        val costs = mapOf('A' to 1, 'B' to 10, 'C' to 100, 'D' to 1000)
-        val roomOutputs = mapOf('A' to 2, 'B' to 4, 'C' to 6, 'D' to 8)
-        val types = roomOutputs.keys.toCharArray()
-        var minCost = Int.MAX_VALUE
-        fun solve(level: Int, cost: Int, rooms: Map<Char, String>, hallway: String): Boolean {
-            //log("$level $cost $hallway $rooms")
-            if (cost >= minCost) return false
-
-            if (rooms.all { room -> room.value.all { it == room.key } }) {
-                minCost = cost
-                return true
-            }
-
-            // not mandatory but improve
-            val estimateCost = rooms.map { (roomName, roomContent) ->
-                roomContent.filter { it != empty && it != roomName }.sumOf {
-                    (roomContent.length * 2 + (roomOutputs[it]!! - roomOutputs[roomName]!!).absoluteValue) * costs[it]!!
-                }
-            }.sum() + hallway.mapIndexed { index, current ->
-                if (current != empty) rooms[current]!!.length + (roomOutputs[current]!! - index).absoluteValue * costs[current]!! else 0
-            }.sum()
-            if (cost + estimateCost >= minCost) return false
-
-            var solved = false
-            hallway.forEachIndexed { hallwayIndex, current ->
-                if (current != empty) {
-                    val roomContent = rooms[current]!!
-                    if (roomContent.all { it == empty || it == current }) {
-                        val roomOutput = roomOutputs[current]!!
-                        val path = if (hallwayIndex < roomOutput) hallway.substring(hallwayIndex + 1, roomOutput) else hallway.substring(roomOutput + 1, hallwayIndex)
-                        if (path.all { it == empty }) {
-                            val roomPosition = roomContent.indexOf(empty)
-                            if (solve(
-                                    level + 1,
-                                    cost + ((roomOutput - hallwayIndex).absoluteValue + roomContent.length - roomPosition) * costs[current]!!,
-                                    rooms.mapValues { if (it.key == current) it.value.replaceFirst(empty, current) else it.value },
-                                    hallway.take(hallwayIndex) + empty + hallway.drop(hallwayIndex + 1)
-                                )
-                            ) {
-                                solved = true
-                                //log("$level $cost $hallway $rooms")
-                            }
-                        }
-                    }
-                }
-            }
-            rooms.forEach { (roomName, roomContent) ->
-                if (roomContent.any { it != empty && it != roomName }) {
-                    val roomPosition = roomContent.indexOfLast { it != empty }
-                    val roomOutput = roomOutputs[roomName]!!
-                    val start = hallway.lastIndexOfAny(types, roomOutput) + 1
-                    val end = hallway.indexOfAny(types, roomOutput).takeIf { it != -1 } ?: hallway.length
-                    for (hallwayIndex in start until end) {
-                        if (hallwayIndex !in roomOutputs.values) {
-                            val current = roomContent[roomPosition]
-                            if (solve(
-                                    level + 1,
-                                    cost + ((roomOutput - hallwayIndex).absoluteValue + roomContent.length - roomPosition) * costs[current]!!,
-                                    rooms.mapValues { if (it.key == roomName) roomContent.replaceRange(roomPosition..roomPosition, empty.toString()) else it.value },
-                                    hallway.take(hallwayIndex) + current + hallway.drop(hallwayIndex + 1)
-                                )
-                            ) {
-                                solved = true
-                                //log("$level $cost $hallway $rooms")
-                            }
-                        }
-                    }
-                }
-            }
-            return solved
-        }
-
-        fun solve(rooms: Map<Char, String>) {
-            minCost = Int.MAX_VALUE
-            solve(0, 0, rooms, empty.toString().repeat(11))
-            minCost.log()
-        }
-
-        log("part1: ")
-        solve(mapOf('A' to "AB", 'B' to "DC", 'C' to "CB", 'D' to "AD"))
-        solve(mapOf('A' to "CA", 'B' to "CD", 'C' to "DA", 'D' to "BB"))
-        log("part2: ")
-        solve(mapOf('A' to "ADDB", 'B' to "DBCC", 'C' to "CABB", 'D' to "ACAD"))
-        solve(mapOf('A' to "CDDA", 'B' to "CBCD", 'C' to "DABA", 'D' to "BCAB"))
-    }
+    fun day23() = Day23.solve()
 
     @Test
-    fun day24() = test(1, 2) { lines ->
-        log("part1: ")
-        log("part2: ")
-    }
+    fun day24() = test(1, 2) { Day24.solve(it) }
 
     @Test
-    fun day25() = test(1, 2) { lines ->
-        log("part 1: ")
-        log("part 2: ")
-    }
+    fun day25() = test(1, 2) { Day25.solve(it) }
 }
