@@ -681,7 +681,7 @@ class AOC2021 : BaseTest("AOC2021") {
     fun day23() = Day23.solve()
 
     @Test
-    fun day24() = test(1, 2) { Day24.solve(it) }
+    fun day24() = test(1) { Day24.solve(it) }
 
     @Test
     fun day25() = test(1, 2) { Day25.solve(it) }
