@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package aoc2021
 
 import log
@@ -24,9 +26,9 @@ object Day24 {
         test("81914111161714").log() // 0
     }
 
-    fun test(input: String) = test(input.map { it.toString().toInt() }.toIntArray())
+    private fun test(input: String) = test(input.map { it.toString().toInt() }.toIntArray())
 
-    fun test(input: IntArray): Int {
+    private fun test(input: IntArray): Int {
         var z = 0
         input.forEachIndexed { index, w ->
             z = step(z, w, index)
@@ -34,7 +36,7 @@ object Day24 {
         return z
     }
 
-    fun step(z: Int, w: Int, index: Int) = when (index) {
+    private fun step(z: Int, w: Int, index: Int) = when (index) {
         0 -> step1(z, w, 10, 5) // 26^1 w0+5
         1 -> step1(z, w, 13, 9) // 26^2 (w0+5)*26+w1+9
         2 -> step1(z, w, 12, 4) // 26^3 ((w0+5)*26+w1+9)*26+w2+4
@@ -55,11 +57,11 @@ object Day24 {
     // normally
     // if (z % 26 + dx != w) z * 26 + (w + dy) else z
     // but dx > 10
-    fun step1(z: Int, w: Int, dx: Int, dy: Int) = z * 26 + w + dy
+    private fun step1(z: Int, w: Int, dx: Int, dy: Int) = z * 26 + w + dy
 
-    fun step2(z: Int, w: Int, dx: Int, dy: Int) = if (z % 26 + dx != w) (z / 26) * 26 + w + dy else z / 26
+    private fun step2(z: Int, w: Int, dx: Int, dy: Int) = if (z % 26 + dx != w) (z / 26) * 26 + w + dy else z / 26
 
-    fun test(lines: List<String>, input: String): Int {
+    private fun test(lines: List<String>, input: String): Int {
         val program = listOf("w", "x", "y", "z").map { it to 0 }.toMap().toMutableMap()
         var index = 0
         lines.map { it.split(" ") }.forEach {
@@ -83,7 +85,7 @@ object Day24 {
 
     // useless but fun
 
-    fun Instruction.eval(input: String): Int = when (this) {
+    private fun Instruction.eval(input: String): Int = when (this) {
         is Instruction.Value -> value
         is Instruction.Inp -> input[index].toString().toInt()
         is Instruction.Add -> value + values.sumOf { it.eval(input) }
@@ -93,7 +95,7 @@ object Day24 {
         is Instruction.Eql -> if (a.eval(input) == b.eval(input)) 1 else 0
     }
 
-    fun reduce(lines: List<String>): Instruction {
+    private fun reduce(lines: List<String>): Instruction {
         val program = listOf("w", "x", "y", "z").map { it to Instruction.Value(0) }.toMap<String, Instruction>().toMutableMap()
         var index = 0
         lines.map { it.split(" ") }.forEach {
@@ -165,8 +167,8 @@ object Day24 {
         else -> Instruction.Mul(a, b)
     }
 
-    private fun div(a: Instruction, b: Instruction.Value) = when {
-        b.value == 1 -> a
+    private fun div(a: Instruction, b: Instruction.Value) = when (b.value) {
+        1 -> a
         else -> Instruction.Div(a, b)
     }
 
