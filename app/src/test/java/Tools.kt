@@ -42,7 +42,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     operator fun get(point: Point) = get(point.x, point.y)
 
     fun neighbors4(point: Point) =
-        listOfNotNull(
+        listOf(
             Point(point.x + 1, point.y),
             Point(point.x - 1, point.y),
             Point(point.x, point.y + 1),
@@ -50,7 +50,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         ).filter { isValid(it) }
 
     fun neighbors8(point: Point) =
-        neighbors4(point) + listOfNotNull(
+        neighbors4(point) + listOf(
             Point(point.x + 1, point.y + 1),
             Point(point.x - 1, point.y + 1),
             Point(point.x + 1, point.y - 1),
