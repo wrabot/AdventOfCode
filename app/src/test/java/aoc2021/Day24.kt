@@ -2,10 +2,11 @@
 
 package aoc2021
 
+import forEachInput
 import log
 
 object Day24 {
-    fun solve(lines: List<String>) {
+    fun solve() = forEachInput(2021, 24, 1) { lines ->
         test(lines, "13579246899999").log()// 76981240
         test("13579246899999").log() // 76981240
 

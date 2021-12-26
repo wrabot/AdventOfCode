@@ -2,10 +2,11 @@ package aoc2021
 
 import Block
 import Point
+import forEachInput
 import log
 
 object Day22 {
-    fun solve(lines: List<String>) {
+    fun solve() = forEachInput(2021, 22, 1, 2) { lines ->
         val procedure = lines.map { line ->
             regex.matchEntire(line)?.groupValues.orEmpty().drop(1).let {
                 Step(

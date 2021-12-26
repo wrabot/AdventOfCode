@@ -14,5 +14,5 @@ open class BaseTest(private val root: String) {
         }
     }
 
-    private fun resource(name: String) = name.javaClass.getResource(name)!!.readText()
+    private fun resource(name: String) = javaClass.getResource(name)!!.readText()
 }

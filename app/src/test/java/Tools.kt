@@ -4,6 +4,13 @@ import java.math.BigInteger
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
+fun Any.forEachInput(year : Int, day: Int, vararg inputs: Int, block: (List<String>) -> Unit) {
+    inputs.forEach {
+        log("load year $year day $day input $it")
+        block(javaClass.classLoader!!.getResource("aoc$year/day$day/input$it.txt")!!.readText().lines())
+    }
+}
+
 data class Point(val x: Int, val y: Int, val z: Int = 0) {
     fun rotateX() = Point(x, -z, y)
     fun rotateY() = Point(z, y, -x)
@@ -81,7 +88,7 @@ fun List<Char>.log(width: Int) = apply {
 
 fun <T> T.log() = apply { log(this) }
 
-@OptIn(ExperimentalTime::class)
+@ExperimentalTime
 fun <T> logDuration(prefix: String = "", block: () -> T) = measureTimedValue(block).apply { log("$prefix$duration") }.value
 
 fun Iterable<BigInteger>.sum() = reduce { acc, bi -> acc + bi }

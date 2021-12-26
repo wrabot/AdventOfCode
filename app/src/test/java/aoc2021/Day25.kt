@@ -2,10 +2,11 @@ package aoc2021
 
 import Board
 import Point
+import forEachInput
 import log
 
 object Day25 {
-    fun solve(lines: List<String>) {
+    fun solve() = forEachInput(2021, 25, 1, 2) { lines ->
         val sea = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it) } })
         var step = 0
         do {

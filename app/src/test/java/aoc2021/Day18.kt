@@ -1,9 +1,10 @@
 package aoc2021
 
+import forEachInput
 import log
 
 object Day18 {
-    fun solve(lines: List<String>) {
+    fun solve() = forEachInput(2021, 18, 1, 2) { lines ->
         log("part 1: ")
         lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude().log()
 

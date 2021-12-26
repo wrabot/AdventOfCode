@@ -194,14 +194,14 @@ class AOC2015 : BaseTest("AOC2015") {
     @Test
     fun day8() = test(2) { lines ->
         val hexa = "\\\\x(..)".toRegex()
-        (lines.sumBy { it.length } - lines.map {
+        (lines.sumOf { it.length } - lines.map {
             it.substring(1, it.length - 1).replace("\\\"", "\"").split("\\\\").joinToString("\\") {
                 it.replace(hexa) {
                     it.groupValues[1].toInt(16).toChar().toString()
                 }
             }
-        }.sumBy { it.length }).log()
-        (lines.map { it.replace("\\", "\\\\").replace("\"", "\\\"") }.sumBy { it.length + 2 } - lines.sumBy { it.length }).log()
+        }.sumOf { it.length }).log()
+        (lines.map { it.replace("\\", "\\\\").replace("\"", "\\\"") }.sumOf { it.length + 2 } - lines.sumOf { it.length }).log()
     }
 
     @Test
