@@ -1,7 +1,6 @@
 package aoc2020
 
 import forEachInput
-import repeat
 import tools.log
 
 object Day25 {
@@ -16,8 +15,8 @@ object Day25 {
             value = next(value, 7)
             count++
             when (value) {
-                card -> repeat(count, 1) { next(it, door) }.log()
-                door -> repeat(count, 1) { next(it, card) }.log()
+                card -> (1..count).fold(1) { acc, _ -> next(acc, door) }.log()
+                door -> (1..count).fold(1) { acc, _ -> next(acc, card) }.log()
                 else -> continue
             }
             break

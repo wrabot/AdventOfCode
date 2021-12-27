@@ -1,7 +1,6 @@
 package aoc2020
 
 import forEachInput
-import repeat
 import tools.log
 
 object Day24 {
@@ -14,7 +13,7 @@ object Day24 {
         log("part 2: ")
         val directions = listOf("e", "w", "ne", "nw", "se", "sw")
         val neighbors = mutableMapOf<Tile, List<Tile>>()
-        repeat(100, blacks.toSet()) { tiles ->
+        (1..100).fold(blacks.toSet()) { tiles, _ ->
             tiles.flatMap { tile -> neighbors.getOrPut(tile) { directions.map { tile.goToTile(it) } } }
                 .groupingBy { it }.eachCount().filter { it.value == 2 || (it.value == 1 && it.key in tiles) }.keys
         }.size.log()

@@ -2,7 +2,6 @@ package aoc2020
 
 import forEachInput
 import tools.log
-import repeat
 
 object Day17 {
     fun solve() = forEachInput(2020, 17, 2) { lines ->
@@ -35,7 +34,7 @@ object Day17 {
 
     private fun cycle(init: Set<Position>) {
         val neighbors = mutableMapOf<Position, List<Position>>()
-        repeat(6, init) { cells ->
+        (1..6).fold(init) { cells, _ ->
             cells.flatMap { cell -> neighbors.getOrPut(cell) { cell.neighbors() } }.groupingBy { it }.eachCount()
                 .filter { it.value == 3 || (it.value == 2 && it.key in cells) }.keys
         }.count().log()
