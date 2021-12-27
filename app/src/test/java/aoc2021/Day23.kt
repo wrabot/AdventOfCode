@@ -1,6 +1,6 @@
 package aoc2021
 
-import log
+import tools.log
 import kotlin.math.absoluteValue
 
 object Day23 {

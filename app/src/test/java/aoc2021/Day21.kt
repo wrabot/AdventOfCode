@@ -1,6 +1,6 @@
 package aoc2021
 
-import log
+import tools.log
 
 object Day21 {
     fun solve() {

@@ -1,7 +1,7 @@
 package aoc2021
 
 import forEachInput
-import log
+import tools.log
 
 object Day14 {
     fun solve() = forEachInput(2021, 14, 1, 2) { lines ->

@@ -1,4 +1,6 @@
 import org.junit.Test
+import tools.log
+import tools.sum
 import java.math.BigInteger
 import java.util.*
 import kotlin.math.abs
@@ -445,7 +447,7 @@ class AOC2020 : BaseTest("AOC2020") {
 
     @Test
     fun day15() = test(2) { lines ->
-        lines.map { it.split(",").toInts() }.run {
+        lines.map { line -> line.split(",").map { it.toInt() } }.run {
             //part1
             forEach { it.memory(2020).log() }
             //part2
@@ -466,10 +468,12 @@ class AOC2020 : BaseTest("AOC2020") {
     @Test
     fun day16() = test(2) { lines ->
         val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->
-            name to rule.split(" or ").map { it.split("-").toInts() }.map { (first, last) -> first..last }
+            name to rule.split(" or ").map { range -> range.split("-").map { it.toInt() } }
+                .map { (first, last) -> first..last }
         }.toMap()
-        val myTicket = lines[2 + rules.size].split(",").toInts().log()
-        val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1).map { it.split(",").toInts() }
+        val myTicket = lines[2 + rules.size].split(",").map { it.toInt() }.log()
+        val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1)
+            .map { line -> line.split(",").map { it.toInt() } }
 
         // part 1
         val validRules = rules.values.flatten()

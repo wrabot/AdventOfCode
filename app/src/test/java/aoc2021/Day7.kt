@@ -1,7 +1,7 @@
 package aoc2021
 
 import forEachInput
-import log
+import tools.log
 import kotlin.math.absoluteValue
 
 object Day7 {

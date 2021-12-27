@@ -149,7 +149,7 @@ class AOC2015 : BaseTest("AOC2015") {
         lights.sum().log()
     }
 
-    private fun String.toIntPair() = split(",").toInts().zipWithNext().first()
+    private fun String.toIntPair() = split(",").map { it.toInt() }.zipWithNext().first()
 
     data class LightOrder(val type: Type, val tl: Pair<Int, Int>, val br: Pair<Int, Int>) {
         enum class Type { toggle, on, off }

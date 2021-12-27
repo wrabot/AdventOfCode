@@ -1,8 +1,8 @@
 package aoc2021
 
-import Point
+import tools.Point
 import forEachInput
-import log
+import tools.log
 import kotlin.math.absoluteValue
 
 object Day19 {
