@@ -22,16 +22,15 @@ object Day7 {
                 })
             }
         }
-        
+
         log("part 1: ")
         val a = circuit.operand("a").log()
         circuit.elements.forEach { it.value.cache = null }
         circuit.elements.getValue("b").cache = a
-        
+
         log("part 2: ")
         circuit.operand("a").log()
     }
-
 
     class Circuit {
         data class Element(val eval: () -> Int) {
@@ -42,5 +41,4 @@ object Day7 {
         val elements = mutableMapOf<String, Element>()
         fun operand(input: String) = input.toIntOrNull() ?: elements.getValue(input).value
     }
-
 }

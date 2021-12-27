@@ -2,7 +2,3 @@
 .gradle
 .idea
 build
-captures
-local.properties
-*.iml
-
