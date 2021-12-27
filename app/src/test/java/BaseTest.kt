@@ -1,5 +1,6 @@
 import org.junit.Rule
 import org.junit.rules.TestName
+import tools.log
 
 open class BaseTest(private val root: String) {
     @Rule

@@ -1,4 +1,5 @@
 import org.junit.Test
+import tools.log
 import java.security.MessageDigest
 import java.util.*
 
