@@ -1,14 +1,9 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day9 {
-    fun solve() = forEachInput(2020, 9, 1) { lines ->
-        val numbers = lines.map { it.toLong() }
-
-        log("part 1: ")
-        var invalid = 0L
+class Day9 : Day(2020, 9) {
+    override fun getPart1(): Any {
         find@ for (i in 25 until numbers.size) {
             for (first in 1..25) {
                 for (second in (first + 1)..25) {
@@ -18,9 +13,10 @@ object Day9 {
             invalid = numbers[i]
             break
         }
-        invalid.log()
+        return invalid
+    }
 
-        log("part 2: ")
+    override fun getPart2(): Any {
         sum@ for (i in numbers.indices) {
             var sum = 0L
             for (j in i until numbers.size) {
@@ -28,12 +24,14 @@ object Day9 {
                 if (sum > invalid) continue@sum
                 if (sum == invalid) {
                     val block = numbers.subList(i, j)
-                    val weakness = block.minOrNull()!! + block.maxOrNull()!!
-                    weakness.log()
-                    break@sum
+                    return block.minOrNull()!! + block.maxOrNull()!!
                 }
             }
             break
         }
+        error("not found")
     }
+
+    private val numbers = lines.map { it.toLong() }
+    private var invalid = 0L
 }

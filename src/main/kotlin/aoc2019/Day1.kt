@@ -1,13 +1,14 @@
 package aoc2019
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day1 {
-    fun solve() = forEachInput(2019, 1, 2) { lines ->
-        log("part 1: ")
-        lines.map { it.toInt() / 3 - 2 }.sum().log()
-        log("part 2: ")
-        lines.map { line -> generateSequence(line.toInt()) { (it / 3 - 2).takeIf { it > 0 } }.drop(1).sum() }.sum().log()
-    }
+class Day1 : Day(2019, 1) {
+    override fun getPart1() = lines.sumOf { it.toInt() / 3 - 2 }
+
+    override fun getPart2() =
+        lines.sumOf { line ->
+            generateSequence(line.toInt()) { mass ->
+                (mass / 3 - 2).takeIf { it > 0 }
+            }.drop(1).sum()
+        }
 }

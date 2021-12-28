@@ -1,30 +1,15 @@
-@file:Suppress("unused")
-
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day24 {
-    fun solve() = forEachInput(2021, 24, 1) { lines ->
-        test(lines, "13579246899999").log()// 76981240
-        test("13579246899999").log() // 76981240
 
-        /*
-        w0=w7+7
-        w1=w6
-        w2=w3+8
-        w4=w5+3
-        w9=w8+5
-        w11=w12+6
-        w13=w10+3
-        */
+class Day24 : Day(2021, 24) {
+    override fun getPart1() = "99919692496939".takeIf { test(it) == 0 } ?: ""
+    override fun getPart2() = "81914111161714".takeIf { test(it) == 0 } ?: ""
 
-        log("part 1: ")
-        test("99919692496939").log() // 0
-
-        log("part 2: ")
-        test("81914111161714").log() // 0
+    init {
+        if (test(lines, "13579246899999") != 76981240) error("invalid raw algo")
+        if (test("13579246899999") != 76981240) error("invalid compiled algo")
     }
 
     private fun test(input: String) = test(input.map { it.toString().toInt() }.toIntArray())
@@ -37,6 +22,15 @@ object Day24 {
         return z
     }
 
+    /*
+        w0=w7+7
+        w1=w6
+        w2=w3+8
+        w4=w5+3
+        w9=w8+5
+        w11=w12+6
+        w13=w10+3
+    */
     private fun step(z: Int, w: Int, index: Int) = when (index) {
         0 -> step1(z, w, 10, 5) // 26^1 w0+5
         1 -> step1(z, w, 13, 9) // 26^2 (w0+5)*26+w1+9
@@ -96,8 +90,10 @@ object Day24 {
         is Instruction.Eql -> if (a.eval(input) == b.eval(input)) 1 else 0
     }
 
+
     private fun reduce(lines: List<String>): Instruction {
-        val program = listOf("w", "x", "y", "z").map { it to Instruction.Value(0) }.toMap<String, Instruction>().toMutableMap()
+        val program =
+            listOf("w", "x", "y", "z").map { it to Instruction.Value(0) }.toMap<String, Instruction>().toMutableMap()
         var index = 0
         lines.map { it.split(" ") }.forEach {
             program[it[1]] = if (it[0] == "inp") {
@@ -118,19 +114,33 @@ object Day24 {
         return program["z"]!!
     }
 
-    fun List<Int>.toRange() = minOf { it }..maxOf { it }
-    fun div(a: Int, b: Int) = if (b == 0) Int.MAX_VALUE else a / b
+    companion object {
+        fun List<Int>.toRange() = minOf { it }..maxOf { it }
+        fun div(a: Int, b: Int) = if (b == 0) Int.MAX_VALUE else a / b
+    }
 
     sealed class Instruction(val range: IntRange) {
         data class Value(val value: Int) : Instruction(value..value)
         data class Inp(val index: Int) : Instruction(1..9)
-        data class Add(val values: List<Instruction>, val value: Int = 0) : Instruction((value + values.sumOf { it.range.first })..(value + values.sumOf { it.range.last }))
+        data class Add(val values: List<Instruction>, val value: Int = 0) :
+            Instruction((value + values.sumOf { it.range.first })..(value + values.sumOf { it.range.last }))
+
         data class Mul(val a: Instruction, val b: Instruction) : Instruction(
-            listOf(a.range.first * b.range.first, a.range.first * b.range.last, a.range.last * b.range.first, a.range.last * b.range.last).toRange()
+            listOf(
+                a.range.first * b.range.first,
+                a.range.first * b.range.last,
+                a.range.last * b.range.first,
+                a.range.last * b.range.last
+            ).toRange()
         )
 
         data class Div(val a: Instruction, val b: Instruction) : Instruction(
-            listOf(div(a.range.first, b.range.first), div(a.range.first, b.range.last), div(a.range.last, b.range.first), div(a.range.last, b.range.last)).toRange()
+            listOf(
+                div(a.range.first, b.range.first),
+                div(a.range.first, b.range.last),
+                div(a.range.last, b.range.first),
+                div(a.range.last, b.range.last)
+            ).toRange()
         )
 
         data class Mod(val a: Instruction, val b: Instruction) : Instruction(0..25) // trick b is always 26

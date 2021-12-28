@@ -1,7 +1,6 @@
 package tools
 
-import tools.log
-
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     val points = (0 until height).flatMap { y ->
         (0 until width).map { x ->
@@ -13,7 +12,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         if (cells.size != width * height) throw Error("invalid board")
     }
 
-    fun log() = log(cells.chunked(width) { it.joinToString("") }.joinToString("\n"))
+    override fun toString() = cells.chunked(width) { it.joinToString("") }.joinToString("\n")
 
     fun isValid(x: Int, y: Int) = x in 0 until width && y in 0 until height
     fun getOrNull(x: Int, y: Int) = if (isValid(x, y)) cells[y * width + x] else null

@@ -1,29 +1,30 @@
 package aoc2021
 
-import tools.log
+import tools.Day
 import kotlin.math.absoluteValue
 
-object Day23 {
-    @Suppress("SpellCheckingInspection")
-    fun solve() {
-        log("part1: ")
-        solve(mapOf('A' to "AB", 'B' to "DC", 'C' to "CB", 'D' to "AD"))
-        solve(mapOf('A' to "CA", 'B' to "CD", 'C' to "DA", 'D' to "BB"))
-        log("part2: ")
-        solve(mapOf('A' to "ADDB", 'B' to "DBCC", 'C' to "CABB", 'D' to "ACAD"))
-        solve(mapOf('A' to "CDDA", 'B' to "CBCD", 'C' to "DABA", 'D' to "BCAB"))
-    }
+class Day23(test: Int? = null) : Day(2021, 23, test) {
+    override fun getPart1() = solve(part1Rooms)
+    override fun getPart2() = solve(part2Rooms)
 
-    private const val empty = '.'
+    private val empty = '.'
     private val costs = mapOf('A' to 1, 'B' to 10, 'C' to 100, 'D' to 1000)
     private val roomOutputs = mapOf('A' to 2, 'B' to 4, 'C' to 6, 'D' to 8)
     private val types = roomOutputs.keys.toCharArray()
     private var minCost = Int.MAX_VALUE
 
-    private fun solve(rooms: Map<Char, String>) {
+    private val part1Rooms = types.associateWith {
+        "${lines[3][roomOutputs[it]!! + 1]}${lines[2][roomOutputs[it]!! + 1]}"
+    }
+    private val extra = mapOf('A' to "DD", 'B' to "BC", 'C' to "AB", 'D' to "CA")
+    private val part2Rooms = types.associateWith {
+        "${lines[3][roomOutputs[it]!! + 1]}${extra[it]}${lines[2][roomOutputs[it]!! + 1]}"
+    }
+
+    private fun solve(rooms: Map<Char, String>): Int {
         minCost = Int.MAX_VALUE
         solve(0, 0, rooms, empty.toString().repeat(11))
-        minCost.log()
+        return minCost
     }
 
     private fun solve(level: Int, cost: Int, rooms: Map<Char, String>, hallway: String): Boolean {
@@ -35,29 +36,27 @@ object Day23 {
             return true
         }
 
-        // not mandatory but improve
-        val estimateCost = rooms.map { (roomName, roomContent) ->
-            roomContent.filter { it != empty && it != roomName }.sumOf {
-                (roomContent.length * 2 + (roomOutputs[it]!! - roomOutputs[roomName]!!).absoluteValue) * costs[it]!!
-            }
-        }.sum() + hallway.mapIndexed { index, current ->
-            if (current != empty) rooms[current]!!.length + (roomOutputs[current]!! - index).absoluteValue * costs[current]!! else 0
-        }.sum()
-        if (cost + estimateCost >= minCost) return false
-
         var solved = false
         hallway.forEachIndexed { hallwayIndex, current ->
             if (current != empty) {
                 val roomContent = rooms[current]!!
                 if (roomContent.all { it == empty || it == current }) {
                     val roomOutput = roomOutputs[current]!!
-                    val path = if (hallwayIndex < roomOutput) hallway.substring(hallwayIndex + 1, roomOutput) else hallway.substring(roomOutput + 1, hallwayIndex)
+                    val path = if (hallwayIndex < roomOutput) hallway.substring(
+                        hallwayIndex + 1,
+                        roomOutput
+                    ) else hallway.substring(roomOutput + 1, hallwayIndex)
                     if (path.all { it == empty }) {
                         val roomPosition = roomContent.indexOf(empty)
                         if (solve(
                                 level + 1,
                                 cost + ((roomOutput - hallwayIndex).absoluteValue + roomContent.length - roomPosition) * costs[current]!!,
-                                rooms.mapValues { if (it.key == current) it.value.replaceFirst(empty, current) else it.value },
+                                rooms.mapValues {
+                                    if (it.key == current) it.value.replaceFirst(
+                                        empty,
+                                        current
+                                    ) else it.value
+                                },
                                 hallway.take(hallwayIndex) + empty + hallway.drop(hallwayIndex + 1)
                             )
                         ) {
@@ -80,7 +79,12 @@ object Day23 {
                         if (solve(
                                 level + 1,
                                 cost + ((roomOutput - hallwayIndex).absoluteValue + roomContent.length - roomPosition) * costs[current]!!,
-                                rooms.mapValues { if (it.key == roomName) roomContent.replaceRange(roomPosition..roomPosition, empty.toString()) else it.value },
+                                rooms.mapValues {
+                                    if (it.key == roomName) roomContent.replaceRange(
+                                        roomPosition..roomPosition,
+                                        empty.toString()
+                                    ) else it.value
+                                },
                                 hallway.take(hallwayIndex) + current + hallway.drop(hallwayIndex + 1)
                             )
                         ) {

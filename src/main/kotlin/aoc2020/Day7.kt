@@ -1,27 +1,20 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day7 {
-    fun solve() = forEachInput(2020, 7, 1) { lines ->
-        log("part 1: ")
-        val rules = lines.map { it.split(" bags contain ") }.map { (a, b) ->
-            a to if (b.startsWith("no")) emptyList() else b.split(", ").map {
-                it.split(" ").let { (n, u, v) -> n.toInt() to "$u $v" }
-            }
-        }.toMap()
+class Day7 : Day(2020, 7) {
+    //TODO remove mutable ?
+    override fun getPart1() = mutableSetOf<String>().apply {
+        rules.keys.forEach { if (rules.contains(it, "shiny gold")) add(it) }
+    }.count()
 
-        //part1
-        val bags = mutableSetOf<String>()
-        rules.keys.forEach {
-            if (rules.contains(it, "shiny gold")) bags.add(it)
+    override fun getPart2() = rules.count("shiny gold")
+
+    private val rules = lines.map { it.split(" bags contain ") }.map { (a, b) ->
+        a to if (b.startsWith("no")) emptyList() else b.split(", ").map {
+            it.split(" ").let { (n, u, v) -> n.toInt() to "$u $v" }
         }
-        bags.count().log()
-
-        log("part 2: ")
-        rules.count("shiny gold").log()
-    }
+    }.toMap()
 
     private fun Map<String, List<Pair<Int, String>>>.contains(container: String, name: String): Boolean =
         getValue(container).any { it.second == name || contains(it.second, name) }

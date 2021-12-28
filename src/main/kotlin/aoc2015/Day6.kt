@@ -1,17 +1,10 @@
 package aoc2015
 
-import forEachInput
-import tools.log
+import tools.Day
 import java.util.*
 
-object Day6 {
-    fun solve() = forEachInput(2015, 6, 1) { lines ->
-        val orders = lines.map { it.removePrefix("turn ").split(" ") }.map { (type, tl, _, br) ->
-            LightOrder(LightOrder.Type.valueOf(type), tl.toIntPair(), br.toIntPair())
-        }
-        val size = 1000
-
-        log("part 1: ")
+class Day6 : Day(2015, 6) {
+    override fun getPart1(): Any {
         val binaryLights = BitSet(size * size)
         orders.forEach {
             for (i in it.tl.first..it.br.first) {
@@ -25,10 +18,11 @@ object Day6 {
                 }
             }
         }
-        binaryLights.cardinality().log()
+        return binaryLights.cardinality()
+    }
 
-        log("part 2: ")
-        val lights = Array<Int>(size * size) { 0 }
+    override fun getPart2(): Any {
+        val lights = Array(size * size) { 0 }
         orders.forEach {
             for (i in it.tl.first..it.br.first) {
                 for (j in it.tl.second..it.br.second) {
@@ -41,11 +35,17 @@ object Day6 {
                 }
             }
         }
-        lights.sum().log()
+        return lights.sum()
     }
 
     data class LightOrder(val type: Type, val tl: Pair<Int, Int>, val br: Pair<Int, Int>) {
+        @Suppress("EnumEntryName")
         enum class Type { toggle, on, off }
+    }
+
+    private val size = 1000
+    private val orders = lines.map { it.removePrefix("turn ").split(" ") }.map { (type, tl, _, br) ->
+        LightOrder(LightOrder.Type.valueOf(type), tl.toIntPair(), br.toIntPair())
     }
 
     private fun String.toIntPair() = split(",").map { it.toInt() }.zipWithNext().first()

@@ -1,36 +1,34 @@
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day16 {
-    fun solve() = forEachInput(2021, 16, 3) { lines ->
-        lines.map {
-            val bits = it.map { digit ->
-                digit.toString().toInt(16).toString(2).padStart(4, '0')
-            }.joinToString("")
-            val packet = parsePacket(bits).packet
-            log("part 1: ")
-            packet.sumVersions().log()
-            log("part 2: ")
-            packet.evaluate().log()
-        }
+class Day16(test: Int? = null) : Day(2021, 16, test) {
+    override fun getPart1() = packets.map { it.sumVersions() }
+
+    override fun getPart2() = packets.map { it.evaluate() }
+
+    sealed class Packet {
+        data class Literal(val version: Int, val value: Long) : Packet()
+        data class Operator(val version: Int, val type: Int, val packets: List<Packet>) : Packet()
     }
 
-    open class Packet
-    data class Literal(val version: Int, val value: Long) : Packet()
-    data class Operator(val version: Int, val type: Int, val packets: List<Packet>) : Packet()
     data class ParseResult(val packet: Packet, val offset: Int)
 
+    private val packets = lines.map {
+        val bits = it.map { digit ->
+            digit.toString().toInt(16).toString(2).padStart(4, '0')
+        }.joinToString("")
+        parsePacket(bits).packet
+    }
+
     private fun Packet.sumVersions(): Int = when (this) {
-        is Literal -> version
-        is Operator -> version + packets.sumOf { it.sumVersions() }
-        else -> 0
+        is Packet.Literal -> version
+        is Packet.Operator -> version + packets.sumOf { it.sumVersions() }
     }
 
     private fun Packet.evaluate(): Long = when (this) {
-        is Literal -> value
-        is Operator -> when (type) {
+        is Packet.Literal -> value
+        is Packet.Operator -> when (type) {
             0 -> packets.sumOf { it.evaluate() }
             1 -> packets.fold(1L) { acc, value -> acc * value.evaluate() }
             2 -> packets.minOf { it.evaluate() }
@@ -40,7 +38,6 @@ object Day16 {
             7 -> if (packets[0].evaluate() == packets[1].evaluate()) 1 else 0
             else -> throw Error("invalid operator type")
         }
-        else -> throw Error("invalid packet type")
     }
 
     private fun parsePacket(input: String): ParseResult {
@@ -53,7 +50,7 @@ object Day16 {
                 val blocks = packetPayload.chunked(5)
                 val count = blocks.indexOfFirst { it.startsWith('0') } + 1
                 val value = blocks.take(count).joinToString("") { it.drop(1) }.toLong(2)
-                ParseResult(Literal(version, value), offset + count * 5)
+                ParseResult(Packet.Literal(version, value), offset + count * 5)
             }
             else -> {
                 val packets = mutableListOf<Packet>()
@@ -78,7 +75,7 @@ object Day16 {
                         offset += result.offset
                     }
                 }
-                ParseResult(Operator(version, type, packets), offset)
+                ParseResult(Packet.Operator(version, type, packets), offset)
             }
         }
     }

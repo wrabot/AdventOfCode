@@ -1,27 +1,17 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day16 {
-    fun solve() = forEachInput(2020, 16, 2) { lines ->
-        val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->
-            name to rule.split(" or ").map { range -> range.split("-").map { it.toInt() } }
-                .map { (first, last) -> first..last }
-        }.toMap()
-        val myTicket = lines[2 + rules.size].split(",").map { it.toInt() }.log()
-        val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1)
-            .map { line -> line.split(",").map { it.toInt() } }
+class Day16(test: Int? = null) : Day(2020, 16, test) {
+    override fun getPart1() = otherTickets.flatten().filter { value -> validRules.none { value in it } }.sum()
 
-        log("part 1: ")
-        val validRules = rules.values.flatten()
-        otherTickets.flatten().filter { value -> validRules.none { value in it } }.sum().log()
-
-        log("part 2: ")
+    override fun getPart2(): Any {
         val validTickets = otherTickets.filter { ticket -> ticket.none { value -> validRules.none { value in it } } }
         val othersValues = myTicket.indices.map { index -> validTickets.map { it[index] } }
         val validIndices = rules.map { rule ->
-            rule.key to othersValues.indices.filter { index -> othersValues[index].all { value -> rule.value.any { value in it } } }.toMutableList()
+            rule.key to othersValues.indices.filter { index ->
+                othersValues[index].all { value -> rule.value.any { value in it } }
+            }.toMutableList()
         }.toMap()
         while (true) {
             val singles = validIndices.filterValues { it.size == 1 }
@@ -29,6 +19,17 @@ object Day16 {
             val singlesValues = singles.values.flatten()
             validIndices.forEach { if (it.value.size > 1) it.value.removeAll(singlesValues) }
         }
-        validIndices.filter { it.key.startsWith("departure") }.log().map { myTicket[it.value.first()].toLong() }.log().reduce { acc, s -> acc * s }.log()
+        return validIndices.filter { it.key.startsWith("departure") }
+            .map { myTicket[it.value.first()].toLong() }
+            .reduce { acc, s -> acc * s }
     }
+
+    private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->
+        name to rule.split(" or ").map { range -> range.split("-").map { it.toInt() } }
+            .map { (first, last) -> first..last }
+    }.toMap()
+    private val myTicket = lines[2 + rules.size].split(",").map { it.toInt() }
+    private val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1)
+        .map { line -> line.split(",").map { it.toInt() } }
+    private val validRules = rules.values.flatten()
 }

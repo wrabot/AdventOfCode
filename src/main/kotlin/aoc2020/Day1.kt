@@ -1,20 +1,15 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day1 {
-    fun solve() = forEachInput(2020, 1, 1) { lines ->
-        val numbers = lines.map { it.toInt() }.sorted()
+class Day1 : Day(2020, 1) {
+    override fun getPart1() = numbers.product(2020)!!
 
-        log("part 1: ")
-        numbers.product(2020)!!.log()
+    override fun getPart2() = numbers.mapIndexedNotNull { index, number ->
+        numbers.drop(index + 1).product(2020 - number)?.let { it * number }
+    }.first()
 
-        log("part 2: ")
-        numbers.mapIndexedNotNull { index: Int, i: Int ->
-            numbers.drop(index + 1).product(2020 - i)?.let { it * i }
-        }.first().log()
-    }
+    private val numbers = lines.map { it.toInt() }.sorted()
 
     private fun List<Int>.product(sum: Int) = find { v -> findLast { it + v == sum } != null }?.let { it * (sum - it) }
 }

@@ -1,17 +1,12 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day15 {
-    fun solve() = forEachInput(2020, 15, 2) { lines ->
-        lines.map { line -> line.split(",").map { it.toInt() } }.run {
-            log("part 1: ")
-            forEach { it.memory(2020).log() }
-            log("part 2: ")
-            forEach { it.memory(30000000).log() }
-        }
-    }
+class Day15(test: Int? = null) : Day(2020, 15, test) {
+    override fun getPart1() = numbers.map { it.memory(2020) }
+    override fun getPart2() = numbers.map { it.memory(30000000) }
+
+    private val numbers = lines.map { line -> line.split(",").map { it.toInt() } }
 
     private fun List<Int>.memory(turns: Int): Int {
         val numbers = IntArray(turns) { 0 }

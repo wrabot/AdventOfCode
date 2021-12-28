@@ -1,44 +1,42 @@
 package aoc2015
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day7 {
-    fun solve() = forEachInput(2015, 7, 1) { lines ->
-        val circuit = Circuit()
+class Day7 : Day(2015, 7) {
+    override fun getPart1() = operand("a")
+
+    override fun getPart2(): Any {
+        val a = operand("a")
+        elements.forEach { it.value.cache = null }
+        elements.getValue("b").cache = a
+        return operand("a")
+    }
+
+    data class Element(val eval: () -> Int) {
+        var cache: Int? = null
+        val value get() = cache ?: eval().apply { cache = this and 0xFFFF }
+    }
+
+    private val elements = mutableMapOf<String, Element>()
+
+    private fun operand(input: String) = input.toIntOrNull() ?: elements.getValue(input).value
+
+    init {
         lines.map { it.split(" -> ") }.forEach { (input, output) ->
-            circuit.elements[output] = input.split(" ").let { operation ->
-                Circuit.Element(when (operation.size) {
-                    1 -> { -> circuit.operand(operation[0]) } // 123
-                    2 -> { -> circuit.operand(operation[1]).inv() } // not a -> b
+            elements[output] = input.split(" ").let { operation ->
+                Element(when (operation.size) {
+                    1 -> { -> operand(operation[0]) } // 123
+                    2 -> { -> operand(operation[1]).inv() } // not a -> b
                     3 -> when (operation[1]) {
-                        "AND" -> { -> (circuit.operand(operation[0]) and circuit.operand(operation[2])) }
-                        "OR" -> { -> (circuit.operand(operation[0]) or circuit.operand(operation[2])) }
-                        "LSHIFT" -> { -> (circuit.operand(operation[0]) shl circuit.operand(operation[2])) }
-                        "RSHIFT" -> { -> (circuit.operand(operation[0]) shr circuit.operand(operation[2])) }
+                        "AND" -> { -> (operand(operation[0]) and operand(operation[2])) }
+                        "OR" -> { -> (operand(operation[0]) or operand(operation[2])) }
+                        "LSHIFT" -> { -> (operand(operation[0]) shl operand(operation[2])) }
+                        "RSHIFT" -> { -> (operand(operation[0]) shr operand(operation[2])) }
                         else -> error("invalid operation")
                     }
                     else -> error("invalid size")
                 })
             }
         }
-
-        log("part 1: ")
-        val a = circuit.operand("a").log()
-        circuit.elements.forEach { it.value.cache = null }
-        circuit.elements.getValue("b").cache = a
-
-        log("part 2: ")
-        circuit.operand("a").log()
-    }
-
-    class Circuit {
-        data class Element(val eval: () -> Int) {
-            var cache: Int? = null
-            val value get() = cache ?: eval().apply { cache = this and 0xFFFF }
-        }
-
-        val elements = mutableMapOf<String, Element>()
-        fun operand(input: String) = input.toIntOrNull() ?: elements.getValue(input).value
     }
 }

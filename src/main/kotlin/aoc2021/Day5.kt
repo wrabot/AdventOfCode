@@ -1,24 +1,25 @@
 package aoc2021
 
+import tools.Day
 import tools.Point
-import forEachInput
-import tools.log
 
-object Day5 {
-    fun solve() = forEachInput(2021, 5, 1, 2) { lines ->
-        val segments = lines.map { line ->
-            val (start, end) = line.split(" -> ").map { point ->
-                val (x, y) = point.split(",").map { it.toInt() }
-                Point(x, y)
-            }
-            start to end
+class Day5(test: Int? = null) : Day(2021, 5, test) {
+    override fun getPart1() = part1
+    override fun getPart2() = part2
+
+    private val segments = lines.map { line ->
+        val (start, end) = line.split(" -> ").map { point ->
+            val (x, y) = point.split(",").map { it.toInt() }
+            Point(x, y)
         }
+        start to end
+    }
 
+    private val part1: Int
+    private val part2: Int
+
+    init {
         val board = mutableMapOf<Point, Int>()
-        fun MutableMap<Point, Int>.add(point: Point) = put(point, getOrDefault(point, 0) + 1)
-        fun range(start: Int, end: Int) = if (start < end) start..end else end..start
-
-        log("part 1: ")
         segments.forEach { segment ->
             if (segment.first.x == segment.second.x) {
                 range(segment.first.y, segment.second.y).forEach { board.add(Point(segment.first.x, it)) }
@@ -26,9 +27,7 @@ object Day5 {
                 range(segment.first.x, segment.second.x).forEach { board.add(Point(it, segment.first.y)) }
             }
         }
-        board.count { it.value > 1 }.log()
-
-        log("part 2: ")
+        part1 = board.count { it.value > 1 }
         segments.forEach { segment ->
             val width = segment.second.x - segment.first.x
             val height = segment.second.y - segment.first.y
@@ -44,6 +43,10 @@ object Day5 {
                 }
             }
         }
-        board.count { it.value > 1 }.log()
+        part2 = board.count { it.value > 1 }
     }
+
+    private fun MutableMap<Point, Int>.add(point: Point) = put(point, getOrDefault(point, 0) + 1)
+
+    private fun range(start: Int, end: Int) = if (start < end) start..end else end..start
 }

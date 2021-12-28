@@ -1,19 +1,11 @@
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day2 {
-    fun solve() = forEachInput(2021, 2, 1, 2) { lines ->
-        val orders = lines.map {
-            val (action, value) = it.split(" ")
-            action to value.toInt()
-        }
-
+class Day2(test: Int? = null) : Day(2021, 2, test) {
+    override fun getPart1(): Any {
         var position = 0
         var depth = 0
-
-        log("part 1: ")
         orders.forEach {
             when (it.first) {
                 "forward" -> position += it.second
@@ -21,11 +13,12 @@ object Day2 {
                 "down" -> depth += it.second
             }
         }
-        (position * depth).log()
+        return position * depth
+    }
 
-        log("part 2: ")
-        position = 0
-        depth = 0
+    override fun getPart2(): Any {
+        var position = 0
+        var depth = 0
         var aim = 0
         orders.forEach {
             when (it.first) {
@@ -37,6 +30,11 @@ object Day2 {
                 "down" -> aim += it.second
             }
         }
-        (position * depth).log()
+        return position * depth
+    }
+
+    private val orders = lines.map {
+        val (action, value) = it.split(" ")
+        action to value.toInt()
     }
 }

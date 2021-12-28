@@ -1,25 +1,10 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 import java.util.*
 
-object Day23 {
-    fun solve() = forEachInput(2020, 23, 1) { lines ->
-        val cups = lines[1].map { it.toString().toInt() }
-
-        log("part 1: ")
-        day23part1(cups)
-
-        log("part 2: ")
-        day23part2(cups)
-    }
-
-    data class Cup(val value: Int) {
-        lateinit var next: Cup
-    }
-
-    private fun day23part1(firstCups: List<Int>) {
+class Day23 : Day(2020, 23) {
+    override fun getPart1(): Any {
         val cups = firstCups.toMutableList()
         repeat(100) {
             val triple = listOf(cups.removeAt(1), cups.removeAt(1), cups.removeAt(1))
@@ -31,10 +16,10 @@ object Day23 {
             cups.add(cups.removeFirst())
         }
         Collections.rotate(cups, -cups.indexOf(1))
-        cups.drop(1).joinToString("").log()
+        return cups.drop(1).joinToString("")
     }
 
-    private fun day23part2(firstCups: List<Int>) {
+    override fun getPart2(): Any {
         val cups = List(1000000) { Cup(if (it < firstCups.size) firstCups[it] else it + 1) }
         cups.forEachIndexed { index, cup -> cup.next = cups[(index + 1) % cups.size] }
         var current = cups.first()
@@ -48,13 +33,21 @@ object Day23 {
             do {
                 if (destinationValue == 1) destinationValue = cups.size else destinationValue--
             } while (destinationValue == first.value || destinationValue == second.value || destinationValue == third.value)
-            val destinationCup = if (destinationValue <= firstCups.size) cups.find { it.value == destinationValue }!! else cups[destinationValue - 1]
+            val destinationCup =
+                if (destinationValue <= firstCups.size) cups.find { it.value == destinationValue }!! else cups[destinationValue - 1]
 
             current.next = third.next // remove first to third
-            third.next = destinationCup.next.apply { destinationCup.next = first } // insert first to third after destination
+            third.next =
+                destinationCup.next.apply { destinationCup.next = first } // insert first to third after destination
             current = current.next // next
         }
 
-        cups.find { it.value == 1 }!!.run { next.value * next.next.value }.log()
+        return cups.find { it.value == 1 }!!.run { next.value * next.next.value }
     }
+
+    data class Cup(val value: Int) {
+        lateinit var next: Cup
+    }
+
+    private val firstCups = lines[1].map { it.toString().toInt() }
 }

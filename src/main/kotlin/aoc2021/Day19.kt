@@ -1,12 +1,17 @@
 package aoc2021
 
+import tools.Day
 import tools.Point
-import forEachInput
-import tools.log
 import kotlin.math.absoluteValue
 
-object Day19 {
-    fun solve() = forEachInput(2021, 19, 1, 2) { lines ->
+class Day19(test: Int? = null) : Day(2021, 19, test) {
+    override fun getPart1() = part1
+    override fun getPart2() = part2
+
+    private val part1: Any
+    private val part2: Any
+
+    init {
         val scanners = lines.fold(emptyList<List<Point>>()) { scanners, line ->
             when {
                 line.isEmpty() -> scanners
@@ -19,7 +24,6 @@ object Day19 {
 
         val rotateScanners: MutableList<List<List<Point>>> = scanners.drop(1).map { it.rotate() }.toMutableList()
 
-        log("part 1: ")
         val done = mutableListOf(Point(0, 0, 0) to scanners[0])
         val toTry = mutableListOf(scanners[0])
         while (toTry.isNotEmpty()) {
@@ -33,16 +37,16 @@ object Day19 {
                 toTry.add(result.third)
             }
         }
-        done.flatMap { it.second }.distinct().count().log()
 
-        log("part 2: ")
+        part1 = done.flatMap { it.second }.distinct().count()
         val positions = done.map { it.first }
-        positions.maxOf { a ->
+        part2 = positions.maxOf { a ->
             positions.maxOf {
                 (it.x - a.x).absoluteValue + (it.y - a.y).absoluteValue + (it.z - a.z).absoluteValue
             }
-        }.log()
+        }
     }
+
 
     // 48 but really 24
     private fun List<Point>.rotate() =
@@ -53,7 +57,11 @@ object Day19 {
             .distinct()
     //.apply { count().log() }
 
-    private fun findScanner(rotateScanners: MutableList<List<List<Point>>>, currentScanner: Set<Point>, start: Int): Triple<Int, Point, List<Point>>? {
+    private fun findScanner(
+        rotateScanners: MutableList<List<List<Point>>>,
+        currentScanner: Set<Point>,
+        start: Int
+    ): Triple<Int, Point, List<Point>>? {
         for (index in start until rotateScanners.size) {
             rotateScanners[index].forEach { beacons ->
                 currentScanner.drop(11).forEach { refBeacon ->

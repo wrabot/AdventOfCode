@@ -1,11 +1,9 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day25 {
-    fun solve() = forEachInput(2020, 25, 2) { lines ->
-        log("part 1: ")
+class Day25(test: Int? = null) : Day(2020, 25, test) {
+    override fun getPart1(): Any {
         val card = lines[0].toInt()
         val door = lines[1].toInt()
 
@@ -14,14 +12,15 @@ object Day25 {
         while (true) {
             value = next(value, 7)
             count++
-            when (value) {
-                card -> (1..count).fold(1) { acc, _ -> next(acc, door) }.log()
-                door -> (1..count).fold(1) { acc, _ -> next(acc, card) }.log()
+            return when (value) {
+                card -> (1..count).fold(1) { acc, _ -> next(acc, door) }
+                door -> (1..count).fold(1) { acc, _ -> next(acc, card) }
                 else -> continue
             }
-            break
         }
     }
+
+    override fun getPart2() = Unit
 
     private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()
 }

@@ -1,18 +1,10 @@
 package aoc2020
 
-import forEachInput
-import tools.log
-import kotlin.math.abs
+import tools.Day
+import kotlin.math.absoluteValue
 
-object Day12 {
-    fun solve() = forEachInput(2020, 12, 2) { lines ->
-        log("part 1: ")
-        part1(lines)
-        log("part 2: ")
-        part2(lines)
-    }
-
-    private fun part1(lines: List<String>) {
+class Day12(test: Int? = null) : Day(2020, 12, test) {
+    override fun getPart1(): Any {
         var x = 0
         var y = 0
         var dir = 0
@@ -34,10 +26,10 @@ object Day12 {
                 else -> error("Should not happen")
             }
         }
-        (abs(x) + abs(y)).log()
+        return x.absoluteValue + y.absoluteValue
     }
 
-    private fun part2(lines: List<String>) {
+    override fun getPart2(): Any {
         var x = 0
         var y = 0
         var wx = 10
@@ -63,7 +55,7 @@ object Day12 {
                 else -> error("Should not happen")
             }
         }
-        (abs(x) + abs(y)).log()
+        return x.absoluteValue + y.absoluteValue
     }
 
     private fun rotate(x: Int, y: Int, degree: Int) = when (degree) {

@@ -1,38 +1,22 @@
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day10 {
-    fun solve() = forEachInput(2021, 10, 1, 2) { lines ->
-        val simplifiedChunks = lines.map { line ->
-            var chunk = line
-            while (true) {
-                val length = chunk.length
-                chunk = chunk.replace("()", "")
-                    .replace("[]", "")
-                    .replace("{}", "")
-                    .replace("<>", "")
-                if (length == chunk.length) break
-            }
-            chunk.toList()
-        }
+class Day10(test: Int? = null) : Day(2021, 10, test) {
+    override fun getPart1() = simplifiedChunks.sumOf { chunk ->
+        when (chunk.find { it in listOf(')', ']', '}', '>') }) {
+            ')' -> 3
+            ']' -> 57
+            '}' -> 1197
+            '>' -> 25137
+            else -> 0  // not corrupted
+        }.toInt()
+    }
 
-        log("part 1: ")
-        simplifiedChunks.sumOf { chunk ->
-            when (chunk.find { it in listOf(')', ']', '}', '>') }) {
-                ')' -> 3
-                ']' -> 57
-                '}' -> 1197
-                '>' -> 25137
-                else -> 0  // not corrupted
-            }.toInt()
-        }.log()
-
-        log("part 2: ")
+    override fun getPart2(): Any {
         val scores = simplifiedChunks.mapNotNull { chunk ->
             runCatching {
-                chunk.reversed().fold(0) { acc, c ->
+                chunk.reversed().fold(0L) { acc, c ->
                     acc * 5 + when (c) {
                         '(' -> 1
                         '[' -> 2
@@ -43,6 +27,19 @@ object Day10 {
                 }
             }.getOrNull()
         }.sorted()
-        scores[scores.size / 2].log()
+        return scores[scores.size / 2]
+    }
+
+    private val simplifiedChunks = lines.map { line ->
+        var chunk = line
+        while (true) {
+            val length = chunk.length
+            chunk = chunk.replace("()", "")
+                .replace("[]", "")
+                .replace("{}", "")
+                .replace("<>", "")
+            if (length == chunk.length) break
+        }
+        chunk.toList()
     }
 }

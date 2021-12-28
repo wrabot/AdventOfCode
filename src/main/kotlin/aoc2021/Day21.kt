@@ -1,16 +1,8 @@
 package aoc2021
 
-import tools.log
+import tools.Day
 
-object Day21 {
-    fun solve() {
-        log("part 1: ")
-        part1()
-
-        log("part 2: ")
-        part2()
-    }
-
+class Day21(test: Int? = null) : Day(2021, 21, test) {
     data class Player(var position: Int, var score: Int = 0) {
         fun move(dice: Int) {
             position = (position + dice - 1) % 10 + 1
@@ -18,37 +10,36 @@ object Day21 {
         }
     }
 
-    private fun part1() {
-        //val player1 = Player(4)
-        //val player2 = Player(8)
-        val player1 = Player(10)
-        val player2 = Player(9)
-
+    override fun getPart1(): Any {
+        val player1 = Player(player1Init)
+        val player2 = Player(player2Init)
         var round = 1
+        var result = 0
         while (true) {
             player1.move(round * 9 - 3)
             if (player1.score >= 1000) {
-                (player2.score * round * 3).log()
+                result = player2.score * round * 3
                 break
             }
             round++
 
             player2.move(round * 9 - 3)
             if (player2.score >= 1000) {
-                (player1.score * round * 3).log()
+                result = player1.score * round * 3
                 break
             }
             round++
         }
+        return result
     }
 
     data class PlayerState(val position: Int, val score: Int = 0)
     data class GameState(val players: List<PlayerState>)
 
-    private fun part2() {
-        //var universes = mapOf(GameState(listOf(PlayerState(4), PlayerState(8))) to 1L)
-        var universes = mapOf(GameState(listOf(PlayerState(10), PlayerState(9))) to 1L)
-        val diceSums = (1..3).flatMap { dice1 -> (1..3).flatMap { dice2 -> (1..3).map { dice3 -> dice1 + dice2 + dice3 } } }
+    override fun getPart2(): Any {
+        var universes = mapOf(GameState(listOf(PlayerState(player1Init), PlayerState(player2Init))) to 1L)
+        val diceSums =
+            (1..3).flatMap { dice1 -> (1..3).flatMap { dice2 -> (1..3).map { dice3 -> dice1 + dice2 + dice3 } } }
         val playerWins = Array(2) { 0L }
         var currentPlayerIndex = 0
         while (universes.isNotEmpty()) {
@@ -72,6 +63,9 @@ object Day21 {
             universes = next
             currentPlayerIndex = (currentPlayerIndex + 1) % 2
         }
-        playerWins.maxOrNull().log()
+        return playerWins.maxOrNull()!!
     }
+
+    private val player1Init = lines[0].toInt()
+    private val player2Init = lines[1].toInt()
 }

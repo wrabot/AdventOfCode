@@ -1,25 +1,21 @@
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day13 {
-    fun solve() = forEachInput(2021, 13, 1, 2) { lines ->
-        val dots = lines.takeWhile { it != "" }.map { line -> line.split(",").map { it.toInt() } }
-        val folds = lines.takeLastWhile { it != "" }.map {
-            it.split("=").let { (a, b) -> a.removePrefix("fold along ") to b.toInt() }
-        }
+class Day13(test: Int? = null) : Day(2021, 13, test) {
+    override fun getPart1() = folds.take(1).foldDots(dots).count()
 
-        log("part 1: ")
-        folds.take(1).foldDots(dots).count().log()
-
-        log("part 2: ")
+    override fun getPart2(): Any {
         val code = folds.foldDots(dots)
         val width = code.maxOf { it[0] } + 1
         val height = code.maxOf { it[1] } + 1
-        List(width * height) {
-            if (listOf(it % width, it / width) in code) '#' else ' '
-        }.log(width)
+        return List(width * height) { if (listOf(it % width, it / width) in code) '#' else ' ' }
+            .chunked(width) { it.joinToString("") }.joinToString("\n")
+    }
+
+    private val dots = lines.takeWhile { it != "" }.map { line -> line.split(",").map { it.toInt() } }
+    private val folds = lines.takeLastWhile { it != "" }.map {
+        it.split("=").let { (a, b) -> a.removePrefix("fold along ") to b.toInt() }
     }
 
     private fun List<Pair<String, Int>>.foldDots(dots: List<List<Int>>) = fold(dots) { acc, f ->

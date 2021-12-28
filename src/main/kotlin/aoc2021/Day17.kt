@@ -1,14 +1,14 @@
 package aoc2021
 
-import tools.log
+import tools.Day
 
-object Day17 {
-    fun solve() {
-        //findBestMaxY(20..30, -10..-5).log()
-        log("part 1: " + findBestMaxY(102..157, -146..-90))
-        //countVelocities(20..30, -10..-5).log()
-        log("part 2: " + countVelocities(102..157, -146..-90))
-    }
+class Day17(test: Int? = null) : Day(2021, 17, test) {
+    override fun getPart1() = findBestMaxY(xTarget, yTarget)
+
+    override fun getPart2() = countVelocities(xTarget, yTarget)
+
+    val xTarget = lines[0].split("..").map { it.toInt() }.let { it.first()..it.last() }
+    val yTarget = lines[1].split("..").map { it.toInt() }.let { it.first()..it.last() }
 
     private fun maxY(vxInit: Int, vyInit: Int, xTarget: IntRange, yTarget: IntRange): Int? {
         var vx = vxInit

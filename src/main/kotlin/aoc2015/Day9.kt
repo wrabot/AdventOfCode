@@ -1,10 +1,16 @@
 package aoc2015
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day9 {
-    fun solve() = forEachInput(2015, 9, 2) { lines ->
+class Day9(test: Int? = null) : Day(2015, 9, test) {
+    override fun getPart1() = Unit
+
+    override fun getPart2() = Unit
+
+    private val distances = mutableMapOf<List<String>, Int>()
+    private val cities = mutableSetOf<String>()
+
+    init {
         lines.map { it.split(" to ", " = ") }.forEach { (a, b, d) ->
             cities.add(a)
             cities.add(b)
@@ -13,13 +19,5 @@ object Day9 {
                 distances[listOf(b, a)] = this
             }
         }
-
-        log("part 1: ")
-        distances.log()
-
-        log("part 2: ")
     }
-
-    private val distances = mutableMapOf<List<String>, Int>()
-    private val cities = mutableSetOf<String>()
 }

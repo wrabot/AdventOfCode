@@ -1,16 +1,10 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day17 {
-    fun solve() = forEachInput(2020, 17, 2) { lines ->
-        log("part 1: ")
-        cycle(lines.createCells(null))
-
-        log("part 2: ")
-        cycle(lines.createCells(0))
-    }
+class Day17(test: Int? = null) : Day(2020, 17, test) {
+    override fun getPart1() = cycle(lines.createCells(null))
+    override fun getPart2() = cycle(lines.createCells(0))
 
     private fun List<String>.createCells(w: Int?) = mapIndexed { y, s ->
         s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }
@@ -32,11 +26,11 @@ object Day17 {
         }
     }
 
-    private fun cycle(init: Set<Position>) {
+    private fun cycle(init: Set<Position>): Int {
         val neighbors = mutableMapOf<Position, List<Position>>()
-        (1..6).fold(init) { cells, _ ->
+        return (1..6).fold(init) { cells, _ ->
             cells.flatMap { cell -> neighbors.getOrPut(cell) { cell.neighbors() } }.groupingBy { it }.eachCount()
                 .filter { it.value == 3 || (it.value == 2 && it.key in cells) }.keys
-        }.count().log()
+        }.count()
     }
 }

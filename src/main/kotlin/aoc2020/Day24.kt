@@ -1,22 +1,20 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day24 {
-    fun solve() = forEachInput(2020, 24, 3) { lines ->
-        log("part 1: ")
-        val blacks = mutableSetOf<Tile>()
+class Day24(test: Int? = null) : Day(2020, 24, test) {
+    override fun getPart1(): Any {
         lines.forEach { Tile(0, 0).goToTile(it).run { if (!blacks.remove(this)) blacks.add(this) } }
-        blacks.size.log()
+        return blacks.size
+    }
 
-        log("part 2: ")
+    override fun getPart2(): Any {
         val directions = listOf("e", "w", "ne", "nw", "se", "sw")
         val neighbors = mutableMapOf<Tile, List<Tile>>()
-        (1..100).fold(blacks.toSet()) { tiles, _ ->
+        return (1..100).fold(blacks.toSet()) { tiles, _ ->
             tiles.flatMap { tile -> neighbors.getOrPut(tile) { directions.map { tile.goToTile(it) } } }
                 .groupingBy { it }.eachCount().filter { it.value == 2 || (it.value == 1 && it.key in tiles) }.keys
-        }.size.log()
+        }.size
     }
 
     data class Tile(val x: Int, val y: Int) {
@@ -36,4 +34,6 @@ object Day24 {
             return Tile(x, y)
         }
     }
+
+    private val blacks = mutableSetOf<Tile>()
 }

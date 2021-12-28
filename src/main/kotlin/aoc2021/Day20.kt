@@ -1,21 +1,24 @@
 package aoc2021
 
 import tools.Board
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day20 {
-    fun solve() = forEachInput(2021, 20, 1, 2) { lines ->
+class Day20(test: Int? = null) : Day(2021, 20, test) {
+    override fun getPart1() = part1
+    override fun getPart2() = part2
+
+    private val part1: Any
+    private val part2: Any
+
+    init {
         val algo = lines[0]
         var image = createImage(lines.drop(2), '.')
 
-        log("part 1: ")
         repeat(2) { image = image.enhance(algo) }
-        image.displayResult()
+        part1 = image.litPixelCount()
 
-        log("part 2: ")
         repeat(48) { image = image.enhance(algo) }
-        image.displayResult()
+        part2 = image.litPixelCount()
     }
 
     private fun createImage(rows: List<String>, outside: Char): Board<Char> {
@@ -24,7 +27,7 @@ object Day20 {
         return Board(width, rows.size + 2, separator + rows.flatMap { "$outside$it$outside".toList() } + separator)
     }
 
-    private fun Board<Char>.displayResult() = cells.count { it == '#' }.log()
+    private fun Board<Char>.litPixelCount() = cells.count { it == '#' }
 
     private fun Board<Char>.enhance(algo: String): Board<Char> {
         val outside = cells[0]

@@ -1,22 +1,13 @@
 package aoc2015
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day3 {
-    fun solve() = forEachInput(2015, 3, 1) { lines ->
-        log("part 1: ")
-        lines[0].day3part1()
-
-        log("part 2: ")
-        lines[0].day3part2()
-    }
-
-    private fun String.day3part1() {
+class Day3 : Day(2015, 3) {
+    override fun getPart1(): Any {
         var x = 0
         var y = 0
         val houses = mutableSetOf(Pair(x, y))
-        forEach {
+        lines[0].forEach {
             when (it) {
                 '<' -> x--
                 '>' -> x++
@@ -26,14 +17,14 @@ object Day3 {
             }
             houses.add(Pair(x, y))
         }
-        houses.count().log()
+        return houses.count()
     }
 
-    private fun String.day3part2() {
+    override fun getPart2(): Any {
         val x = mutableListOf(0, 0)
         val y = mutableListOf(0, 0)
         val houses = mutableSetOf(Pair(0, 0))
-        forEachIndexed { index, c ->
+        lines[0].forEachIndexed { index, c ->
             val i = index % 2
             when (c) {
                 '<' -> x[i]--
@@ -44,6 +35,6 @@ object Day3 {
             }
             houses.add(Pair(x[i], y[i]))
         }
-        houses.count().log()
+        return houses.count()
     }
 }

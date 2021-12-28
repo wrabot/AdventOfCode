@@ -1,38 +1,17 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 import kotlin.math.sqrt
 
-object Day20 {
-    fun solve() = forEachInput(2020, 20, 2) { lines ->
-        val chunks = lines.chunked(12)
-        val size = sqrt(chunks.size.toFloat()).toInt()
-        val blocks = chunks.flatMap { data ->
-            val id = data[0].split(" ", ":")[1].toLong()
-            data.drop(1).dropLast(1).allOrientations().map {
-                val flipD = it.flipD()
-                Block(id, it, it.first(), it.last(), flipD.first(), flipD.last())
-            }
-        }
-        val links = blocks.map { block ->
-            block to listOf(
-                blocks.find { it.id != block.id && it.bottom == block.top },
-                blocks.find { it.id != block.id && it.top == block.bottom },
-                blocks.find { it.id != block.id && it.right == block.left },
-                blocks.find { it.id != block.id && it.left == block.right }
-            )
-        }.toMap()
-
+class Day20(test: Int? = null) : Day(2020, 20, test) {
+    override fun getPart1(): Any {
         // check input: borders are unique !!!
         (links.count { it.value.countNotNull() == 2 } + links.count { it.value.countNotNull() == 3 } + links.count { it.value.countNotNull() == 4 } == blocks.size).log()
 
-        log("part 1: ")
-        val corners = links.filter { it.value.countNotNull() == 2 }
-        corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }.log()
+        return corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }
+    }
 
-        log("part 2: ")
-
+    override fun getPart2(): Any {
         // creates block image
         val blockImage = mutableListOf<Block>()
         blockImage.add(corners.filter { it.value[1] != null && it.value[3] != null }.keys.first())
@@ -68,19 +47,62 @@ object Day20 {
         image.allOrientations().forEach { i ->
             for (y in 0 until image.size - pattern.size) {
                 for (x in 0 until image.size - patternWidth) {
-                    if (pattern[0].match(i[y], x) && pattern[1].match(i[y + 1], x) && pattern[2].match(i[y + 2], x)) count++
+                    if (pattern[0].match(i[y], x) && pattern[1].match(i[y + 1], x) && pattern[2].match(
+                            i[y + 2],
+                            x
+                        )
+                    ) count++
                 }
             }
         }
         //count.log()
-        (imageWeight - count * patternWeight).log()
+
+        return imageWeight - count * patternWeight
     }
 
-    data class Block(val id: Long, val image: List<String>, val top: String, val bottom: String, val left: String, val right: String)
+    data class Block(
+        val id: Long,
+        val image: List<String>,
+        val top: String,
+        val bottom: String,
+        val left: String,
+        val right: String
+    )
+
+    private val chunks = lines.chunked(12)
+    private val size = sqrt(chunks.size.toFloat()).toInt()
+    private val blocks = chunks.flatMap { data ->
+        val id = data[0].split(" ", ":")[1].toLong()
+        data.drop(1).dropLast(1).allOrientations().map {
+            val flipD = it.flipD()
+            Block(id, it, it.first(), it.last(), flipD.first(), flipD.last())
+        }
+    }
+    private val links = blocks.map { block ->
+        block to listOf(
+            blocks.find { it.id != block.id && it.bottom == block.top },
+            blocks.find { it.id != block.id && it.top == block.bottom },
+            blocks.find { it.id != block.id && it.right == block.left },
+            blocks.find { it.id != block.id && it.left == block.right }
+        )
+    }.toMap()
+    private val corners = links.filter { it.value.countNotNull() == 2 }
 
     private fun List<Block?>.countNotNull() = count { it != null }
-    private fun List<String>.allOrientations() = listOf(this, flipD(), flipV(), flipD().flipV(), flipH(), flipD().flipH(), flipV().flipH(), flipD().flipV().flipH())
-    private fun String.match(s: String, start: Int) = zip(s.substring(start)).all { it.first == ' ' || it.first == it.second }
+    private fun List<String>.allOrientations() = listOf(
+        this,
+        flipD(),
+        flipV(),
+        flipD().flipV(),
+        flipH(),
+        flipD().flipH(),
+        flipV().flipH(),
+        flipD().flipV().flipH()
+    )
+
+    private fun String.match(s: String, start: Int) =
+        zip(s.substring(start)).all { it.first == ' ' || it.first == it.second }
+
     private fun List<String>.flipD() = indices.map { index -> joinToString("") { it[index].toString() } }
     private fun List<String>.flipH() = map { it.reversed() }
     private fun List<String>.flipV() = reversed()

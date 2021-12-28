@@ -1,18 +1,13 @@
 package aoc2019
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day2 {
-    fun solve() = forEachInput(2019, 2, 1) { lines ->
-        val code = lines.first().split(",").map { it.toInt() }
+class Day2 : Day(2019, 2) {
+    override fun getPart1() = code.execute(12, 2)
 
-        log("part 1: ")
-        code.execute(12, 2).log()
+    override fun getPart2() = (0..9999).first { code.execute(it / 100, it % 100) == 19690720 }
 
-        log("part 2: ")
-        (0..9999).find { code.execute(it / 100, it % 100) == 19690720 }.log()
-    }
+    private val code = lines.first().split(",").map { it.toInt() }
 
     private fun List<Int>.execute(noun: Int, verb: Int): Int {
         val code = toMutableList()

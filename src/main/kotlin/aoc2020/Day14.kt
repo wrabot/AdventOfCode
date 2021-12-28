@@ -1,17 +1,9 @@
 package aoc2020
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day14 {
-    fun solve() = forEachInput(2020, 14, 2) { lines ->
-        log("part 1: ")
-        part1(lines)
-        log("part 2: ")
-        part2(lines)
-    }
-
-    private fun part1(lines: List<String>) {
+class Day14(test: Int? = null) : Day(2020, 14, test) {
+    override fun getPart1() : Any {
         var maskOff = 0L
         var maskOn = 0L
         val mem = mutableMapOf<Long, Long>()
@@ -28,10 +20,10 @@ object Day14 {
                 }
             }
         }
-        mem.values.sum().log()
+        return mem.values.sum()
     }
 
-    private fun part2(lines: List<String>) {
+    override fun getPart2() : Any {
         var maskOff = 0L
         val maskOn = mutableListOf<Long>()
         val mem = mutableMapOf<Long, Long>()
@@ -54,6 +46,6 @@ object Day14 {
                 }
             }
         }
-        mem.values.sum().log()
+        return mem.values.sum()
     }
 }

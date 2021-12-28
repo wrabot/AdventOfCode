@@ -1,22 +1,19 @@
 package aoc2015
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day8 {
-    fun solve() = forEachInput(2015, 8, 2) { lines ->
-        val hexa = "\\\\x(..)".toRegex()
-
-        log("part 1: ")
-        (lines.sumOf { it.length } - lines.map {
-            it.substring(1, it.length - 1).replace("\\\"", "\"").split("\\\\").joinToString("\\") {
-                it.replace(hexa) {
-                    it.groupValues[1].toInt(16).toChar().toString()
-                }
+class Day8(test: Int? = null) : Day(2015, 8, test) {
+    override fun getPart1() = lines.sumOf { it.length } - lines.map { line ->
+        line.substring(1, line.length - 1)
+            .replace("\\\"", "\"")
+            .split("\\\\")
+            .joinToString("\\") { part ->
+                part.replace(regex) { it.groupValues[1].toInt(16).toChar().toString() }
             }
-        }.sumOf { it.length }).log()
+    }.sumOf { it.length }
 
-        log("part 2: ")
-        (lines.map { it.replace("\\", "\\\\").replace("\"", "\\\"") }.sumOf { it.length + 2 } - lines.sumOf { it.length }).log()
-    }
+    override fun getPart2() = lines.map { it.replace("\\", "\\\\").replace("\"", "\\\"") }
+        .sumOf { it.length + 2 } - lines.sumOf { it.length }
+
+    private val regex = "\\\\x(..)".toRegex()
 }

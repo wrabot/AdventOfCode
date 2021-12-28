@@ -1,28 +1,24 @@
 package aoc2021
 
 import tools.Board
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day15 {
-    fun solve() = forEachInput(2021, 15, 1, 2) { lines ->
-        log("part 1: ")
-        minRisk(Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it.toString().toInt()) } })).log()
+class Day15(test: Int? = null) : Day(2021, 15, test) {
+    override fun getPart1() =
+        minRisk(Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it.toString().toInt()) } }))
 
-        log("part 2: ")
-        minRisk(
-            Board(
-                lines[0].length * 5,
-                lines.size * 5,
-                (0..4).flatMap { row ->
-                    lines.flatMap { line ->
-                        (0..4).flatMap { column ->
-                            line.map { Cell((it.toString().toInt() + column + row - 1) % 9 + 1) }
-                        }
+    override fun getPart2() = minRisk(
+        Board(
+            lines[0].length * 5,
+            lines.size * 5,
+            (0..4).flatMap { row ->
+                lines.flatMap { line ->
+                    (0..4).flatMap { column ->
+                        line.map { Cell((it.toString().toInt() + column + row - 1) % 9 + 1) }
                     }
-                })
-        ).log()
-    }
+                }
+            })
+    )
 
     data class Cell(val risk: Int, var minRisk: Int = Int.MAX_VALUE) {
         override fun toString() = risk.toString()

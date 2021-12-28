@@ -1,19 +1,14 @@
 package aoc2021
 
-import forEachInput
-import tools.log
+import tools.Day
 
-object Day18 {
-    fun solve() = forEachInput(2021, 18, 1, 2) { lines ->
-        log("part 1: ")
-        lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude().log()
+class Day18(test: Int? = null) : Day(2021, 18, test) {
+    override fun getPart1() = lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude()
 
-        log("part 2: ")
-        lines.indices.maxOf { first ->
-            lines.indices.maxOf { second ->
-                if (first == second) 0 else (parseNumber(lines[first]).number + parseNumber(lines[second]).number).magnitude()
-            }
-        }.log()
+    override fun getPart2() = lines.indices.maxOf { first ->
+        lines.indices.maxOf { second ->
+            if (first == second) 0 else (parseNumber(lines[first]).number + parseNumber(lines[second]).number).magnitude()
+        }
     }
 
     data class ParseResult(val number: NumberPart, val offset: Int)
