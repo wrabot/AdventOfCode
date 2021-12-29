@@ -1,5 +1,6 @@
 package tools
 
+@Suppress("MemberVisibilityCanBePrivate")
 abstract class Day(year: Int, day: Int, input: String, detail: String) {
     constructor(year: Int, day: Int, test: Int? = null) : this(
         year,
