@@ -3,8 +3,8 @@ fun main() {
 }
 
 fun checkAll() {
-    aoc2015.all()
-    aoc2019.all()
+    aoc2015.checkAll()
+    aoc2019.checkAll()
     aoc2020.checkAll()
     aoc2021.checkAll()
 }

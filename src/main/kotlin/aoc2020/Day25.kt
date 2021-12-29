@@ -20,7 +20,7 @@ class Day25(test: Int? = null) : Day(2020, 25, test) {
         }
     }
 
-    override fun getPart2() = Unit
+    override fun getPart2() = "done!"
 
     private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()
 }
