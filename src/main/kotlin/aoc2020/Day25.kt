@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day25(test: Int? = null) : Day(2020, 25, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val card = lines[0].toInt()
         val door = lines[1].toInt()
 
@@ -20,7 +20,7 @@ class Day25(test: Int? = null) : Day(2020, 25, test) {
         }
     }
 
-    override fun getPart2() = "done!"
+    override fun solvePart2() = Unit
 
     private fun next(value: Int, subject: Int) = ((value.toLong() * subject) % 20201227).toInt()
 }

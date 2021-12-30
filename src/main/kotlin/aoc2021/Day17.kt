@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day17(test: Int? = null) : Day(2021, 17, test) {
-    override fun getPart1() = findBestMaxY(xTarget, yTarget)
+    override fun solvePart1() = findBestMaxY(xTarget, yTarget)
 
-    override fun getPart2() = countVelocities(xTarget, yTarget)
+    override fun solvePart2() = countVelocities(xTarget, yTarget)
 
     val xTarget = lines[0].split("..").map { it.toInt() }.let { it.first()..it.last() }
     val yTarget = lines[1].split("..").map { it.toInt() }.let { it.first()..it.last() }

@@ -5,7 +5,7 @@ import tools.Day
 import tools.Point
 
 class Day22(test: Int? = null) : Day(2021, 22, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val halfSize = 50
         val fullSize = halfSize * 2 + 1
         val reactor = Array(fullSize * fullSize * fullSize) { false }
@@ -22,7 +22,7 @@ class Day22(test: Int? = null) : Day(2021, 22, test) {
         return reactor.count { it }
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         var count = 0L
         val exclusions = mutableListOf<Block>()
         procedure.reversed().forEach { step ->

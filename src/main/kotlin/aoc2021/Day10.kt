@@ -3,7 +3,7 @@ package aoc2021
 import tools.Day
 
 class Day10(test: Int? = null) : Day(2021, 10, test) {
-    override fun getPart1() = simplifiedChunks.sumOf { chunk ->
+    override fun solvePart1() = simplifiedChunks.sumOf { chunk ->
         when (chunk.find { it in listOf(')', ']', '}', '>') }) {
             ')' -> 3
             ']' -> 57
@@ -13,7 +13,7 @@ class Day10(test: Int? = null) : Day(2021, 10, test) {
         }.toInt()
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val scores = simplifiedChunks.mapNotNull { chunk ->
             runCatching {
                 chunk.reversed().fold(0L) { acc, c ->

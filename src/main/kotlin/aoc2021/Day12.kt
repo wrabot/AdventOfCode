@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day12(test: Int? = null) : Day(2021, 12, test) {
-    override fun getPart1() = countPaths(links, listOf("start"), false)
+    override fun solvePart1() = countPaths(links, listOf("start"), false)
 
-    override fun getPart2() = countPaths(links, listOf("start"), true)
+    override fun solvePart2() = countPaths(links, listOf("start"), true)
 
     private val links = lines.flatMap { it.split("-").let { (a, b) -> listOf(a to b, b to a) } }
         .filter { it.second != "start" }

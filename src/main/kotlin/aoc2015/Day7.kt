@@ -3,9 +3,9 @@ package aoc2015
 import tools.Day
 
 class Day7 : Day(2015, 7) {
-    override fun getPart1() = operand("a")
+    override fun solvePart1() = operand("a")
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val a = operand("a")
         elements.forEach { it.value.cache = null }
         elements.getValue("b").cache = a

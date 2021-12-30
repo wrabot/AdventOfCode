@@ -4,7 +4,7 @@ import tools.Day
 import java.util.*
 
 class Day23 : Day(2020, 23) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val cups = firstCups.toMutableList()
         repeat(100) {
             val triple = listOf(cups.removeAt(1), cups.removeAt(1), cups.removeAt(1))
@@ -19,7 +19,7 @@ class Day23 : Day(2020, 23) {
         return cups.drop(1).joinToString("")
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val cups = List(1000000) { Cup(if (it < firstCups.size) firstCups[it] else it + 1) }
         cups.forEachIndexed { index, cup -> cup.next = cups[(index + 1) % cups.size] }
         var current = cups.first()

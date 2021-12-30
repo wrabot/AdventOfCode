@@ -4,8 +4,8 @@ import tools.Board
 import tools.Day
 
 class Day4(test: Int? = null) : Day(2021, 4, test) {
-    override fun getPart1() = firstWinningScore
-    override fun getPart2() = lastWinningScore
+    override fun solvePart1() = firstWinningScore
+    override fun solvePart2() = lastWinningScore
 
     data class Cell(val value: Int, var marked: Boolean = false)
 

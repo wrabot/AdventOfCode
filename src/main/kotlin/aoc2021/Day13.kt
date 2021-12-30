@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day13(test: Int? = null) : Day(2021, 13, test) {
-    override fun getPart1() = folds.take(1).foldDots(dots).count()
+    override fun solvePart1() = folds.take(1).foldDots(dots).count()
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val code = folds.foldDots(dots)
         val width = code.maxOf { it[0] } + 1
         val height = code.maxOf { it[1] } + 1

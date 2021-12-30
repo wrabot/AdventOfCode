@@ -5,7 +5,7 @@ import tools.Day
 import tools.Point
 
 class Day25(test: Int? = null) : Day(2021, 25, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val sea = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it) } })
         var step = 0
         do {
@@ -16,7 +16,7 @@ class Day25(test: Int? = null) : Day(2021, 25, test) {
         return step
     }
 
-    override fun getPart2() = "done!"
+    override fun solvePart2() = Unit
 
     data class Cell(var content: Char) {
         override fun toString() = content.toString()

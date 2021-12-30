@@ -3,7 +3,7 @@ package aoc2015
 import tools.Day
 
 class Day5 : Day(2015, 5) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val required = List(26) { ('a' + it).toString().repeat(2) }
         val forbidden = listOf("ab", "cd", "pq", "xy")
         return lines.count { line ->
@@ -13,7 +13,7 @@ class Day5 : Day(2015, 5) {
         }
     }
 
-    override fun getPart2() = lines.count { word ->
+    override fun solvePart2() = lines.count { word ->
         for (i in 0 until word.length - 1) {
             val sub = word.substring(i, i + 2)
             if (word.lastIndexOf(sub) >= i + 2) {

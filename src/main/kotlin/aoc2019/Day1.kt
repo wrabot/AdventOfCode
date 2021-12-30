@@ -3,9 +3,9 @@ package aoc2019
 import tools.Day
 
 class Day1 : Day(2019, 1) {
-    override fun getPart1() = lines.sumOf { it.toInt() / 3 - 2 }
+    override fun solvePart1() = lines.sumOf { it.toInt() / 3 - 2 }
 
-    override fun getPart2() =
+    override fun solvePart2() =
         lines.sumOf { line ->
             generateSequence(line.toInt()) { mass ->
                 (mass / 3 - 2).takeIf { it > 0 }

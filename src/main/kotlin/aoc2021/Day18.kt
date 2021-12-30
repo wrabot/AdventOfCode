@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day18(test: Int? = null) : Day(2021, 18, test) {
-    override fun getPart1() = lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude()
+    override fun solvePart1() = lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude()
 
-    override fun getPart2() = lines.indices.maxOf { first ->
+    override fun solvePart2() = lines.indices.maxOf { first ->
         lines.indices.maxOf { second ->
             if (first == second) 0 else (parseNumber(lines[first]).number + parseNumber(lines[second]).number).magnitude()
         }

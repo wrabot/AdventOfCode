@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day22(test: Int? = null) : Day(2020, 22, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val deck1 = deck1Init.toMutableList()
         val deck2 = deck2Init.toMutableList()
         while (deck1.isNotEmpty() && deck2.isNotEmpty()) {
@@ -20,7 +20,7 @@ class Day22(test: Int? = null) : Day(2020, 22, test) {
         return score(deck1, deck2).second
     }
 
-    override fun getPart2() = play(deck1Init.toMutableList(), deck2Init.toMutableList(), 1).second
+    override fun solvePart2() = play(deck1Init.toMutableList(), deck2Init.toMutableList(), 1).second
 
     private fun play(deck1: MutableList<Int>, deck2: MutableList<Int>, level: Int): Pair<Boolean, Int> {
         //log("$level $deck1 $deck2")

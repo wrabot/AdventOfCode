@@ -5,8 +5,8 @@ import tools.sum
 import java.math.BigInteger
 
 class Day18 : Day(2020, 18) {
-    override fun getPart1() = list.map { Expr(it, false).eval() }.sum()
-    override fun getPart2() = list.map { Expr(it, true).eval() }.sum()
+    override fun solvePart1() = list.map { Expr(it, false).eval() }.sum()
+    override fun solvePart2() = list.map { Expr(it, true).eval() }.sum()
 
     data class Expr(val text: String, val part2: Boolean) {
         fun eval(): BigInteger {

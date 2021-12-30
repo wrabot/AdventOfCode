@@ -3,12 +3,12 @@ package aoc2020
 import tools.Day
 
 class Day19 : Day(2020, 19) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val regex0 = rules.createRegex("0").toRegex()
         return messages.count { it.matches(regex0) }
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         // rule 8 and 11 only used by rule 0
         // 0: 8 11
         // 8: 42 | 8

@@ -68,7 +68,7 @@ fun checkAll() {
     Day22().check(537042, 1304385553084863)
     Day23(1).check(12521, 44169)
     Day23().check(13495, 53767)
-    Day24().solve()
-    Day25(1).check(58, "done!")
-    Day25().check(507, "done!")
+    Day24().check(99919692496939, 81914111161714)
+    Day25(1).checkPart1(58)
+    Day25().checkPart1(507)
 }

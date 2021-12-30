@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day8(test: Int? = null) : Day(2021, 8, test) {
-    override fun getPart1() = entries.sumOf { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }
+    override fun solvePart1() = entries.sumOf { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }
 
-    override fun getPart2() = entries.sumOf { entry ->
+    override fun solvePart2() = entries.sumOf { entry ->
         val digits = mutableMapOf<Int, List<Char>>()
         digits[1] = entry.first.first { it.size == 2 }
         digits[7] = entry.first.first { it.size == 3 }

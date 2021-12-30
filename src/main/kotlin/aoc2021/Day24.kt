@@ -4,8 +4,8 @@ import tools.Day
 
 
 class Day24 : Day(2021, 24) {
-    override fun getPart1() = "99919692496939".takeIf { test(it) == 0 } ?: ""
-    override fun getPart2() = "81914111161714".takeIf { test(it) == 0 } ?: ""
+    override fun solvePart1() = "99919692496939".takeIf { test(it) == 0 } ?: ""
+    override fun solvePart2() = "81914111161714".takeIf { test(it) == 0 } ?: ""
 
     init {
         if (test(lines, "13579246899999") != 76981240) error("invalid raw algo")

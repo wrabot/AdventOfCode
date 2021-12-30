@@ -3,9 +3,9 @@ package aoc2020
 import tools.Day
 
 class Day8 : Day(2020, 8) {
-    override fun getPart1() = code.run().second
+    override fun solvePart1() = code.run().second
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         for (fixIndex in code.indices) {
             val original = code[fixIndex].op
             val fixOp = when (original) {

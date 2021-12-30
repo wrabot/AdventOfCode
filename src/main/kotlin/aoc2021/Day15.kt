@@ -4,10 +4,10 @@ import tools.Board
 import tools.Day
 
 class Day15(test: Int? = null) : Day(2021, 15, test) {
-    override fun getPart1() =
+    override fun solvePart1() =
         minRisk(Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it.toString().toInt()) } }))
 
-    override fun getPart2() = minRisk(
+    override fun solvePart2() = minRisk(
         Board(
             lines[0].length * 5,
             lines.size * 5,

@@ -10,7 +10,7 @@ class Day21(test: Int? = null) : Day(2021, 21, test) {
         }
     }
 
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val player1 = Player(player1Init)
         val player2 = Player(player2Init)
         var round = 1
@@ -36,7 +36,7 @@ class Day21(test: Int? = null) : Day(2021, 21, test) {
     data class PlayerState(val position: Int, val score: Int = 0)
     data class GameState(val players: List<PlayerState>)
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         var universes = mapOf(GameState(listOf(PlayerState(player1Init), PlayerState(player2Init))) to 1L)
         val diceSums =
             (1..3).flatMap { dice1 -> (1..3).flatMap { dice2 -> (1..3).map { dice3 -> dice1 + dice2 + dice3 } } }

@@ -4,9 +4,9 @@ import tools.Board
 import tools.Day
 
 class Day9(test: Int? = null) : Day(2021, 9, test) {
-    override fun getPart1() = lowPoints.sumOf { board[it] + 1 }
+    override fun solvePart1() = lowPoints.sumOf { board[it] + 1 }
 
-    override fun getPart2() = lowPoints.map { lowPoint -> board.zone4(lowPoint) { board[it] != 9 }.count() }
+    override fun solvePart2() = lowPoints.map { lowPoint -> board.zone4(lowPoint) { board[it] != 9 }.count() }
         .sortedDescending().take(3).reduce(Int::times)
 
     private val board = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { it.toString().toInt() } })

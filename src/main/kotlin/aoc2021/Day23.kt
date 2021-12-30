@@ -4,8 +4,8 @@ import tools.Day
 import kotlin.math.absoluteValue
 
 class Day23(test: Int? = null) : Day(2021, 23, test) {
-    override fun getPart1() = solve(part1Rooms)
-    override fun getPart2() = solve(part2Rooms)
+    override fun solvePart1() = solve(part1Rooms)
+    override fun solvePart2() = solve(part2Rooms)
 
     private val empty = '.'
     private val costs = mapOf('A' to 1, 'B' to 10, 'C' to 100, 'D' to 1000)

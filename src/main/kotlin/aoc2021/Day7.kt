@@ -4,11 +4,11 @@ import tools.Day
 import kotlin.math.absoluteValue
 
 class Day7(test: Int? = null) : Day(2021, 7, test) {
-    override fun getPart1() = (min..max).minOf { target ->
+    override fun solvePart1() = (min..max).minOf { target ->
         positions.entries.sumOf { (it.key - target).absoluteValue * it.value }
     }
 
-    override fun getPart2() = (min..max).minOf { target ->
+    override fun solvePart2() = (min..max).minOf { target ->
         positions.entries.sumOf {
             val n = (it.key - target).absoluteValue
             n * (n + 1) / 2 * it.value

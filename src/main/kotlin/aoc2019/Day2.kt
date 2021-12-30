@@ -3,9 +3,9 @@ package aoc2019
 import tools.Day
 
 class Day2 : Day(2019, 2) {
-    override fun getPart1() = code.execute(12, 2)
+    override fun solvePart1() = code.execute(12, 2)
 
-    override fun getPart2() = (0..9999).first { code.execute(it / 100, it % 100) == 19690720 }
+    override fun solvePart2() = (0..9999).first { code.execute(it / 100, it % 100) == 19690720 }
 
     private val code = lines.first().split(",").map { it.toInt() }
 

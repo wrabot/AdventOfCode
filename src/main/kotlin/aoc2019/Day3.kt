@@ -4,9 +4,9 @@ import tools.Day
 import kotlin.math.absoluteValue
 
 class Day3(test: Int? = null) : Day(2019, 3, test) {
-    override fun getPart1() = intersections.minOf { it.first.absoluteValue + it.second.absoluteValue }
+    override fun solvePart1() = intersections.minOf { it.first.absoluteValue + it.second.absoluteValue }
 
-    override fun getPart2() = intersections.minOf { point -> wires.sumOf { it.indexOf(point) } }
+    override fun solvePart2() = intersections.minOf { point -> wires.sumOf { it.indexOf(point) } }
 
     private val wires = lines.map { wire ->
         wire.split(",").map { it.first() to it.drop(1).toInt() }.fold(listOf(0 to 0)) { acc, v ->

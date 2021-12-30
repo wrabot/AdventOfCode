@@ -4,14 +4,9 @@ import tools.Day
 import kotlin.math.sqrt
 
 class Day20(test: Int? = null) : Day(2020, 20, test) {
-    override fun getPart1(): Any {
-        // check input: borders are unique !!!
-        (links.count { it.value.countNotNull() == 2 } + links.count { it.value.countNotNull() == 3 } + links.count { it.value.countNotNull() == 4 } == blocks.size).log()
+    override fun solvePart1() = corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }
 
-        return corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }
-    }
-
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         // creates block image
         val blockImage = mutableListOf<Block>()
         blockImage.add(corners.filter { it.value[1] != null && it.value[3] != null }.keys.first())

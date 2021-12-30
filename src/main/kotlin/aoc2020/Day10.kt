@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day10(test: Int? = null) : Day(2020, 10, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val list = mutableListOf(links.first())
         while (list.last() != 0) {
             list.add(groups.getValue(list.last()).first())
@@ -12,7 +12,7 @@ class Day10(test: Int? = null) : Day(2020, 10, test) {
         return diff.count { it == 1 } * (diff.count { it == 3 } + 1)
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val counts = mutableMapOf(0 to 1L)
         adapters.reversed().forEach {
             counts[it] = groups.getValue(it).fold(0L) { acc, i -> acc + counts[i]!! }

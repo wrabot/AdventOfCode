@@ -3,12 +3,12 @@ package aoc2020
 import tools.Day
 
 class Day24(test: Int? = null) : Day(2020, 24, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         lines.forEach { Tile(0, 0).goToTile(it).run { if (!blacks.remove(this)) blacks.add(this) } }
         return blacks.size
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val directions = listOf("e", "w", "ne", "nw", "se", "sw")
         val neighbors = mutableMapOf<Tile, List<Tile>>()
         return (1..100).fold(blacks.toSet()) { tiles, _ ->

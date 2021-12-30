@@ -4,7 +4,7 @@ import tools.Day
 import kotlin.math.absoluteValue
 
 class Day12(test: Int? = null) : Day(2020, 12, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         var x = 0
         var y = 0
         var dir = 0
@@ -29,7 +29,7 @@ class Day12(test: Int? = null) : Day(2020, 12, test) {
         return x.absoluteValue + y.absoluteValue
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         var x = 0
         var y = 0
         var wx = 10

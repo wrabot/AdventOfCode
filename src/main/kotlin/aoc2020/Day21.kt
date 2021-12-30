@@ -3,8 +3,8 @@ package aoc2020
 import tools.Day
 
 class Day21(test: Int? = null) : Day(2020, 21, test) {
-    override fun getPart1() = foods.map { it.first.minus(foodWithAllergens).size }.sum()
-    override fun getPart2() = foodWithAllergens.joinToString(",")
+    override fun solvePart1() = foods.map { it.first.minus(foodWithAllergens).size }.sum()
+    override fun solvePart2() = foodWithAllergens.joinToString(",")
 
     private val foods = lines.map { it.removeSuffix(")").split(" (contains ") }.map { (ingredients, allergens) ->
         ingredients.split(" ") to allergens.split(", ")

@@ -3,9 +3,9 @@ package aoc2015
 import tools.Day
 
 class Day9(test: Int? = null) : Day(2015, 9, test) {
-    override fun getPart1() = Unit
+    override fun solvePart1() = Unit
 
-    override fun getPart2() = Unit
+    override fun solvePart2() = Unit
 
     private val distances = mutableMapOf<List<String>, Int>()
     private val cities = mutableSetOf<String>()

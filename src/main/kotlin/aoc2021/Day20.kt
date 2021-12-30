@@ -4,22 +4,19 @@ import tools.Board
 import tools.Day
 
 class Day20(test: Int? = null) : Day(2021, 20, test) {
-    override fun getPart1() = part1
-    override fun getPart2() = part2
-
-    private val part1: Any
-    private val part2: Any
-
-    init {
-        val algo = lines[0]
-        var image = createImage(lines.drop(2), '.')
-
+    override fun solvePart1(): Any {
         repeat(2) { image = image.enhance(algo) }
-        part1 = image.litPixelCount()
-
-        repeat(48) { image = image.enhance(algo) }
-        part2 = image.litPixelCount()
+        return image.litPixelCount()
     }
+
+    override fun solvePart2(): Any {
+        part1 // force part1
+        repeat(50 - 2) { image = image.enhance(algo) }
+        return image.litPixelCount()
+    }
+
+    private val algo = lines[0]
+    private var image = createImage(lines.drop(2), '.')
 
     private fun createImage(rows: List<String>, outside: Char): Board<Char> {
         val width = rows[0].length + 2

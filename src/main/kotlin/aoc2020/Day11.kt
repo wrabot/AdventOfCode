@@ -3,11 +3,11 @@ package aoc2020
 import tools.Day
 
 class Day11(test: Int? = null) : Day(2020, 11, test) {
-    override fun getPart1() = Seats(initialMap, width, height, 4) { seat, direction ->
+    override fun solvePart1() = Seats(initialMap, width, height, 4) { seat, direction ->
         get(seat.first + direction.first, seat.second + direction.second) == '#'
     }.update()
 
-    override fun getPart2() = Seats(initialMap, width, height, 5) { seat, direction ->
+    override fun solvePart2() = Seats(initialMap, width, height, 5) { seat, direction ->
         var x = seat.first
         var y = seat.second
         var c: Char?

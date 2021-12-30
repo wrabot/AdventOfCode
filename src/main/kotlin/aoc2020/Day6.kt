@@ -3,8 +3,8 @@ package aoc2020
 import tools.Day
 
 class Day6 : Day(2020, 6) {
-    override fun getPart1() = groups.sumOf { it.reduce { acc, s -> acc + s }.toSet().count() }
-    override fun getPart2() = groups.sumOf { g -> g.map { it.toSet() }.reduce { acc, s -> acc intersect s }.count() }
+    override fun solvePart1() = groups.sumOf { it.reduce { acc, s -> acc + s }.toSet().count() }
+    override fun solvePart2() = groups.sumOf { g -> g.map { it.toSet() }.reduce { acc, s -> acc intersect s }.count() }
 
     //TODO remove mutable ?
     private val groups = mutableListOf(mutableListOf<String>()).apply {

@@ -5,8 +5,8 @@ import java.math.BigInteger
 import java.security.MessageDigest
 
 class Day4 : Day(2015, 4) {
-    override fun getPart1() = find(5)
-    override fun getPart2() = find(6)
+    override fun solvePart1() = find(5)
+    override fun solvePart2() = find(6)
 
     private val md5 = MessageDigest.getInstance("MD5")
 

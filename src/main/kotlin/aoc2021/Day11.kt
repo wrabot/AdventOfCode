@@ -4,8 +4,20 @@ import tools.Board
 import tools.Day
 
 class Day11(test: Int? = null) : Day(2021, 11, test) {
-    override fun getPart1() = part1
-    override fun getPart2() = part2
+    override fun solvePart1() : Any {
+        repeat(100) { step() }
+        return flashes
+    }
+
+    override fun solvePart2() : Any {
+        part1 // force part1
+        var step = 100
+        while (board.cells.any { it.level != 0 }) {
+            step()
+            step++
+        }
+        return step
+    }
 
     data class Cell(var level: Int) {
         constructor(init: Char) : this(init.toString().toInt())
@@ -17,20 +29,6 @@ class Day11(test: Int? = null) : Day(2021, 11, test) {
     private val board = Board(lines[0].length, lines.size, lines.flatMap { it.map(::Cell) })
 
     private var flashes = 0
-    private val part1: Int
-    private val part2: Int
-
-    init {
-        repeat(100) { step() }
-        part1 = flashes
-
-        var step = 100
-        while (board.cells.any { it.level != 0 }) {
-            step()
-            step++
-        }
-        part2 = step
-    }
 
     private fun step() {
         board.cells.forEach { it.level++ }

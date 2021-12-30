@@ -3,7 +3,7 @@ package aoc2021
 import tools.Day
 
 class Day3(test: Int? = null) : Day(2021, 3, test) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val length = lines[0].length
         val threshold = lines.size / 2
         val gammaBits = (0 until length).map { position ->
@@ -13,7 +13,7 @@ class Day3(test: Int? = null) : Day(2021, 3, test) {
         return gammaBits.toInt(2) * epsilonBits.toInt(2)
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val oxygen = rating(lines, '0', '1')
         val co2 = rating(lines, '1', '0')
         return oxygen * co2

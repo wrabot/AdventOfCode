@@ -3,9 +3,9 @@ package aoc2020
 import tools.Day
 
 class Day5 : Day(2020, 5) {
-    override fun getPart1() = ids.maxOrNull()!!
+    override fun solvePart1() = ids.maxOrNull()!!
 
-    override fun getPart2() = ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1
+    override fun solvePart2() = ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1
 
     private val ids = lines.map {
         it.replace('F', '0')

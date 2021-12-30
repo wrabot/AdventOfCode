@@ -3,9 +3,9 @@ package aoc2021
 import tools.Day
 
 class Day16(test: Int? = null) : Day(2021, 16, test) {
-    override fun getPart1() = packets.map { it.sumVersions() }
+    override fun solvePart1() = packets.map { it.sumVersions() }
 
-    override fun getPart2() = packets.map { it.evaluate() }
+    override fun solvePart2() = packets.map { it.evaluate() }
 
     sealed class Packet {
         data class Literal(val version: Int, val value: Long) : Packet()

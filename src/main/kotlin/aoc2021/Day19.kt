@@ -5,26 +5,8 @@ import tools.Point
 import kotlin.math.absoluteValue
 
 class Day19(test: Int? = null) : Day(2021, 19, test) {
-    override fun getPart1() = part1
-    override fun getPart2() = part2
-
-    private val part1: Any
-    private val part2: Any
-
-    init {
-        val scanners = lines.fold(emptyList<List<Point>>()) { scanners, line ->
-            when {
-                line.isEmpty() -> scanners
-                line.startsWith("---") -> scanners.plusElement(mutableListOf())
-                else -> scanners.dropLast(1).plusElement(
-                    scanners.last() + line.split(",").let { (x, y, z) -> Point(x.toInt(), y.toInt(), z.toInt()) }
-                )
-            }
-        }
-
+    override fun solvePart1(): Any {
         val rotateScanners: MutableList<List<List<Point>>> = scanners.drop(1).map { it.rotate() }.toMutableList()
-
-        val done = mutableListOf(Point(0, 0, 0) to scanners[0])
         val toTry = mutableListOf(scanners[0])
         while (toTry.isNotEmpty()) {
             val current = toTry.removeAt(0).toSet()
@@ -37,16 +19,30 @@ class Day19(test: Int? = null) : Day(2021, 19, test) {
                 toTry.add(result.third)
             }
         }
+        return done.flatMap { it.second }.distinct().count()
+    }
 
-        part1 = done.flatMap { it.second }.distinct().count()
+    override fun solvePart2(): Any {
+        part1 // force part1
         val positions = done.map { it.first }
-        part2 = positions.maxOf { a ->
+        return positions.maxOf { a ->
             positions.maxOf {
                 (it.x - a.x).absoluteValue + (it.y - a.y).absoluteValue + (it.z - a.z).absoluteValue
             }
         }
     }
 
+    private val scanners = lines.fold(emptyList<List<Point>>()) { scanners, line ->
+        when {
+            line.isEmpty() -> scanners
+            line.startsWith("---") -> scanners.plusElement(mutableListOf())
+            else -> scanners.dropLast(1).plusElement(
+                scanners.last() + line.split(",").let { (x, y, z) -> Point(x.toInt(), y.toInt(), z.toInt()) }
+            )
+        }
+    }
+
+    private val done = mutableListOf(Point(0, 0, 0) to scanners[0])
 
     // 48 but really 24
     private fun List<Point>.rotate() =

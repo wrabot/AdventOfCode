@@ -3,9 +3,9 @@ package aoc2020
 import tools.Day
 
 class Day16(test: Int? = null) : Day(2020, 16, test) {
-    override fun getPart1() = otherTickets.flatten().filter { value -> validRules.none { value in it } }.sum()
+    override fun solvePart1() = otherTickets.flatten().filter { value -> validRules.none { value in it } }.sum()
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val validTickets = otherTickets.filter { ticket -> ticket.none { value -> validRules.none { value in it } } }
         val othersValues = myTicket.indices.map { index -> validTickets.map { it[index] } }
         val validIndices = rules.map { rule ->
@@ -19,9 +19,8 @@ class Day16(test: Int? = null) : Day(2020, 16, test) {
             val singlesValues = singles.values.flatten()
             validIndices.forEach { if (it.value.size > 1) it.value.removeAll(singlesValues) }
         }
-        val departures = validIndices.filter { it.key.startsWith("departure") }
-            .map { myTicket[it.value.first()].toLong() }
-        return if (departures.isEmpty()) 0 else departures.reduce { acc, s -> acc * s }
+        return validIndices.filter { it.key.startsWith("departure") }
+            .map { myTicket[it.value.first()].toLong() }.reduce { acc, s -> acc * s }
     }
 
     private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->

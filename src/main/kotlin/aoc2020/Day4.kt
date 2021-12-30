@@ -3,9 +3,9 @@ package aoc2020
 import tools.Day
 
 class Day4 : Day(2020, 4) {
-    override fun getPart1() = passports.count { (it.keys intersect mandatory.keys).size == 7 }
+    override fun solvePart1() = passports.count { (it.keys intersect mandatory.keys).size == 7 }
 
-    override fun getPart2() = passports.count { passport ->
+    override fun solvePart2() = passports.count { passport ->
         mandatory.all { it.value(passport[it.key].orEmpty()) }
     }
 

@@ -3,8 +3,8 @@ package aoc2020
 import tools.Day
 
 class Day17(test: Int? = null) : Day(2020, 17, test) {
-    override fun getPart1() = cycle(lines.createCells(null))
-    override fun getPart2() = cycle(lines.createCells(0))
+    override fun solvePart1() = cycle(lines.createCells(null))
+    override fun solvePart2() = cycle(lines.createCells(0))
 
     private fun List<String>.createCells(w: Int?) = mapIndexed { y, s ->
         s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }

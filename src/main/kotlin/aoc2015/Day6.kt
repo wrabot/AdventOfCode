@@ -4,7 +4,7 @@ import tools.Day
 import java.util.*
 
 class Day6 : Day(2015, 6) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         val binaryLights = BitSet(size * size)
         orders.forEach {
             for (i in it.tl.first..it.br.first) {
@@ -21,7 +21,7 @@ class Day6 : Day(2015, 6) {
         return binaryLights.cardinality()
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         val lights = Array(size * size) { 0 }
         orders.forEach {
             for (i in it.tl.first..it.br.first) {

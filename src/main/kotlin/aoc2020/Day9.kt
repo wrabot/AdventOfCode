@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day9 : Day(2020, 9) {
-    override fun getPart1(): Any {
+    override fun solvePart1(): Any {
         find@ for (i in 25 until numbers.size) {
             for (first in 1..25) {
                 for (second in (first + 1)..25) {
@@ -16,7 +16,7 @@ class Day9 : Day(2020, 9) {
         return invalid
     }
 
-    override fun getPart2(): Any {
+    override fun solvePart2(): Any {
         sum@ for (i in numbers.indices) {
             var sum = 0L
             for (j in i until numbers.size) {

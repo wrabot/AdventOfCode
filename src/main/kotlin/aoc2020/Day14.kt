@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day14(test: Int? = null) : Day(2020, 14, test) {
-    override fun getPart1() : Any {
+    override fun solvePart1() : Any {
         var maskOff = 0L
         var maskOn = 0L
         val mem = mutableMapOf<Long, Long>()
@@ -23,7 +23,7 @@ class Day14(test: Int? = null) : Day(2020, 14, test) {
         return mem.values.sum()
     }
 
-    override fun getPart2() : Any {
+    override fun solvePart2() : Any {
         var maskOff = 0L
         val maskOn = mutableListOf<Long>()
         val mem = mutableMapOf<Long, Long>()

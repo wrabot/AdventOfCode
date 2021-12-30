@@ -4,11 +4,11 @@ import tools.Day
 
 class Day7 : Day(2020, 7) {
     //TODO remove mutable ?
-    override fun getPart1() = mutableSetOf<String>().apply {
+    override fun solvePart1() = mutableSetOf<String>().apply {
         rules.keys.forEach { if (rules.contains(it, "shiny gold")) add(it) }
     }.count()
 
-    override fun getPart2() = rules.count("shiny gold")
+    override fun solvePart2() = rules.count("shiny gold")
 
     private val rules = lines.map { it.split(" bags contain ") }.map { (a, b) ->
         a to if (b.startsWith("no")) emptyList() else b.split(", ").map {
