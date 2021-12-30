@@ -1,12 +1,16 @@
 package tools
 
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
+
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class Day(year: Int, day: Int, input: String, detail: String) {
-    constructor(year: Int, day: Int, test: Int? = null) : this(
+abstract class Day(year: Int, day: Int, input: String, detail: String, private val measure: Boolean) {
+    constructor(year: Int, day: Int, test: Int? = null, measure: Boolean = false) : this(
         year,
         day,
         test?.let { "test$it.txt" } ?: "input.txt",
-        test?.let { " test $it" } ?: ""
+        test?.let { " test $it" } ?: "",
+        measure
     )
 
     val part1: Any by lazy {
@@ -25,11 +29,21 @@ abstract class Day(year: Int, day: Int, input: String, detail: String) {
     }
 
     fun checkPart1(expectedPart1: Any) {
-        if (part1.toString() != expectedPart1.toString()) error("$info invalid part1")
+        measure {
+            if (part1.toString() != expectedPart1.toString()) error("$info invalid part1")
+        }
     }
 
     fun checkPart2(expectedPart2: Any) {
-        if (part2.toString() != expectedPart2.toString()) error("$info invalid part2")
+        measure {
+            if (part2.toString() != expectedPart2.toString()) error("$info invalid part2")
+        }
+    }
+
+    @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+    @OptIn(ExperimentalTime::class)
+    private fun measure(block: () -> Unit) {
+        if (measure) measureTime(block).log() else block()
     }
 
     protected val lines = javaClass.classLoader!!.getResource("aoc$year/day$day/$input")!!.readText().lines()
