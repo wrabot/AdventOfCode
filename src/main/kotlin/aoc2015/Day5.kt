@@ -2,6 +2,7 @@ package aoc2015
 
 import tools.Day
 
+@Suppress("SpellCheckingInspection")
 class Day5 : Day(2015, 5) {
     override fun solvePart1(): Any {
         val required = List(26) { ('a' + it).toString().repeat(2) }

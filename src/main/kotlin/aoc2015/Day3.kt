@@ -1,40 +1,39 @@
 package aoc2015
 
 import tools.Day
+import tools.Point
 
 class Day3 : Day(2015, 3) {
     override fun solvePart1(): Any {
-        var x = 0
-        var y = 0
-        val houses = mutableSetOf(Pair(x, y))
+        val houses = mutableSetOf(start)
+        var current = start
         lines[0].forEach {
-            when (it) {
-                '<' -> x--
-                '>' -> x++
-                '^' -> y--
-                'v' -> y++
-                else -> error("invalid direction")
-            }
-            houses.add(Pair(x, y))
+            current = current.next(it)
+            houses.add(current)
         }
         return houses.count()
     }
 
     override fun solvePart2(): Any {
-        val x = mutableListOf(0, 0)
-        val y = mutableListOf(0, 0)
-        val houses = mutableSetOf(Pair(0, 0))
-        lines[0].forEachIndexed { index, c ->
-            val i = index % 2
-            when (c) {
-                '<' -> x[i]--
-                '>' -> x[i]++
-                '^' -> y[i]--
-                'v' -> y[i]++
-                else -> error("invalid direction")
-            }
-            houses.add(Pair(x[i], y[i]))
+        val houses = mutableSetOf(start)
+        var previous = start
+        var current = start
+        lines[0].forEach {
+            val next = previous.next(it)
+            previous = current
+            current = next
+            houses.add(current)
         }
         return houses.count()
+    }
+
+    private val start = Point(0, 0)
+
+    fun Point.next(direction: Char) = when (direction) {
+        '<' -> Point(x - 1, y)
+        '>' -> Point(x + 1, y)
+        '^' -> Point(x, y - 1)
+        'v' -> Point(x, y + 1)
+        else -> error("invalid direction")
     }
 }

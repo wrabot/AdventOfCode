@@ -2,40 +2,37 @@ package aoc2015
 
 import tools.Day
 
+@Suppress("SpellCheckingInspection")
 class Day7 : Day(2015, 7) {
-    override fun solvePart1() = operand("a")
+    override fun solvePart1() = eval("a")
 
     override fun solvePart2(): Any {
-        val a = operand("a")
-        elements.forEach { it.value.cache = null }
-        elements.getValue("b").cache = a
-        return operand("a")
+        val a = eval("a")
+        outputs.clear()
+        outputs["b"] = a
+        return eval("a")
     }
 
-    data class Element(val eval: () -> Int) {
-        var cache: Int? = null
-        val value get() = cache ?: eval().apply { cache = this and 0xFFFF }
+    private val circuit = lines.associate {
+        val (expression, output) = it.split(" -> ")
+        output to expression.split(" ")
     }
 
-    private val elements = mutableMapOf<String, Element>()
+    private val outputs = mutableMapOf<String, Int>()
 
-    private fun operand(input: String) = input.toIntOrNull() ?: elements.getValue(input).value
-
-    init {
-        lines.map { it.split(" -> ") }.forEach { (input, output) ->
-            elements[output] = input.split(" ").let { operation ->
-                Element(when (operation.size) {
-                    1 -> { -> operand(operation[0]) } // 123
-                    2 -> { -> operand(operation[1]).inv() } // not a -> b
-                    3 -> when (operation[1]) {
-                        "AND" -> { -> (operand(operation[0]) and operand(operation[2])) }
-                        "OR" -> { -> (operand(operation[0]) or operand(operation[2])) }
-                        "LSHIFT" -> { -> (operand(operation[0]) shl operand(operation[2])) }
-                        "RSHIFT" -> { -> (operand(operation[0]) shr operand(operation[2])) }
-                        else -> error("invalid operation")
-                    }
-                    else -> error("invalid size")
-                })
+    private fun eval(value: String): Int = value.toIntOrNull() ?: outputs.getOrPut(value) {
+        circuit[value]!!.let { expression ->
+            when (expression.size) {
+                1 -> eval(expression[0])
+                2 -> eval(expression[1]).inv() // not
+                3 -> when (expression[1]) {
+                    "AND" -> eval(expression[0]) and eval(expression[2])
+                    "OR" -> eval(expression[0]) or eval(expression[2])
+                    "LSHIFT" -> eval(expression[0]) shl expression[2].toInt()
+                    "RSHIFT" -> eval(expression[0]) shr expression[2].toInt()
+                    else -> error("invalid operation")
+                }
+                else -> error("invalid size")
             }
         }
     }
