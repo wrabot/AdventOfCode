@@ -4,7 +4,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class Day(year: Int, day: Int, input: String, detail: String, private val measure: Boolean) {
+abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, private val measure: Boolean) {
     constructor(year: Int, day: Int, test: Int? = null, measure: Boolean = false) : this(
         year,
         day,
@@ -46,7 +46,8 @@ abstract class Day(year: Int, day: Int, input: String, detail: String, private v
         if (measure) measureTime(block).log() else block()
     }
 
-    protected val lines = javaClass.classLoader!!.getResource("aoc$year/day$day/$input")!!.readText().lines()
+    protected val input = javaClass.classLoader!!.getResource("aoc$year/day$day/$inputFileName")!!.readText()
+    protected val lines = input.lines()
 
     protected fun log(message: Any?) = System.err.println(message)
     protected fun <T> T.log() = apply { log(this) }

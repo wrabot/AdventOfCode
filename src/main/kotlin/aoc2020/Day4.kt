@@ -9,17 +9,8 @@ class Day4 : Day(2020, 4) {
         mandatory.all { it.value(passport[it.key].orEmpty()) }
     }
 
-    //TODO remove mutable ?
-    private val passports = mutableListOf(mutableMapOf<String, String>()).apply {
-        lines.forEach { line ->
-            if (line.isBlank()) {
-                add(mutableMapOf())
-            } else {
-                line.split(" ").map { it.split(":") }.forEach { (key, value) ->
-                    last()[key] = value
-                }
-            }
-        }
+    private val passports = input.split("\n\n").fold(emptyList<Map<String, String>>()) { acc, text ->
+        acc + text.split('\n', ' ').associate { it.split(":").zipWithNext().first() }
     }
 
     private val mandatory = mapOf<String, (String) -> Boolean>(

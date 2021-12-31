@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day8 : Day(2020, 8) {
-    override fun solvePart1() = code.run().second
+    override fun solvePart1() = execute().run { acc }
 
     override fun solvePart2(): Any {
         for (fixIndex in code.indices) {
@@ -15,31 +15,32 @@ class Day8 : Day(2020, 8) {
             }
             if (fixOp != null) {
                 code[fixIndex].op = fixOp
-                val result = code.run()
-                if (result.first == code.size) return result.second
+                if (execute()) return acc
                 code[fixIndex].op = original
             }
         }
         error("not found")
     }
 
+    data class Ins(var op: String, val arg: Int, var used: Boolean = false)
 
     private val code = lines.map { it.split(" ") }.map { (op, arg) -> Ins(op, arg.toInt()) }
 
-    data class Ins(var op: String, val arg: Int, var used: Boolean = false)
+    var acc = 0
 
-    private fun List<Ins>.run(): Pair<Int, Int> {
-        forEach { it.used = false }
-        var acc = 0
+    private fun execute(): Boolean {
+        acc = 0
+        code.forEach { it.used = false }
         var index = 0
-        while (index < size && !this[index].used) {
-            this[index].used = true
-            when (this[index].op) {
-                "jmp" -> index += this[index].arg
-                "acc" -> acc += this[index++].arg
+        while (index < code.size) {
+            if (code[index].used) return false
+            code[index].used = true
+            when (code[index].op) {
+                "jmp" -> index += code[index].arg
+                "acc" -> acc += code[index++].arg
                 else -> index++
             }
         }
-        return index to acc
+        return true
     }
 }
