@@ -34,9 +34,9 @@ class Day20(test: Int? = null) : Day(2020, 20, test) {
         }
         //println(image.joinToString("\n"))
 
-        val imageWeight = image.map { line -> line.count { it == '#' } }.sum()
+        val imageWeight = image.sumOf { line -> line.count { it == '#' } }
         val pattern = listOf("                  #", "#    ##    ##    ###", " #  #  #  #  #  #")
-        val patternWeight = pattern.map { line -> line.count { it == '#' } }.sum()
+        val patternWeight = pattern.sumOf { line -> line.count { it == '#' } }
         val patternWidth = pattern.maxOf { it.length }
         var count = 0
         image.allOrientations().forEach { i ->
@@ -73,14 +73,14 @@ class Day20(test: Int? = null) : Day(2020, 20, test) {
             Block(id, it, it.first(), it.last(), flipD.first(), flipD.last())
         }
     }
-    private val links = blocks.map { block ->
-        block to listOf(
+    private val links = blocks.associateWith { block ->
+        listOf(
             blocks.find { it.id != block.id && it.bottom == block.top },
             blocks.find { it.id != block.id && it.top == block.bottom },
             blocks.find { it.id != block.id && it.right == block.left },
             blocks.find { it.id != block.id && it.left == block.right }
         )
-    }.toMap()
+    }
     private val corners = links.filter { it.value.countNotNull() == 2 }
 
     private fun List<Block?>.countNotNull() = count { it != null }

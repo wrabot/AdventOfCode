@@ -14,23 +14,14 @@ class Day21(test: Int? = null) : Day(2021, 21, test) {
         val player1 = Player(player1Init)
         val player2 = Player(player2Init)
         var round = 1
-        var result = 0
         while (true) {
             player1.move(round * 9 - 3)
-            if (player1.score >= 1000) {
-                result = player2.score * round * 3
-                break
-            }
+            if (player1.score >= 1000) return player2.score * round * 3
             round++
-
             player2.move(round * 9 - 3)
-            if (player2.score >= 1000) {
-                result = player1.score * round * 3
-                break
-            }
+            if (player2.score >= 1000) return player1.score * round * 3
             round++
         }
-        return result
     }
 
     data class PlayerState(val position: Int, val score: Int = 0)

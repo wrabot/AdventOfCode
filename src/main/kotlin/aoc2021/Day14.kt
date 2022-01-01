@@ -15,9 +15,9 @@ class Day14(test: Int? = null) : Day(2021, 14, test) {
     }
 
     private val template = lines[0]
-    private val rules = lines.drop(2).map {
+    private val rules = lines.drop(2).associate {
         it.split(" -> ").let { (pattern, insert) -> pattern.zipWithNext().first() to insert[0] }
-    }.toMap()
+    }
 
     private var generation = template.zipWithNext().groupingBy { it }.eachCount().mapValues { it.value.toLong() }
 

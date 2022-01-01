@@ -11,11 +11,11 @@ class Day4(test: Int? = null) : Day(2021, 4, test) {
 
     private val numbers = lines[0].split(",").map { it.toInt() }
 
-    private val boards = lines.drop(1).chunked(6).map { board ->
+    private val boards = lines.drop(1).chunked(6).associate { board ->
         val rows = board.drop(1).map { row -> row.chunked(3).map { Cell(it.trim().toInt()) } }
         val columns = (0 until 5).map { column -> rows.map { it[column] } }
         Board(5, 5, rows.flatten()) to (rows + columns)
-    }.toMap()
+    }
 
     private val firstWinningScore: Int
     private val lastWinningScore: Int

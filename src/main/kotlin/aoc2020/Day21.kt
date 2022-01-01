@@ -3,7 +3,7 @@ package aoc2020
 import tools.Day
 
 class Day21(test: Int? = null) : Day(2020, 21, test) {
-    override fun solvePart1() = foods.map { it.first.minus(foodWithAllergens).size }.sum()
+    override fun solvePart1() = foods.sumOf { it.first.minus(foodWithAllergens).size }
     override fun solvePart2() = foodWithAllergens.joinToString(",")
 
     private val foods = lines.map { it.removeSuffix(")").split(" (contains ") }.map { (ingredients, allergens) ->
@@ -11,10 +11,10 @@ class Day21(test: Int? = null) : Day(2020, 21, test) {
     }
     private val allergens = foods.flatMap { it.second }.distinct()
 
-    private val allergensMap = allergens.map { allergen ->
-        allergen to foods.filter { allergen in it.second }.map { it.first }
+    private val allergensMap = allergens.associateWith { allergen ->
+        foods.filter { allergen in it.second }.map { it.first }
             .reduce { acc, list -> (acc intersect list).toList() }.toMutableList()
-    }.toMap().apply {
+    }.apply {
         while (true) {
             var modified = false
             values.mapNotNull { it.singleOrNull() }.forEach { found ->

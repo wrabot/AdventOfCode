@@ -52,19 +52,21 @@ class Day24 : Day(2021, 24) {
     // normally
     // if (z % 26 + dx != w) z * 26 + (w + dy) else z
     // but dx > 10
+    @Suppress("UNUSED_PARAMETER")
     private fun step1(z: Int, w: Int, dx: Int, dy: Int) = z * 26 + w + dy
 
     private fun step2(z: Int, w: Int, dx: Int, dy: Int) = if (z % 26 + dx != w) (z / 26) * 26 + w + dy else z / 26
 
+    @Suppress("SameParameterValue")
     private fun test(lines: List<String>, input: String): Int {
-        val program = listOf("w", "x", "y", "z").map { it to 0 }.toMap().toMutableMap()
+        val program = listOf("w", "x", "y", "z").associateWith { 0 }.toMutableMap()
         var index = 0
         lines.map { it.split(" ") }.forEach {
             program[it[1]] = if (it[0] == "inp") {
                 input[index++].toString().toInt()
             } else {
                 val a = program[it[1]]!!
-                val b = program.getOrElse(it[2], { it[2].toInt() })
+                val b = program.getOrElse(it[2]) { it[2].toInt() }
                 when (it[0]) {
                     "add" -> a + b
                     "mul" -> a * b
@@ -80,6 +82,7 @@ class Day24 : Day(2021, 24) {
 
     // useless but fun
 
+    @Suppress("unused")
     private fun Instruction.eval(input: String): Int = when (this) {
         is Instruction.Value -> value
         is Instruction.Inp -> input[index].toString().toInt()
@@ -90,17 +93,18 @@ class Day24 : Day(2021, 24) {
         is Instruction.Eql -> if (a.eval(input) == b.eval(input)) 1 else 0
     }
 
-
+    @Suppress("unused")
     private fun reduce(lines: List<String>): Instruction {
-        val program =
-            listOf("w", "x", "y", "z").map { it to Instruction.Value(0) }.toMap<String, Instruction>().toMutableMap()
+        val program = listOf("w", "x", "y", "z")
+            .associateWith<String, Instruction> { Instruction.Value(0) }
+            .toMutableMap()
         var index = 0
         lines.map { it.split(" ") }.forEach {
             program[it[1]] = if (it[0] == "inp") {
                 Instruction.Inp(index++)
             } else {
                 val a = program[it[1]]!!
-                val b = program.getOrElse(it[2], { Instruction.Value(it[2].toInt()) })
+                val b = program.getOrElse(it[2]) { Instruction.Value(it[2].toInt()) }
                 when (it[0]) {
                     "add" -> add(a, b)
                     "mul" -> mul(a, b)

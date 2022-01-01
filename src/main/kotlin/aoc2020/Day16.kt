@@ -23,10 +23,12 @@ class Day16(test: Int? = null) : Day(2020, 16, test) {
             .map { myTicket[it.value.first()].toLong() }.reduce { acc, s -> acc * s }
     }
 
-    private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (name, rule) ->
-        name to rule.split(" or ").map { range -> range.split("-").map { it.toInt() } }
-            .map { (first, last) -> first..last }
-    }.toMap()
+    private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }
+        .associate { (name, rule) ->
+            name to rule.split(" or ").map { range ->
+                range.split("-").let { (first, last) -> first.toInt()..last.toInt() }
+            }
+        }
     private val myTicket = lines[2 + rules.size].split(",").map { it.toInt() }
     private val otherTickets = lines.takeLastWhile { it.isNotBlank() }.drop(1)
         .map { line -> line.split(",").map { it.toInt() } }

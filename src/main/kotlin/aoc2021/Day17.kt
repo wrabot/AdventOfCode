@@ -7,8 +7,8 @@ class Day17(test: Int? = null) : Day(2021, 17, test) {
 
     override fun solvePart2() = countVelocities(xTarget, yTarget)
 
-    val xTarget = lines[0].split("..").map { it.toInt() }.let { it.first()..it.last() }
-    val yTarget = lines[1].split("..").map { it.toInt() }.let { it.first()..it.last() }
+    private val xTarget = lines[0].split("..").map { it.toInt() }.let { it.first()..it.last() }
+    private val yTarget = lines[1].split("..").map { it.toInt() }.let { it.first()..it.last() }
 
     private fun maxY(vxInit: Int, vyInit: Int, xTarget: IntRange, yTarget: IntRange): Int? {
         var vx = vxInit

@@ -21,9 +21,9 @@ class Day19 : Day(2020, 19) {
         return messages.count { regex0Recursive.matches(it) && regex8.matches(it.recursiveMatches(regex0Recursive)) }
     }
 
-    private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.map { (id, rule) ->
+    private val rules = lines.takeWhile { it.isNotBlank() }.map { it.split(": ") }.associate { (id, rule) ->
         id to rule.replace("\"", "").split(" | ").map { it.split(" ") }
-    }.toMap()
+    }
 
     private val messages = lines.takeLastWhile { it.isNotBlank() }
 
