@@ -10,7 +10,7 @@ class Day10(test: Int? = null) : Day(2020, 10, test) {
     override fun solvePart2(): Any {
         val counts = mutableMapOf(0 to 1L)
         val links = adapters.groupBy({ it }) { v -> voltages.filter { it in v - 3 until v } }
-            .mapValues { it.value.flatten() }.log()
+            .mapValues { it.value.flatten() }
         adapters.reversed().forEach { adapter ->
             counts[adapter] = links[adapter]!!.sumOf { counts[it]!! }
         }

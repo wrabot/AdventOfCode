@@ -1,15 +1,13 @@
 package aoc2020
 
 import tools.Day
-import tools.sum
-import java.math.BigInteger
 
 class Day18 : Day(2020, 18) {
     override fun solvePart1() = list.map { Expr(it, false).eval() }.sum()
     override fun solvePart2() = list.map { Expr(it, true).eval() }.sum()
 
     data class Expr(val text: String, val part2: Boolean) {
-        fun eval(): BigInteger {
+        fun eval(): Long {
             val stack = mutableListOf(operand())
             while (index < text.length) {
                 when (text[index++]) {
@@ -23,7 +21,7 @@ class Day18 : Day(2020, 18) {
         }
 
         private var index: Int = 0
-        private fun operand() = if (text[index++] == '(') eval() else text[index - 1].toString().toBigInteger()
+        private fun operand() = if (text[index++] == '(') eval() else text[index - 1].toString().toLong()
     }
 
     private val list = lines.map { it.replace(" ", "") }

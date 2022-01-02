@@ -1,54 +1,49 @@
 package aoc2020
 
+import tools.Board
 import tools.Day
+import tools.Point
 
 class Day11(test: Int? = null) : Day(2020, 11, test) {
-    override fun solvePart1() = Seats(initialMap, width, height, 4) { seat, direction ->
-        get(seat.first + direction.first, seat.second + direction.second) == '#'
-    }.update()
+    override fun solvePart1() = count(4) { seat, direction -> getOrNull(seat + direction)?.current == '#' }
 
-    override fun solvePart2() = Seats(initialMap, width, height, 5) { seat, direction ->
-        var x = seat.first
-        var y = seat.second
-        var c: Char?
-        do {
-            x += direction.first
-            y += direction.second
-            c = get(x, y)
-        } while (c == '.')
-        c == '#'
-    }.update()
-
-    data class Seats(
-        private var map: List<Char>,
-        val width: Int,
-        val height: Int,
-        val min: Int,
-        val occupied: Seats.(Pair<Int, Int>, Pair<Int, Int>) -> Boolean
-    ) {
-        fun update(): Int {
-            do {
-                var modified = false
-                map = map.mapIndexed { index, c ->
-                    val seat = Pair(index % width, index / width)
-                    when (c) {
-                        'L' -> if (adjacent(seat) == 0) '#' else 'L'
-                        '#' -> if (adjacent(seat) >= min) 'L' else '#'
-                        else -> c
-                    }.apply { if (c != this) modified = true }
-                }
-            } while (modified)
-            return map.count { it == '#' }
+    override fun solvePart2() = count(5) { seat, direction ->
+        var current = seat
+        while (true) {
+            current += direction
+            when (getOrNull(current)?.current) {
+                '.' -> continue
+                '#' -> return@count true
+                else -> break
+            }
         }
-
-        fun get(x: Int, y: Int) = if (x in 0 until width && y in 0 until height) map[y * width + x] else null
-
-        private val directions = listOf(1 to 0, 1 to -1, 0 to -1, -1 to -1, -1 to 0, -1 to 1, 0 to 1, 1 to 1)
-        private fun adjacent(seat: Pair<Int, Int>) = directions.count { occupied(seat, it) }
+        false
     }
 
-    //TODO use board ?
-    private val width = lines[0].length
-    private val height = lines.size
-    private val initialMap = lines.flatMap { it.toList() }
+    data class Seat(var current: Char, var next: Char = current)
+
+    private val directions = listOf(
+        Point(1, 0), Point(1, -1), Point(0, -1), Point(-1, -1),
+        Point(-1, 0), Point(-1, 1), Point(0, 1), Point(1, 1)
+    )
+
+    fun count(min: Int, occupied: Board<Seat>.(Point, Point) -> Boolean): Int {
+        val plane = Board(lines[0].length, lines.size, lines.flatMap { it.map(::Seat) })
+        while (true) {
+            var modified = false
+            plane.points.forEach { point ->
+                val seat = plane[point]
+                if (seat.current == 'L' && directions.none { plane.occupied(point, it) }) {
+                    seat.next = '#'
+                    modified = true
+                }
+                if (seat.current == '#' && directions.count { plane.occupied(point, it) } >= min) {
+                    seat.next = 'L'
+                    modified = true
+                }
+            }
+            if (!modified) return plane.cells.count { it.current == '#' }
+            plane.cells.forEach { it.current = it.next }
+        }
+    }
 }
