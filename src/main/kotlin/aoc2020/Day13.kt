@@ -1,7 +1,7 @@
 package aoc2020
 
 import tools.Day
-import tools.modTimes
+import tools.times
 
 class Day13(test: Int? = null) : Day(2020, 13, test) {
     override fun solvePart1(): Any {
@@ -16,6 +16,6 @@ class Day13(test: Int? = null) : Day(2020, 13, test) {
             val a = acc.first * v.first
             var f = acc.first
             while (f % v.first != 1L) f += acc.first
-            a to a + acc.second - f.modTimes(v.second + acc.second, a)
+            a to a + acc.second - f.times(v.second + acc.second, a)
         }.second
 }
