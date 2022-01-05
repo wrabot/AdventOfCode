@@ -2,6 +2,7 @@ package aoc2021
 
 import tools.Board
 import tools.Day
+import tools.shortPath
 
 class Day15(test: Int? = null) : Day(2021, 15, test) {
     override fun solvePart1() =
@@ -24,25 +25,7 @@ class Day15(test: Int? = null) : Day(2021, 15, test) {
         override fun toString() = risk.toString()
     }
 
-    private fun minRisk(cave: Board<Cell>): Int {
-        val start = cave.points.first()
-        val end = cave.points.last()
-        cave[start].minRisk = 0
-
-        val todo = mutableListOf(start)
-        while (todo.isNotEmpty()) {
-            val point = todo.removeAt(0)
-            val minRisk = cave[point].minRisk
-            cave.neighbors4(point).forEach {
-                val neighbor = cave[it]
-                val newRisk = neighbor.risk + minRisk
-                if (newRisk < neighbor.minRisk) {
-                    neighbor.minRisk = newRisk
-                    if (it !in todo) todo.add(it)
-                }
-            }
-            todo.sortBy { cave[it].minRisk }
-        }
-        return cave[end].minRisk
-    }
+    private fun minRisk(cave: Board<Cell>) = shortPath(cave.points.first(), cave.points.last()) { point ->
+        cave.neighbors4(point).associateWith { cave[it].risk }
+    }.drop(1).sumOf { cave[it].risk }
 }
