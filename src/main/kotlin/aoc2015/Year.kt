@@ -12,4 +12,5 @@ fun checkAll() {
     Day8().check(1350,2085)
     //Day9(1).check(605, 982)
     Day9().check(207,804)
+    Day10().check(252594, 3579328)
 }
