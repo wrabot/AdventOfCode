@@ -36,6 +36,20 @@ class Day23(test: Int? = null) : Day(2021, 23, test) {
             return true
         }
 
+        if (minCost < Int.MAX_VALUE) {
+            // not mandatory but fastest
+            val minimalCost = rooms.map { (roomName, roomContent) -> // go to room entrance from room
+                roomContent.withIndex().filter { it.value != empty && it.value != roomName }.sumOf {
+                    (roomContent.length - it.index + (roomOutputs[it.value]!! - roomOutputs[roomName]!!).absoluteValue) * costs[it.value]!!
+                }
+            }.sum() + hallway.mapIndexed { index, current -> // go to room entrance from hallway
+                if (current != empty) (roomOutputs[current]!! - index).absoluteValue * costs[current]!! else 0
+            }.sum() + rooms.map { (roomName, roomContent) -> // enter in room (very minimal)
+                roomContent.count { it != roomName }.let { it * (it + 1) / 2 } * costs[roomName]!!
+            }.sum()
+            if (cost + minimalCost >= minCost) return false
+        }
+
         var solved = false
         hallway.forEachIndexed { hallwayIndex, current ->
             if (current != empty) {
