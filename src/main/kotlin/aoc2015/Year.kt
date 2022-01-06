@@ -10,8 +10,6 @@ fun checkAll() {
     Day7().check(3176,14710)
     //Day8(1).check(12,19)
     Day8().check(1350,2085)
-
-    //TODO
-    //Day9(1).solve()
-    //Day9().solve()
+    //Day9(1).check(605, 982)
+    Day9().check(207,804)
 }
