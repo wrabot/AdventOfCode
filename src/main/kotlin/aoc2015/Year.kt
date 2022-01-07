@@ -18,4 +18,6 @@ fun checkAll() {
     Day12().check(119433, 68466)
     //Day13(1).checkPart1(330)
     Day13().check(664, 640)
+    //Day14(1).check(1120,689)
+    Day14().check(2660,1256)
 }
