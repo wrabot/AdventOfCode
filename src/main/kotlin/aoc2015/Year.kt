@@ -13,4 +13,6 @@ fun checkAll() {
     //Day9(1).check(605, 982)
     Day9().check(207,804)
     Day10().check(252594, 3579328)
+    //Day11(1).checkPart1("abcdffaa")
+    Day11().check("cqjxxyzz", "cqkaabcc")
 }
