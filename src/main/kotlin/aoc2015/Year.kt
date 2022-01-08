@@ -24,4 +24,5 @@ fun checkAll() {
     Day15().check(222870, 117936)
     Day16().check("Sue 213", "Sue 323")
     Day17().check(654, 57)
+    Day18().check(1061, 1006)
 }
