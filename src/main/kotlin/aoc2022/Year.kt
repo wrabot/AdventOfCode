@@ -11,4 +11,6 @@ fun checkAll() {
     Day4().check(483, 874)
     Day5(1).check("CMZ", "MCD")
     Day5().check("TPGVQPFDH", "DMRDFRHHH")
+    Day6(1).check(listOf(7, 5, 6, 10, 11), listOf(19, 23, 23, 29, 26))
+    Day6().check(listOf(1640), listOf(3613))
 }
