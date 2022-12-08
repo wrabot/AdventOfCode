@@ -14,13 +14,11 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
     )
 
     val part1: Any by lazy {
-        log("$info part 1:")
-        solvePart1().log()
+        solvePart1().apply { println("$info part 2: $this") }
     }
 
     val part2: Any by lazy {
-        log("$info part 2:")
-        solvePart2().log()
+        solvePart2().apply { println("$info part 2: $this") }
     }
 
     fun check(expectedPart1: Any, expectedPart2: Any) {
@@ -30,13 +28,13 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
 
     fun checkPart1(expectedPart1: Any) {
         measure {
-            if (part1.toString() != expectedPart1.toString()) error("$info invalid part1")
+            if (part1.toString() != expectedPart1.toString()) log("$info invalid part1: $part1")
         }
     }
 
     fun checkPart2(expectedPart2: Any) {
         measure {
-            if (part2.toString() != expectedPart2.toString()) error("$info invalid part2")
+            if (part2.toString() != expectedPart2.toString()) log("$info invalid part2: $part2")
         }
     }
 

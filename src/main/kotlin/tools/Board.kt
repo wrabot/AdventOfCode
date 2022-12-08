@@ -8,6 +8,9 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         }
     }
 
+    val directions4 = listOf(Point(1, 0), Point(-1, 0), Point(0, 1), Point(0, -1))
+    val directions8 = directions4 + listOf(Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1))
+
     init {
         if (cells.size != width * height) throw Error("invalid board")
     }
@@ -21,21 +24,8 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     fun getOrNull(point: Point) = getOrNull(point.x, point.y)
     operator fun get(point: Point) = get(point.x, point.y)
 
-    fun neighbors4(point: Point) =
-        listOf(
-            Point(point.x + 1, point.y),
-            Point(point.x - 1, point.y),
-            Point(point.x, point.y + 1),
-            Point(point.x, point.y - 1)
-        ).filter { isValid(it) }
-
-    fun neighbors8(point: Point) =
-        neighbors4(point) + listOf(
-            Point(point.x + 1, point.y + 1),
-            Point(point.x - 1, point.y + 1),
-            Point(point.x + 1, point.y - 1),
-            Point(point.x - 1, point.y - 1)
-        ).filter { isValid(it) }
+    fun neighbors4(point: Point) = directions4.map { point + it }.filter { isValid(it) }
+    fun neighbors8(point: Point) = directions8.map { point + it }.filter { isValid(it) }
 
     fun zone4(point: Point, predicate: (Point) -> Boolean) =
         zone(point) { neighbors4(it).filter(predicate) }

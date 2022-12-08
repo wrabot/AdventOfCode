@@ -7,15 +7,13 @@ import tools.Point
 class Day8(test: Int? = null) : Day(2022, 8, test) {
     override fun solvePart1() = board.points.count { point ->
         val height = board[point]
-        directions.any { point.isVisible(height, it) }
+        board.directions4.any { point.isVisible(height, it) }
     }
 
     override fun solvePart2() = board.points.maxOf { point ->
         val height = board[point]
-        directions.map { point.score(height, it, 0) }.reduce { acc, b -> acc * b }
+        board.directions4.map { point.score(height, it, 0) }.reduce { acc, b -> acc * b }
     }
-
-    private val directions = listOf(Point(0, -1), Point(0, 1), Point(1, 0), Point(-1, 0))
 
     private fun Point.isVisible(height: Int, direction: Point): Boolean = (this + direction).let { next ->
         board.getOrNull(next)?.let { it < height && next.isVisible(height, direction) } ?: true
