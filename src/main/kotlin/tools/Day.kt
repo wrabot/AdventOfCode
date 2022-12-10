@@ -14,7 +14,7 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
     )
 
     val part1: Any by lazy {
-        solvePart1().apply { println("$info part 2: $this") }
+        solvePart1().apply { println("$info part 1: $this") }
     }
 
     val part2: Any by lazy {
