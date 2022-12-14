@@ -17,9 +17,15 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
 
     override fun toString() = cells.chunked(width) { it.joinToString("") }.joinToString("\n")
 
+    fun toString(start: Point, end: Point) = cells.chunked(width) {
+        it.joinToString("").substring(start.x, end.x + 1)
+    }.subList(start.y, end.y + 1).joinToString("\n")
+
     fun isValid(x: Int, y: Int) = x in 0 until width && y in 0 until height
     fun getOrNull(x: Int, y: Int) = if (isValid(x, y)) cells[y * width + x] else null
-    operator fun get(x: Int, y: Int) = getOrNull(x, y) ?: throw Error("invalid cell")
+    operator fun get(x: Int, y: Int) =
+        getOrNull(x, y) ?: throw Error("invalid cell : x=$x y=$y width=$width height=$height")
+
     fun isValid(point: Point) = isValid(point.x, point.y)
     fun getOrNull(point: Point) = getOrNull(point.x, point.y)
     operator fun get(point: Point) = get(point.x, point.y)
