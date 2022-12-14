@@ -1,5 +1,9 @@
 package aoc2022
 
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.int
 import tools.Day
 
 class Day13(test: Int? = null) : Day(2022, 13, test) {
@@ -11,42 +15,22 @@ class Day13(test: Int? = null) : Day(2022, 13, test) {
             .run { packetIndex(divider1) * packetIndex(divider2) }
 
     private val packets = input.split("\n\n").map { block ->
-        block.split("\n").map { it.parse(0).second.first() }
+        block.split("\n").map { Json.Default.parseToJsonElement(it) }
     }
 
-    private val divider1 = listOf(listOf(2))
-    private val divider2 = listOf(listOf(6))
+    private val divider1 = Json.Default.parseToJsonElement("[[2]]")
+    private val divider2 = Json.Default.parseToJsonElement("[[6]]")
 
     private fun List<Any>.packetIndex(packet: Any) = indexOfFirst { compare(it, packet) == 0 } + 1
 
     private fun compare(left: Any, right: Any): Int = when {
-        left is Int && right is Int -> right - left
-        left is List<*> && right is Int -> compare(left, listOf(right))
-        left is Int && right is List<*> -> compare(listOf(left), right)
-        left is List<*> && right is List<*> -> left.zip(right).map { compare(it.first!!, it.second!!) }
+        left is JsonPrimitive && right is JsonPrimitive -> right.int - left.int
+        left is JsonArray && right is JsonPrimitive -> compare(left, JsonArray(listOf(right)))
+        left is JsonPrimitive && right is JsonArray -> compare(JsonArray(listOf(left)), right)
+        left is JsonArray && right is JsonArray -> left.zip(right).map { compare(it.first, it.second) }
             .dropWhile { it == 0 }.run {
                 firstOrNull() ?: (right.size - left.size)
             }
         else -> error("!!!!")
-    }
-
-    private fun String.parse(start: Int): Pair<Int, List<Any>> {
-        val siblings = mutableListOf<Any>()
-        var index = start
-        while (index < length) {
-            when (this[index]) {
-                '[' -> parse(index + 1).let {
-                    index = it.first
-                    siblings.add(it.second)
-                }
-                ']' -> return Pair(index + 1, siblings)
-                ',' -> index++
-                else -> indexOfAny("],".toCharArray(), index).let {
-                    siblings.add(substring(index, it).toInt())
-                    index = it
-                }
-            }
-        }
-        return Pair(index, siblings)
     }
 }
