@@ -3,7 +3,7 @@ package aoc2022
 import tools.Day
 
 class Day7b(test: Int? = null) : Day(2022, 7, test) {
-    override fun solvePart1() = sizes.log().filter { it <= 100000 }.sum()
+    override fun solvePart1() = sizes.filter { it <= 100000 }.sum()
     override fun solvePart2() = sizes.filter { space + it >= 30000000 }.min()
 
     private val sizes = mutableListOf(0)

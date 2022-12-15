@@ -7,10 +7,9 @@ class Day19(test: Int? = null) : Day(2015, 19, test) {
         regex.toRegex().findAll(molecule).map { molecule.replaceRange(it.range, replacement) }
     }.distinct().count()
 
-    override fun solvePart2() = molecule.count(0)!!
+    override fun solvePart2() = molecule.count(0)
 
     fun String.count(level: Int): Int = cache.getOrPut(this) {
-        level.log()
         if (this == "e") return@getOrPut level
         val keys = keys.filter { it in this }.takeIf { it.isNotEmpty() } ?: return@getOrPut Int.MAX_VALUE
         keys.minOf { replaceFirst(it, replacements[it]!!).count(level + 1) }
