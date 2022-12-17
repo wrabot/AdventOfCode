@@ -2,13 +2,14 @@ package tools
 
 import java.lang.Integer.max
 
-fun List<IntRange>.merge() = sortedBy { it.first }.run {
-    drop(1).fold(listOf(first())) { acc, range ->
-        val last = acc.last()
-        if (range.first in acc.last())
-            acc.dropLast(1).plusElement(last.first..max(last.last, range.last))
-        else
-            acc.plusElement(range)
+fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
+    sortedBy { it.first }.forEach {
+        val last = merge.lastOrNull()
+        when {
+            last == null -> merge.add(it)
+            it.first in last -> merge[merge.lastIndex] = last.first..max(last.last, it.last)
+            else -> merge.add(it)
+        }
     }
 }
 
