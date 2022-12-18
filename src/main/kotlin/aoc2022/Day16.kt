@@ -26,9 +26,11 @@ class Day16(test: Int? = null) : Day(2022, 16, test, true) {
 
     private val targets = valves.values.filter { it.rate > 0 }.map { it.name }
 
-    private val distances = (targets + "AA").associateWith { start ->
-        targets.minus(start).associateWith { end ->
-            shortPath(start, end) { valves[it]!!.neighbors.associateWith { 1 } }.size - 1
+    private val distances by lazy {
+        (targets + "AA").associateWith { start ->
+            targets.minus(start).associateWith { end ->
+                shortPath(start, end) { valves[it]!!.neighbors }.size - 1
+            }
         }
     }
 }
