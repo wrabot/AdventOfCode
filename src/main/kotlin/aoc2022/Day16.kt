@@ -3,11 +3,11 @@ package aoc2022
 import tools.Day
 import tools.shortPath
 
-class Day16(test: Int? = null) : Day(2022, 16, test, true) {
+class Day16(test: Int? = null) : Day(2022, 16, test) {
     override fun solvePart1() = max(targets, "AA", 0, 0, 30)
     override fun solvePart2() = (0 until (1 shl (targets.size - 1))).maxOf { id ->
         val mine = targets.filterIndexed { index, _ -> id and (1 shl index) == 0 }
-        val elephant = targets - mine
+        val elephant = targets - mine.toSet()
         max(mine, "AA", 0, 0, 26) + max(elephant, "AA", 0, 0, 26)
     }
 

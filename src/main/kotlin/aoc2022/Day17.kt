@@ -3,7 +3,7 @@ package aoc2022
 import tools.Day
 import kotlin.math.max
 
-class Day17(test: Int? = null) : Day(2022, 17, test, true) {
+class Day17(test: Int? = null) : Day(2022, 17, test) {
     override fun solvePart1() = solve(2022)
     override fun solvePart2() = (((1000000000000 - params[0]) / params[1]) - 1) * params[2] + solve((params[0] + params[1] + ((1000000000000 - params[0]) % params[1])).toInt())
 
@@ -30,7 +30,7 @@ class Day17(test: Int? = null) : Day(2022, 17, test, true) {
                     }
                 }
 
-                // use to find params
+                // use to find params TODO find params programmatically
                 log("$commandIndex ${spriteIndex % sprites.size} ${size()}")
                 if (commandIndex == 0) log("$spriteIndex ${spriteIndex % sprites.size} ${size()} ${(spriteIndex - params[0]) / params[1] * params[2] + params[3]}")
                 if (commandIndex == 1) log("$spriteIndex ${spriteIndex % sprites.size} ${size()} ${(spriteIndex - params[0]) / params[1] * params[2] + params[3]}")

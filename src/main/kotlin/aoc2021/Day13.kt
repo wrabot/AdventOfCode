@@ -9,7 +9,7 @@ class Day13(test: Int? = null) : Day(2021, 13, test) {
         val code = folds.foldDots(dots)
         val width = code.maxOf { it[0] } + 1
         val height = code.maxOf { it[1] } + 1
-        return List(width * height) { if (listOf(it % width, it / width) in code) '#' else ' ' }
+        return "\n" + List(width * height) { if (listOf(it % width, it / width) in code) '#' else ' ' }
             .chunked(width) { it.joinToString("") }.joinToString("\n")
     }
 
