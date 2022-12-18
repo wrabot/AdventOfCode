@@ -28,13 +28,13 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
 
     fun checkPart1(expectedPart1: Any) {
         measure {
-            if (part1.toString() != expectedPart1.toString()) log("$info invalid part1: $part1")
+            if (part1.toString() != expectedPart1.toString()) log("$info invalid part1: $expectedPart1")
         }
     }
 
     fun checkPart2(expectedPart2: Any) {
         measure {
-            if (part2.toString() != expectedPart2.toString()) log("$info invalid part2: $part2")
+            if (part2.toString() != expectedPart2.toString()) log("$info invalid part2: $expectedPart2")
         }
     }
 
