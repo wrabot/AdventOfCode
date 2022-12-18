@@ -1,65 +1,76 @@
 package aoc2022
 
 import tools.Day
+import tools.Point
 import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(2022, 17, test) {
     override fun solvePart1() = solve(2022)
-    override fun solvePart2() = (((1000000000000 - params[0]) / params[1]) - 1) * params[2] + solve((params[0] + params[1] + ((1000000000000 - params[0]) % params[1])).toInt())
+    override fun solvePart2(): Long {
+        solve(0)
+        val (rockOffset, rockStep, sizeStep) = params!!
+        val rocks = 1000000000000 - rockOffset
+        return (rocks / rockStep - 1) * sizeStep + solve((rockOffset + rockStep + (rocks % rockStep)).toInt())
+    }
 
     fun solve(rocks: Int) = Board().apply {
         var commandIndex = 0
-        var spriteIndex = 0
-        var spriteX = 2
-        var spriteY = 3
-        var sprite = sprites[spriteIndex]
-        while (spriteIndex < rocks) {
+        var rockIndex = 0
+        var rockX = 2
+        var rockY = 3
+        var rock = rockContent[rockIndex]
+        val patterns = mutableMapOf<Pair<Int, Int>, MutableList<Point>>()
+        val findParams = rocks <= 0
+        while (findParams || rockIndex < rocks) {
             when (commands[commandIndex++]) {
-                '<' -> if (isValid(sprite, spriteX - 1, spriteY)) spriteX--
-                '>' -> if (isValid(sprite, spriteX + 1, spriteY)) spriteX++
+                '<' -> if (isValid(rock, rockX - 1, rockY)) rockX--
+                '>' -> if (isValid(rock, rockX + 1, rockY)) rockX++
                 else -> error("!!!")
             }
             if (commandIndex == commands.length) commandIndex = 0
 
-            if (isValid(sprite, spriteX, spriteY - 1)) {
-                spriteY--
+            if (isValid(rock, rockX, rockY - 1)) {
+                rockY--
             } else {
-                for (x in 0 until sprite.width) {
-                    for (y in 0 until sprite.height) {
-                        if (sprite.isRock(x, y)) get(x + spriteX, y + spriteY).content = '#'
+                for (x in 0 until rock.width) {
+                    for (y in 0 until rock.height) {
+                        if (rock.isRock(x, y)) get(x + rockX, y + rockY).content = '#'
                     }
                 }
 
                 // use to find params TODO find params programmatically
-                log("$commandIndex ${spriteIndex % sprites.size} ${size()}")
-                if (commandIndex == 0) log("$spriteIndex ${spriteIndex % sprites.size} ${size()} ${(spriteIndex - params[0]) / params[1] * params[2] + params[3]}")
-                if (commandIndex == 1) log("$spriteIndex ${spriteIndex % sprites.size} ${size()} ${(spriteIndex - params[0]) / params[1] * params[2] + params[3]}")
+                if (findParams) patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }.add(Point(rockIndex, size()))
 
                 // reduce time
                 clean()
 
-                spriteIndex++
-                sprite = sprites[spriteIndex % sprites.size]
-                spriteX = 2
-                spriteY = size() + 3
+                rockIndex++
+                rock = rockContent[rockIndex % rockContent.size]
+                rockX = 2
+                rockY = size() + 3
+            }
+            if (findParams) {
+                params = patterns.values.filter { it.size >= 3 }
+                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Triple(list.first().x, it.x, it.y) } }
+                if (params != null) break
             }
         }
     }.size()
 
-    data class Sprite(val width: Int, val height: Int, val content: String) {
+    data class rock(val width: Int, val height: Int, val content: String) {
         fun isRock(x: Int, y: Int) = x in 0 until width && y in 0 until height && content[y * width + x] == '#'
     }
 
-    private val sprites = listOf(
-        Sprite(4, 1, "####"),
-        Sprite(3, 3, ".#.###.#."),
-        Sprite(3, 3, "###..#..#"),
-        Sprite(1, 4, "####"),
-        Sprite(2, 2, "####"),
+    private val rockContent = listOf(
+        rock(4, 1, "####"),
+        rock(3, 3, ".#.###.#."),
+        rock(3, 3, "###..#..#"),
+        rock(1, 4, "####"),
+        rock(2, 2, "####"),
     )
 
-    private val params = lines[0].split(" ").map { it.toInt() }
-    private val commands = lines[1]
+    private var params: Triple<Int, Int, Int>? = null
+    private val commands = input
 
     class Board {
         data class Cell(var content: Char)
@@ -72,18 +83,18 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
             } + "\n+-------+"
         }
 
-        fun toString(sprite: Sprite, bottomX: Int, bottomY: Int) = max(size(), bottomY + sprite.height).let { size ->
+        fun toString(rock: rock, bottomX: Int, bottomY: Int) = max(size(), bottomY + rock.height).let { size ->
             (0 until size).joinToString("\n") {
                 val y = size - it - 1
-                "|" + (0..6).joinToString("") { x -> if (sprite.isRock(x - bottomX, y - bottomY)) "@" else get(x, y).content.toString() } + "|"
+                "|" + (0..6).joinToString("") { x -> if (rock.isRock(x - bottomX, y - bottomY)) "@" else get(x, y).content.toString() } + "|"
             } + "\n+-------+"
         }
 
         fun size() = columns.maxOf { column -> column.filter { it.value.content == '#' }.maxOfOrNull { it.key + 1 } ?: 0 }
-        fun isValid(sprite: Sprite, bottomX: Int, bottomY: Int) = isValid(bottomX, bottomY) && isValid(bottomX + sprite.width - 1, bottomY + sprite.height - 1) &&
-                (0 until sprite.width).all { x ->
-                    (0 until sprite.height).all { y ->
-                        !sprite.isRock(x, y) || get(x + bottomX, y + bottomY).content != '#'
+        fun isValid(rock: rock, bottomX: Int, bottomY: Int) = isValid(bottomX, bottomY) && isValid(bottomX + rock.width - 1, bottomY + rock.height - 1) &&
+                (0 until rock.width).all { x ->
+                    (0 until rock.height).all { y ->
+                        !rock.isRock(x, y) || get(x + bottomX, y + bottomY).content != '#'
                     }
                 }
 
