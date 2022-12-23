@@ -12,7 +12,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     val directions8 = directions4 + listOf(Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1))
 
     init {
-        if (cells.size != width * height) throw Error("invalid board")
+        if (cells.size != width * height) throw Error("invalid board ${cells.size} !=  $width * $height (${width * height})")
     }
 
     override fun toString() = cells.chunked(width) { it.joinToString("") }.joinToString("\n")
