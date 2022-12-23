@@ -65,4 +65,6 @@ fun checkAll() {
     Day22().check(Unit, Unit)
     Day22(1).check(6032, 5031)
     Day22().check(67390, 95291)
+    Day23(1).check(110, 20)
+    Day23().check(3917, 988)
 }
