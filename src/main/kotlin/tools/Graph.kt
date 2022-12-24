@@ -12,7 +12,7 @@ fun <Node : Any> shortPath2(start: Node, end: Node, neighbors: (Node) -> List<No
     val predecessor = mutableMapOf<Node, Node>()
     while (true) {
         val (currentNode, currentCost) = todo.minByOrNull { it.value } ?: break
-        if (currentNode == end) return generateSequence(end) { predecessor[it] }.toList().reversed()
+        if (currentNode == end) break
         todo.remove(currentNode)
         done.add(currentNode)
         neighbors(currentNode).forEach { next ->
@@ -25,5 +25,5 @@ fun <Node : Any> shortPath2(start: Node, end: Node, neighbors: (Node) -> List<No
             }
         }
     }
-    return emptyList()
+    return generateSequence(end) { predecessor[it] }.toList().reversed()
 }
