@@ -69,4 +69,6 @@ fun checkAll() {
     Day23().check(3917, 988)
     Day24(1).check(18, 54)
     Day24().check(230, 713)
+    Day25(1).check("2=-1=0", Unit)
+    Day25().check("2=01-0-2-0=-0==-1=01", Unit)
 }
