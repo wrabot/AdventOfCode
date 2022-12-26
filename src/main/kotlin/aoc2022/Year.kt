@@ -63,8 +63,6 @@ fun checkAll() {
     Day20().check(8764, 535648840980)
     //Day21(1).check(152, 301)
     Day21().check(84244467642604, 3759569926192)
-    //Day22(1).check(6032, Unit)
-    Day22().check(67390, 95291)
     //Day22(1).check(6032, 5031)
     Day22().check(67390, 95291)
     //Day23(1).check(110, 20)
