@@ -27,21 +27,21 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
     }
 
     fun checkPart1(expectedPart1: Any) {
-        measure {
+        measure("$info part1") {
             if (part1.toString() != expectedPart1.toString()) log("$info invalid part1: $expectedPart1")
         }
     }
 
     fun checkPart2(expectedPart2: Any) {
-        measure {
+        measure("$info part2") {
             if (part2.toString() != expectedPart2.toString()) log("$info invalid part2: $expectedPart2")
         }
     }
 
     @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
     @OptIn(ExperimentalTime::class)
-    private fun measure(block: () -> Unit) {
-        if (measure) measureTime(block).log() else block()
+    private fun measure(message: String, block: () -> Unit) {
+        if (measure) measureTime(block).apply { log("$message: $this") } else block()
     }
 
     protected val input = javaClass.classLoader!!.getResource("aoc$year/day$day/$inputFileName")!!.readText()

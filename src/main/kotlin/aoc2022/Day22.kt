@@ -4,7 +4,7 @@ import tools.Board
 import tools.Day
 import tools.Point
 
-class Day22(test: Int? = null) : Day(2022, 22, test, true) {
+class Day22(test: Int? = null) : Day(2022, 22, test) {
     override fun solvePart1(): Int {
         var position = start
         var directionIndex = 0
@@ -80,7 +80,7 @@ class Day22(test: Int? = null) : Day(2022, 22, test, true) {
         var position = start
         var directionIndex = 0
         moves.forEach { move ->
-            log("$position $directionIndex $move")
+            //log("$position $directionIndex $move")
             repeat(move.first) {
                 val direction = directions[directionIndex]
                 val directionChar = directionChars[directionIndex]

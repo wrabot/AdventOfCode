@@ -2,12 +2,12 @@ package aoc2022
 
 import tools.Day
 
-class Day19(test: Int? = null) : Day(2022, 19, test, true) {
+class Day19(test: Int? = null) : Day(2022, 19, test) {
     override fun solvePart1() = blueprints.sumOf { it.solve(24) * it.id }
     override fun solvePart2() = blueprints.take(3).map { it.solve(32) }.reduce { acc, i -> acc * i }
 
     fun Blueprint.solve(duration: Int): Int {
-        log("solve $id $duration")
+        //log("solve $id $duration")
         val maxOreCost = listOf(clayRobotOreCost, obsidianRobotOreCost, geodeRobotOreCost).max()
         var done = mutableSetOf(State(List(4) { 0 }, List(4) { if (it == oreIndex) 1 else 0 }))
         repeat(duration) {

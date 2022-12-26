@@ -6,7 +6,7 @@ import tools.Board
 import tools.Day
 import tools.Point
 
-class Day24(test: Int? = null) : Day(2022, 24, test, true) {
+class Day24(test: Int? = null) : Day(2022, 24, test) {
     override fun solvePart1() = solve(0, entrance, exit)
     override fun solvePart2() = solve(solve(solve(0, entrance, exit), exit, entrance), entrance, exit)
 
