@@ -5,41 +5,26 @@ package aoc2022
 import tools.Board
 import tools.Day
 import tools.Point
+import tools.shortPath
 
 class Day24(test: Int? = null) : Day(2022, 24, test) {
     override fun solvePart1() = solve(0, entrance, exit)
     override fun solvePart2() = solve(solve(solve(0, entrance, exit), exit, entrance), entrance, exit)
 
-    private fun solve(initialTime: Int, start: Point, end: Point): Int {
-        val done = mutableSetOf<State>()
-        val todo = mutableListOf(State(initialTime, start, initialTime % boards.size))
-        while (todo.isNotEmpty()) {
-            val state = todo.removeFirst()
-            if (state.expedition == end) return state.time
-            if (state !in done) {
-                done.add(state)
-                todo.addAll(state.nextStates())
-            }
-        }
-        return -1
-    }
+    private fun solve(initialTime: Int, start: Point, end: Point) =
+        shortPath(State(start, initialTime % boards.size), isEnd = { expedition == end }) {
+            nextStates()
+        }.size - 1 + initialTime
 
     private fun State.nextStates(): List<State> {
         val boardIndex = (boardIndex + 1) % boards.size
         val nextBoard = boards[boardIndex]
         return (nextBoard.neighbors4(expedition) + expedition).mapNotNull {
-            if (nextBoard[it].isEmpty()) State(time + 1, it, boardIndex) else null
+            if (nextBoard[it].isEmpty()) State(it, boardIndex) else null
         }
     }
 
-    data class State(val time: Int, val expedition: Point, val boardIndex: Int) {
-        override fun equals(other: Any?) = other is State && expedition == other.expedition && boardIndex == other.boardIndex
-        override fun hashCode(): Int {
-            var result = expedition.hashCode()
-            result = 31 * result + boardIndex
-            return result
-        }
-    }
+    data class State(val expedition: Point, val boardIndex: Int)
 
     private val boards = mutableListOf<Board<Cell>>()
     private val entrance = Point(1, 0)

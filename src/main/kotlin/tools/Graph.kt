@@ -16,20 +16,30 @@ fun <Node : Any> shortPath(
 ): List<Node> {
     val predecessor = mutableMapOf<Node, Node>()
     val costs = mutableMapOf(start to 0)
-    val todo = PriorityQueue<Node>(compareBy { costs[it] })
-    todo.offer(start)
+    val todo = TreeMap<Int, MutableList<Node>>()
+    todo[0] = mutableListOf(start)
     while (true) {
-        val currentNode = todo.poll() ?: break
+        val (currentCost, nodes) = todo.firstEntry() ?: break
+        val currentNode = nodes.first()
         if (currentNode.isEnd()) return generateSequence(currentNode) { predecessor[it] }.toList().reversed()
-        val currentCost = costs[currentNode]!!
-        neighbors(currentNode).forEach { next ->
-            val nextCost = cost(currentNode, currentCost, next)
-            if (nextCost < costs.getOrDefault(next, Int.MAX_VALUE)) {
-                costs[next] = nextCost
-                todo.offer(next)
-                predecessor[next] = currentNode
+        todo.remove(currentCost, currentNode)
+        neighbors(currentNode).forEach { nextNode ->
+            val oldCost = costs[nextNode]
+            val nextCost = cost(currentNode, currentCost, nextNode)
+            if (nextCost < (oldCost ?: Int.MAX_VALUE)) {
+                predecessor[nextNode] = currentNode
+                costs[nextNode] = nextCost
+                todo.getOrPut(nextCost) { mutableListOf() }.add(nextNode)
+                if (oldCost != null) todo.remove(oldCost, nextNode)
             }
         }
     }
     return emptyList()
+}
+
+private fun <Node : Any> TreeMap<Int, MutableList<Node>>.remove(cost: Int, node: Node) = apply {
+    this[cost]!!.let {
+        it.remove(node)
+        if (it.isEmpty()) remove(cost)
+    }
 }
