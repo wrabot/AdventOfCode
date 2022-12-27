@@ -8,9 +8,10 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
     override fun solvePart1() = solve(2022)
     override fun solvePart2(): Long {
         solve(0)
-        val (rockOffset, rockStep, sizeStep) = params!!
-        val rocks = 1000000000000 - rockOffset
-        return (rocks / rockStep - 1) * sizeStep + solve((rockOffset + rockStep + (rocks % rockStep)).toInt())
+        with(params!!) {
+            val rocks = 1000000000000 - rockOffset
+            return (rocks / rockStep - 1) * sizeStep + solve((rockOffset + rockStep + (rocks % rockStep)).toInt())
+        }
     }
 
     fun solve(rocks: Int) = Board().apply {
@@ -38,7 +39,7 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
                     }
                 }
 
-                // use to find params TODO find params programmatically
+                // use to find params
                 if (findParams) patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }.add(Point(rockIndex, size()))
 
                 // reduce time
@@ -51,25 +52,27 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
             }
             if (findParams) {
                 params = patterns.values.filter { it.size >= 3 }
-                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Triple(list.first().x, it.x, it.y) } }
+                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Params(list.first().x, it.x, it.y) } }
                 if (params != null) break
             }
         }
     }.size()
 
-    data class rock(val width: Int, val height: Int, val content: String) {
+    data class Rock(val width: Int, val height: Int, val content: String) {
         fun isRock(x: Int, y: Int) = x in 0 until width && y in 0 until height && content[y * width + x] == '#'
     }
 
+    data class Params(val rockOffset: Int, val rockStep: Int, val sizeStep: Int)
+
     private val rockContent = listOf(
-        rock(4, 1, "####"),
-        rock(3, 3, ".#.###.#."),
-        rock(3, 3, "###..#..#"),
-        rock(1, 4, "####"),
-        rock(2, 2, "####"),
+        Rock(4, 1, "####"),
+        Rock(3, 3, ".#.###.#."),
+        Rock(3, 3, "###..#..#"),
+        Rock(1, 4, "####"),
+        Rock(2, 2, "####"),
     )
 
-    private var params: Triple<Int, Int, Int>? = null
+    private var params: Params? = null
     private val commands = input
 
     class Board {
@@ -83,7 +86,7 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
             } + "\n+-------+"
         }
 
-        fun toString(rock: rock, bottomX: Int, bottomY: Int) = max(size(), bottomY + rock.height).let { size ->
+        fun toString(rock: Rock, bottomX: Int, bottomY: Int) = max(size(), bottomY + rock.height).let { size ->
             (0 until size).joinToString("\n") {
                 val y = size - it - 1
                 "|" + (0..6).joinToString("") { x -> if (rock.isRock(x - bottomX, y - bottomY)) "@" else get(x, y).content.toString() } + "|"
@@ -91,7 +94,7 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
         }
 
         fun size() = columns.maxOf { column -> column.filter { it.value.content == '#' }.maxOfOrNull { it.key + 1 } ?: 0 }
-        fun isValid(rock: rock, bottomX: Int, bottomY: Int) = isValid(bottomX, bottomY) && isValid(bottomX + rock.width - 1, bottomY + rock.height - 1) &&
+        fun isValid(rock: Rock, bottomX: Int, bottomY: Int) = isValid(bottomX, bottomY) && isValid(bottomX + rock.width - 1, bottomY + rock.height - 1) &&
                 (0 until rock.width).all { x ->
                     (0 until rock.height).all { y ->
                         !rock.isRock(x, y) || get(x + bottomX, y + bottomY).content != '#'
