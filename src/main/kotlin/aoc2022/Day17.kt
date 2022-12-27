@@ -5,21 +5,14 @@ import tools.Point
 import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(2022, 17, test) {
-    override fun solvePart1() = solve(2022)
-    override fun solvePart2(): Long {
+    override fun solvePart1() = Board().solve(2022)
+    override fun solvePart2() = Board().run {
         solve(0)
-        with(params!!) {
-            val rocks = 1000000000000 - rockOffset
-            return (rocks / rockStep - 1) * sizeStep + solve((rockOffset + rockStep + (rocks % rockStep)).toInt())
-        }
+        val rocks = 1000000000000 - rockIndex
+        with(params!!) { (rocks / rockStep) * sizeStep + solve(rockIndex + (rocks % rockStep).toInt()) }
     }
 
-    fun solve(rocks: Int) = Board().apply {
-        var commandIndex = 0
-        var rockIndex = 0
-        var rockX = 2
-        var rockY = 3
-        var rock = rockContent[rockIndex]
+    fun Board.solve(rocks: Int) = apply {
         val patterns = mutableMapOf<Pair<Int, Int>, MutableList<Point>>()
         val findParams = rocks <= 0
         while (findParams || rockIndex < rocks) {
@@ -46,13 +39,12 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
                 clean()
 
                 rockIndex++
-                rock = rockContent[rockIndex % rockContent.size]
                 rockX = 2
                 rockY = size() + 3
             }
             if (findParams) {
                 params = patterns.values.filter { it.size >= 3 }
-                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Params(list.first().x, it.x, it.y) } }
+                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Params(it.x, it.y) } }
                 if (params != null) break
             }
         }
@@ -62,20 +54,32 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
         fun isRock(x: Int, y: Int) = x in 0 until width && y in 0 until height && content[y * width + x] == '#'
     }
 
-    data class Params(val rockOffset: Int, val rockStep: Int, val sizeStep: Int)
-
-    private val rockContent = listOf(
-        Rock(4, 1, "####"),
-        Rock(3, 3, ".#.###.#."),
-        Rock(3, 3, "###..#..#"),
-        Rock(1, 4, "####"),
-        Rock(2, 2, "####"),
-    )
+    data class Params(val rockStep: Int, val sizeStep: Int)
 
     private var params: Params? = null
     private val commands = input
 
     class Board {
+        val rockContent = listOf(
+            Rock(4, 1, "####"),
+            Rock(3, 3, ".#.###.#."),
+            Rock(3, 3, "###..#..#"),
+            Rock(1, 4, "####"),
+            Rock(2, 2, "####"),
+        )
+
+        var commandIndex = 0
+        var rockIndex = 0
+            set(value) {
+                field = value
+                rock = rockContent[rockIndex % rockContent.size]
+            }
+        var rockX = 2
+        var rockY = 3
+
+        var rock = rockContent[0]
+            private set
+
         data class Cell(var content: Char)
 
         private val columns = MutableList(7) { mutableMapOf<Int, Cell>() }
