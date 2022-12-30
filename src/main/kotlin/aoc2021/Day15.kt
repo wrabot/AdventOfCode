@@ -25,5 +25,5 @@ class Day15(test: Int? = null) : Day(2021, 15, test) {
         override fun toString() = risk.toString()
     }
 
-    private fun minRisk(cave: Board<Cell>) = shortPath(cave.points.first(), cave.points.last(), { cave[it].risk }) { cave.neighbors4(it) }.drop(1).sumOf { cave[it].risk }
+    private fun minRisk(cave: Board<Cell>) = shortPath(cave.points.first(), cave.points.last(), { _, destination -> cave[destination].risk }) { cave.neighbors4(it) }.drop(1).sumOf { cave[it].risk }
 }

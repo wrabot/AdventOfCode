@@ -2,44 +2,58 @@ package tools
 
 import java.util.*
 
-fun <Node : Any> shortPath(start: Node, end: Node, neighbors: (Node) -> List<Node>) =
-    shortPath(start, isEnd = { this == end }, neighbors = neighbors)
-
-fun <Node : Any> shortPath(start: Node, end: Node, cost: (Node) -> Int, neighbors: (Node) -> List<Node>) =
-    shortPath(start, isEnd = { this == end }, { _, currentCost, destination -> currentCost + cost(destination) }, neighbors)
+fun <Node : Any> shortPath(
+    start: Node,
+    end: Node,
+    cost: (origin: Node, destination: Node) -> Int = { _, _ -> 1 },
+    estimatedEndCost: (Node) -> Int = { 0 }, // A*
+    neighbors: (Node) -> List<Node>
+) = shortPath(start, isEnd = { this == end }, cost, estimatedEndCost, neighbors)
 
 fun <Node : Any> shortPath(
     start: Node,
     isEnd: Node.() -> Boolean,
-    cost: (origin: Node, currentCost: Int, destination: Node) -> Int = { _, currentCost, _ -> currentCost + 1 },
+    cost: (origin: Node, destination: Node) -> Int = { _, _ -> 1 },
+    toEndMinimalCost: (Node) -> Int = { 0 }, // A*
     neighbors: Node.() -> List<Node>
 ): List<Node> {
-    val predecessor = mutableMapOf<Node, Node>()
-    val costs = mutableMapOf(start to 0)
-    val todo = TreeMap<Int, MutableList<Node>>()
-    todo[0] = mutableListOf(start)
+    val extendedStart = ExtendedNode(start, 0, toEndMinimalCost(start), null)
+    val extendedNodes = mutableMapOf(start to extendedStart)
+    val todo = TreeMap<Int, MutableList<ExtendedNode<Node>>>()
+    todo[extendedStart.toEndMinimalCost] = mutableListOf(extendedStart)
     while (true) {
-        val (currentCost, nodes) = todo.firstEntry() ?: break
-        val currentNode = nodes.first()
-        if (currentNode.isEnd()) return generateSequence(currentNode) { predecessor[it] }.toList().reversed()
-        todo.remove(currentCost, currentNode)
-        neighbors(currentNode).forEach { nextNode ->
-            val oldCost = costs[nextNode]
-            val nextCost = cost(currentNode, currentCost, nextNode)
-            if (nextCost < (oldCost ?: Int.MAX_VALUE)) {
-                predecessor[nextNode] = currentNode
-                costs[nextNode] = nextCost
-                todo.getOrPut(nextCost) { mutableListOf() }.add(nextNode)
-                if (oldCost != null) todo.remove(oldCost, nextNode)
+        val currentExtendedNode = todo.firstEntry()?.value?.first() ?: return emptyList()
+        if (currentExtendedNode.node.isEnd()) return generateSequence(currentExtendedNode) { it.predecessor }.map { it.node }.toList().reversed()
+        todo.remove(currentExtendedNode)
+        neighbors(currentExtendedNode.node).forEach { nextNode ->
+            val newFromStartCost = currentExtendedNode.fromStartCost + cost(currentExtendedNode.node, nextNode)
+            val nextExtendedNode = extendedNodes[nextNode]
+            if (nextExtendedNode == null) {
+                ExtendedNode(nextNode, newFromStartCost, newFromStartCost + toEndMinimalCost(nextNode), currentExtendedNode).apply {
+                    extendedNodes[nextNode] = this
+                    todo.add(this)
+                }
+            } else if (newFromStartCost < nextExtendedNode.fromStartCost) {
+                nextExtendedNode.predecessor = currentExtendedNode
+                nextExtendedNode.fromStartCost = newFromStartCost
+                val newToEndMinimalCost = newFromStartCost + toEndMinimalCost(nextNode)
+                if (nextExtendedNode.toEndMinimalCost != newToEndMinimalCost) {
+                    todo.remove(nextExtendedNode)
+                    nextExtendedNode.toEndMinimalCost = newToEndMinimalCost
+                    todo.add(nextExtendedNode)
+                }
             }
         }
     }
-    return emptyList()
 }
 
-private fun <Node : Any> TreeMap<Int, MutableList<Node>>.remove(cost: Int, node: Node) = apply {
-    this[cost]!!.let {
+private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: Int, var toEndMinimalCost: Int, var predecessor: ExtendedNode<Node>?)
+
+private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.add(node: ExtendedNode<Node>) = getOrPut(node.toEndMinimalCost) { mutableListOf() }.add(node)
+
+private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.remove(node: ExtendedNode<Node>) = apply {
+    this[node.toEndMinimalCost]?.let {
         it.remove(node)
-        if (it.isEmpty()) remove(cost)
+        if (it.isEmpty()) remove(node.toEndMinimalCost)
     }
 }
