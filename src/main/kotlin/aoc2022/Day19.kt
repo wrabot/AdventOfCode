@@ -10,22 +10,26 @@ class Day19(test: Int? = null) : Day(2022, 19, test) {
         //log("solve $id $duration")
         val maxOreCost = listOf(clayRobotOreCost, obsidianRobotOreCost, geodeRobotOreCost).max()
         var done = mutableSetOf(State(List(4) { 0 }, List(4) { if (it == oreIndex) 1 else 0 }))
-        repeat(duration) {
-            //log("minute ${it + 1}")
+        var maxGeodes = 0
+        repeat(duration) { minute ->
+            val remaining = duration - minute
+            //log("minute ${minute + 1}")
             val todo = done.toMutableList()
             done = mutableSetOf()
             while (todo.isNotEmpty()) {
                 val state = todo.removeLast()
                 //log("state $state")
-                choices(state).forEach {
+                choices(state).forEach { choice ->
                     val minerals = state.minerals.toMutableList()
                     val robots = state.robots.toMutableList()
-                    turn(minerals, robots, it)
+                    turn(minerals, robots, choice)
+                    maxGeodes = maxGeodes.coerceAtLeast(minerals[geodeIndex])
 
                     if ( // more robots is useless
                         robots[oreIndex] <= maxOreCost &&
                         robots[clayIndex] <= obsidianRobotClayCost &&
-                        robots[obsidianIndex] <= geodeRobotObsidianCost
+                        robots[obsidianIndex] <= geodeRobotObsidianCost &&
+                        ((remaining - 1) * remaining) / 2 + minerals[geodeIndex] + remaining * robots[obsidianIndex] > maxGeodes
                     ) {
                         // avoid to keep too many resources
                         minerals[oreIndex] = minerals[oreIndex].coerceAtMost(maxOreCost * 3)
@@ -37,7 +41,7 @@ class Day19(test: Int? = null) : Day(2022, 19, test) {
                 }
             }
         }
-        return done.maxOf { it.minerals[geodeIndex] }
+        return maxGeodes
     }
 
     private fun Blueprint.choices(state: State) = (0..3).filter {
