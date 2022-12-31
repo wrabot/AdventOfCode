@@ -8,6 +8,7 @@ class Day16(test: Int? = null) : Day(2022, 16, test) {
     override fun solvePart2() = (0 until (1 shl (targets.size - 1))).maxOf { id ->
         val mine = targets.filterIndexed { index, _ -> id and (1 shl index) == 0 }
         val elephant = targets - mine.toSet()
+        if (mine.size < targets.size / 2 || elephant.size < targets.size / 2) return@maxOf 0
         max(mine, "AA", 0, 0, 26) + max(elephant, "AA", 0, 0, 26)
     }
 
