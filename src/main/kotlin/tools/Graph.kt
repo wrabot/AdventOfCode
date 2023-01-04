@@ -20,7 +20,7 @@ fun <Node : Any> shortPath(
     val extendedStart = ExtendedNode(start, 0, toEndMinimalCost(start), null)
     val extendedNodes = mutableMapOf(start to extendedStart)
     val todo = TreeMap<Int, MutableList<ExtendedNode<Node>>>()
-    todo[extendedStart.toEndMinimalCost] = mutableListOf(extendedStart)
+    todo[extendedStart.minimalCost] = mutableListOf(extendedStart)
     while (true) {
         val currentExtendedNode = todo.firstEntry()?.value?.first() ?: return emptyList()
         if (currentExtendedNode.node.isEnd()) return generateSequence(currentExtendedNode) { it.predecessor }.map { it.node }.toList().reversed()
@@ -29,17 +29,16 @@ fun <Node : Any> shortPath(
             val newFromStartCost = currentExtendedNode.fromStartCost + cost(currentExtendedNode.node, nextNode)
             val nextExtendedNode = extendedNodes[nextNode]
             if (nextExtendedNode == null) {
-                ExtendedNode(nextNode, newFromStartCost, newFromStartCost + toEndMinimalCost(nextNode), currentExtendedNode).apply {
-                    extendedNodes[nextNode] = this
-                    todo.add(this)
-                }
+                val extendedNode = ExtendedNode(nextNode, newFromStartCost, newFromStartCost + toEndMinimalCost(nextNode), currentExtendedNode)
+                extendedNodes[nextNode] = extendedNode
+                todo.add(extendedNode)
             } else if (newFromStartCost < nextExtendedNode.fromStartCost) {
                 nextExtendedNode.predecessor = currentExtendedNode
                 nextExtendedNode.fromStartCost = newFromStartCost
                 val newToEndMinimalCost = newFromStartCost + toEndMinimalCost(nextNode)
-                if (nextExtendedNode.toEndMinimalCost != newToEndMinimalCost) {
+                if (nextExtendedNode.minimalCost != newToEndMinimalCost) {
                     todo.remove(nextExtendedNode)
-                    nextExtendedNode.toEndMinimalCost = newToEndMinimalCost
+                    nextExtendedNode.minimalCost = newToEndMinimalCost
                     todo.add(nextExtendedNode)
                 }
             }
@@ -47,13 +46,14 @@ fun <Node : Any> shortPath(
     }
 }
 
-private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: Int, var toEndMinimalCost: Int, var predecessor: ExtendedNode<Node>?)
+private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: Int, var minimalCost: Int, var predecessor: ExtendedNode<Node>?)
 
-private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.add(node: ExtendedNode<Node>) = getOrPut(node.toEndMinimalCost) { mutableListOf() }.add(node)
+private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.add(node: ExtendedNode<Node>) =
+    getOrPut(node.minimalCost) { mutableListOf() }.add(node)
 
 private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.remove(node: ExtendedNode<Node>) = apply {
-    this[node.toEndMinimalCost]?.let {
+    this[node.minimalCost]?.let {
         it.remove(node)
-        if (it.isEmpty()) remove(node.toEndMinimalCost)
+        if (it.isEmpty()) remove(node.minimalCost)
     }
 }
