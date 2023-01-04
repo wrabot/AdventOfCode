@@ -1,7 +1,5 @@
 package tools
 
-import java.util.*
-
 fun <Node : Any> shortPath(
     start: Node,
     end: Node,
@@ -19,10 +17,10 @@ fun <Node : Any> shortPath(
 ): List<Node> {
     val extendedStart = ExtendedNode(start, 0, toEndMinimalCost(start), null)
     val extendedNodes = mutableMapOf(start to extendedStart)
-    val todo = TreeMap<Int, MutableList<ExtendedNode<Node>>>()
-    todo[extendedStart.minimalCost] = mutableListOf(extendedStart)
+    val todo = mutableListOf<MutableList<ExtendedNode<Node>>>()
+    todo.add(extendedStart)
     while (true) {
-        val currentExtendedNode = todo.firstEntry()?.value?.first() ?: return emptyList()
+        val currentExtendedNode = todo.firstOrNull()?.first() ?: return emptyList()
         if (currentExtendedNode.node.isEnd()) return generateSequence(currentExtendedNode) { it.predecessor }.map { it.node }.toList().reversed()
         todo.remove(currentExtendedNode)
         neighbors(currentExtendedNode.node).forEach { nextNode ->
@@ -48,12 +46,23 @@ fun <Node : Any> shortPath(
 
 private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: Int, var minimalCost: Int, var predecessor: ExtendedNode<Node>?)
 
-private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.add(node: ExtendedNode<Node>) =
-    getOrPut(node.minimalCost) { mutableListOf() }.add(node)
+private fun <Node : Any> MutableList<MutableList<ExtendedNode<Node>>>.add(node: ExtendedNode<Node>) {
+    val index = binarySearch { it.first().minimalCost - node.minimalCost }
+    if (index >= 0) {
+        this[index].add(node)
+    } else {
+        add(-index - 1, mutableListOf(node))
+    }
+}
 
-private fun <Node : Any> TreeMap<Int, MutableList<ExtendedNode<Node>>>.remove(node: ExtendedNode<Node>) = apply {
-    this[node.minimalCost]?.let {
-        it.remove(node)
-        if (it.isEmpty()) remove(node.minimalCost)
+private fun <Node : Any> MutableList<MutableList<ExtendedNode<Node>>>.remove(node: ExtendedNode<Node>) {
+    val index = binarySearch { it.first().minimalCost - node.minimalCost }
+    if (index >= 0) {
+        val list = this[index]
+        if (list.size <= 1) {
+            removeAt(index)
+        } else {
+            list.remove(node)
+        }
     }
 }
