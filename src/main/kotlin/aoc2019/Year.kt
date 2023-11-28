@@ -7,4 +7,5 @@ fun checkAll() {
     //Day3(2).check(159,610)
     //Day3(3).check(135,410)
     Day3().check(865,35038)
+    Day4().check(1790,1206)
 }
