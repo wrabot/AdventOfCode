@@ -10,11 +10,10 @@ class Day5 : Day(2019, 5) {
     private val code = lines.first().split(",").map { it.toInt() }
 
     data class Runtime(val memory: MutableList<Int>, val input: Int) {
-        private var offset: Int = 0
-        var output: Int = 0
-            private set
+        private var offset = 0
 
         fun execute(): Int {
+            var output = 0
             while (offset < memory.size) {
                 val opcode = read()
                 val firstMode = opcode / 100 % 10
