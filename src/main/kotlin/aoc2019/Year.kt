@@ -11,11 +11,23 @@ fun checkAll() {
     Day4().check(1790, 1206)
     Day5().check(15097178, 1558663)
     Day6().check(130681, 313)
-    */
     Day7().check(116680, 89603079)
     Day7(1).checkPart1(43210)
     Day7(2).checkPart1(54321)
     Day7(3).checkPart1(65210)
     Day7(4).checkPart2(139629729)
     Day7(5).checkPart2(18216)
+     */
+    Day8().check(
+        1584,
+        """
+        
+        #  #  ##   ##  ####  ##  
+        # #  #  # #  # #    #  # 
+        ##   #    #    ###  #    
+        # #  #    # ## #    #    
+        # #  #  # #  # #    #  # 
+        #  #  ##   ### ####  ##  
+        """.trimIndent()
+    )
 }
