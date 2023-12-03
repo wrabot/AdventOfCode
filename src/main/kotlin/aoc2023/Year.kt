@@ -6,4 +6,5 @@ fun checkAll() {
     Day2().check(2727, 56580)
     Day3(1).check(4361, 467835)
     Day3().check(509115, 75220503)
+    Day4().check(Unit, Unit)
 }
