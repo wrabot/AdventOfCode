@@ -3,6 +3,7 @@ package aoc2022
 import tools.Board
 import tools.Day
 import tools.Point
+import tools.log
 import kotlin.math.abs
 
 class Day9(test: Int? = null) : Day(2022, 9, test) {

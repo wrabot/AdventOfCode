@@ -47,9 +47,6 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
     protected val input = javaClass.classLoader!!.getResource("aoc$year/day$day/$inputFileName")!!.readText()
     protected val lines = input.lines()
 
-    protected fun log(message: Any?) = System.err.println(message)
-    protected fun <T> T.log() = apply { log(this) }
-
     protected abstract fun solvePart1(): Any
     protected abstract fun solvePart2(): Any
 
