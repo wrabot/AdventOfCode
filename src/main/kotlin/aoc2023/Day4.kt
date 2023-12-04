@@ -3,6 +3,27 @@ package aoc2023
 import tools.Day
 
 class Day4(test: Int? = null) : Day(2023, 4, test) {
-    override fun solvePart1() = Unit
-    override fun solvePart2() = Unit
+    override fun solvePart1() = cards.sumOf { card ->
+        card.myWinning.let { if (it <= 1) it else 1 shl (it - 1) }
+    }
+
+    override fun solvePart2(): Int {
+        cards.forEach { card ->
+            cards.subList(card.id, card.id + card.myWinning).forEach {
+                it.count += card.count
+            }
+        }
+        return cards.sumOf { it.count }
+    }
+
+    private val cards = lines.mapIndexed { id, line ->
+        line.split(":")[1].split("|").map { list ->
+            list.trimEnd().chunked(3).map { it.trim().toInt() }
+        }.let { (winning, mine) -> Card(id + 1, winning.toSet(), mine.toSet()) }
+    }
+
+    data class Card(val id: Int, val winning: Set<Int>, val mime: Set<Int>) {
+        val myWinning = winning.intersect(mime).count()
+        var count = 1
+    }
 }
