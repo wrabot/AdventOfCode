@@ -1,6 +1,8 @@
 package aoc2023
 
 import tools.Day
+import tools.groupValues
+import tools.toWords
 
 class Day4(test: Int? = null) : Day(2023, 4, test) {
     override fun solvePart1() = cards.sumOf { card ->
@@ -16,14 +18,16 @@ class Day4(test: Int? = null) : Day(2023, 4, test) {
         return cards.sumOf { it.count }
     }
 
-    private val cards = lines.mapIndexed { id, line ->
-        line.split(":")[1].split("|").map { list ->
-            list.trimEnd().chunked(3).map { it.trim().toInt() }
-        }.let { (winning, mine) -> Card(id + 1, winning.toSet(), mine.toSet()) }
+    private val cards = Regex("Card\\s+(\\d+):(.*)\\|(.*)").run {
+        lines.map { line ->
+            groupValues(line).let { Card(it[0].toInt(), it[1].toIntSet(), it[2].toIntSet()) }
+        }
     }
 
-    data class Card(val id: Int, val winning: Set<Int>, val mime: Set<Int>) {
-        val myWinning = winning.intersect(mime).count()
+    data class Card(val id: Int, val winning: Set<Int>, val mine: Set<Int>) {
+        val myWinning = winning.intersect(mine).count()
         var count = 1
     }
+
+    private fun String.toIntSet() = toWords().map { it.toInt() }.toSet()
 }
