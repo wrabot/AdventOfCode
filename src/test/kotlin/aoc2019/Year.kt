@@ -57,4 +57,14 @@ class Year2019 {
         //Day9(3).checkPart1(listOf(1125899906842624))
         Day9().check(listOf(2775723069), 49115)
     }
+
+    @Test
+    fun day10() {
+        //Day10(0).checkPart1(8)
+        //Day10(1).checkPart1(33)
+        //Day10(2).checkPart1(35)
+        //Day10(3).checkPart1(41)
+        //Day10(4).check(210, 802)
+        Day10().check(230, 1205)
+    }
 }
