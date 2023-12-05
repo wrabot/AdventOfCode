@@ -14,3 +14,4 @@ fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
 }
 
 fun IntRange.size() = last - first + 1
+fun LongRange.size() = last - first + 1
