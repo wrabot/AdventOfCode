@@ -10,5 +10,6 @@ fun checkAll() {
     Day4(1).check(13, 30)
     Day4().check(25571, 8805731)
      */
-    Day5().check(Unit, Unit)
+    Day5(1).check(35, 46)
+    Day5().check(462648396, 2520479)
 }
