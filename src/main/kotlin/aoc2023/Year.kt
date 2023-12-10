@@ -19,4 +19,9 @@ fun checkAll() {
     Day8().check(19783, 9177460370549)
     Day9(1).check(114, 2)
     Day9().check(1868368343, 1022)
+    Day10(1).checkPart1(8)
+    Day10(2).check(23, 4)
+    Day10(3).check(70, 8)
+    Day10(4).check(80, 10)
+    Day10().check(6812, 527)
 }
