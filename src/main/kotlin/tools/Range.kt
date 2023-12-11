@@ -1,6 +1,7 @@
 package tools
 
 import java.lang.Integer.max
+import kotlin.math.min
 
 fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
     sortedBy { it.first }.forEach {
@@ -12,6 +13,8 @@ fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
         }
     }
 }
+
+fun rangeMinMax(a: Int, b: Int) = min(a, b)..max(a, b)
 
 fun IntRange.size() = last - first + 1
 fun LongRange.size() = last - first + 1
