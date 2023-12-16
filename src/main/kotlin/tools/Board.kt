@@ -8,8 +8,8 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         }
     }
 
-    val directions4 = listOf(Point(1, 0), Point(-1, 0), Point(0, 1), Point(0, -1))
-    val directions8 = directions4 + listOf(Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1))
+    val directions4 = Direction.entries.filterNot { it.isDiadonal }.map { it.delta }
+    val directions8 = Direction.entries.map { it.delta }
 
     init {
         if (cells.size != width * height) throw Error("invalid board ${cells.size} !=  $width * $height (${width * height})")
