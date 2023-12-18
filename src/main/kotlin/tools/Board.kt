@@ -39,12 +39,9 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     fun zone8(point: Point, predicate: (Point) -> Boolean) =
         zone(point) { neighbors8(it).filter(predicate) }
 
-    fun zone(point: Point, neighbors: (Point) -> List<Point>): List<Point> {
-        val zone = mutableListOf(point)
-        var index = 0
-        while (index < zone.size) {
-            zone.addAll(neighbors(zone[index++]).filter { it !in zone })
+    fun zone(point: Point, neighbors: (Point) -> List<Point>): Set<Point> =
+        sortedSetOf<Point>({ p1, p2 -> (p2.y - p1.y) * width + p2.x - p1.x }, point).apply {
+            val todo = mutableListOf(point)
+            while (true) neighbors(todo.removeFirstOrNull() ?: break).forEach { if (add(it)) todo.add(it) }
         }
-        return zone
-    }
 }
