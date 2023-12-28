@@ -21,17 +21,24 @@ fun <Node : Any> shortPath(
     while (true) {
         val currentExtendedNode = todo.removeFirstOrNull() ?: return emptyList()
         currentExtendedNode.todo = false
-        if (currentExtendedNode.node.isEnd()) return generateSequence(currentExtendedNode) { it.predecessor }.map { it.node }.toList().reversed()
+        if (currentExtendedNode.node.isEnd())
+            return generateSequence(currentExtendedNode) { it.predecessor }.map { it.node }.toList().reversed()
         neighbors(currentExtendedNode.node).forEach { nextNode ->
             val newFromStartCost = currentExtendedNode.fromStartCost + cost(currentExtendedNode.node, nextNode)
             val nextExtendedNode = extendedNodes[nextNode]
             when {
                 nextExtendedNode == null -> {
-                    val extendedNode = ExtendedNode(nextNode, newFromStartCost, newFromStartCost + toEndMinimalCost(nextNode), true)
+                    val extendedNode = ExtendedNode(
+                        nextNode,
+                        newFromStartCost,
+                        newFromStartCost + toEndMinimalCost(nextNode),
+                        true
+                    )
                     extendedNode.predecessor = currentExtendedNode
                     extendedNodes[nextNode] = extendedNode
                     todo.add(-todo.binarySearch(extendedNode) - 1, extendedNode)
                 }
+
                 newFromStartCost < nextExtendedNode.fromStartCost -> {
                     var toIndex = todo.size
                     if (nextExtendedNode.todo) {
@@ -49,7 +56,12 @@ fun <Node : Any> shortPath(
     }
 }
 
-private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: Int, var minimalCost: Int, var todo: Boolean) : Comparable<ExtendedNode<Node>> {
+private data class ExtendedNode<Node : Any>(
+    val node: Node,
+    var fromStartCost: Int,
+    var minimalCost: Int,
+    var todo: Boolean
+) : Comparable<ExtendedNode<Node>> {
     var predecessor: ExtendedNode<Node>? = null
 
     override fun compareTo(other: ExtendedNode<Node>): Int {
@@ -62,4 +74,8 @@ private data class ExtendedNode<Node : Any>(val node: Node, var fromStartCost: I
     companion object {
         private var nextId = Int.MIN_VALUE
     }
+}
+
+fun List<Triple<Any, Any, Any?>>.toGraphWiz() = joinToString("\n", "digraph {\n", "\n}") {
+    "${it.first} -> ${it.second}" + if (it.third == null) "" else " [label=${it.third}]"
 }
