@@ -19,32 +19,46 @@ class Day24(test: Int? = null) : Day(2023, 24, test) {
     private fun inLimit(d: Double) = d >= limit.first && d <= limit.last
 
     override fun solvePart2(): Long {
-        val v = PointD(
-            hailstones.map { it.first.x to it.second.x }.solve(),
-            hailstones.map { it.first.y to it.second.y }.solve(),
-            hailstones.map { it.first.z to it.second.z }.solve(),
-        )
-        val lines = hailstones.take(2).map { it.first to it.second - v }
-        val point = intersect2D(lines[0], lines[1])!!
-        val z = lines[0].run { first.z + second.z * (point.x - first.x) / second.x }
-        return point.x.roundToLong() + point.y.roundToLong() + z.roundToLong()
+        val speeds = hailstones.map { it.first.x to it.second.x }.possibleSpeeds().flatMap { x ->
+            hailstones.map { it.first.y to it.second.y }.possibleSpeeds().flatMap { y ->
+                hailstones.map { it.first.z to it.second.z }.possibleSpeeds().map { z ->
+                    PointD(x.toDouble(), y.toDouble(), z.toDouble())
+                }
+            }
+        }
+        return speeds.firstNotNullOf { speed ->
+            rockSpeedToRockPosition(speed).takeIf { checkRock(it, speed) }
+        }.run { x + y + z }.toLong()
     }
 
-    private fun List<Pair<Double, Double>>.solve() = flatMapIndexed { index, first ->
+    private fun List<Pair<Double, Double>>.possibleSpeeds() = flatMapIndexed { index, first ->
         drop(index + 1).mapNotNull {
             if (it.second == first.second) it.second.toLong() to abs(it.first - first.first).toLong() else null
         }
     }.groupBy({ it.first }, { it.second }).mapValues { it.value.reduce { a, b -> gcd(a, b) } }
-        .toList().sortedBy { abs(it.second) }.run {
-            var speed = 0L
-            while (!all { it.second.isDivideBy(speed - it.first) }) {
-                if (all { it.second.isDivideBy(-speed - it.first) }) return@run -speed
-                speed++
+        .toList().sortedBy { it.second }.run {
+            val max = minOf { abs(it.first) + it.second }
+            (-max..max).filter { speed ->
+                all { it.second.isDivideBy(speed - it.first) }
             }
-            speed
-        }.toDouble()
+        }
 
     private fun Long.isDivideBy(divider: Long) = divider != 0L && this % divider == 0L
+
+    private fun checkRock(position: PointD, speed: PointD) =
+        hailstones.map { (it.first - position) to (speed - it.second) }
+            .all { it.first * it.second.x == it.second * it.first.x }
+
+    private fun rockSpeedToRockPosition(rockSpeed: PointD): PointD {
+        val lines = hailstones.take(2).map { it.first to it.second - rockSpeed }
+        val point2D = intersect2D(lines[0], lines[1])!!
+        val z = lines[0].run { first.z + second.z * (point2D.x - first.x) / second.x }
+        return PointD(
+            point2D.x.roundToLong().toDouble(),
+            point2D.y.roundToLong().toDouble(),
+            z.roundToLong().toDouble()
+        )
+    }
 
     // common
 
