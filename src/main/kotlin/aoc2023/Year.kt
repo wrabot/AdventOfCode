@@ -54,6 +54,6 @@ fun checkAll() {
     Day24(1).checkPart1(2)
     Day24(1).check(2, 47)
     Day24().check(27732, 641619849766168)
-    //Day25(1).check(Unit, Unit)
-    //Day25().check(Unit, Unit)
+    Day25(1).checkPart1(54)
+    Day25().checkPart1(543564)
 }
