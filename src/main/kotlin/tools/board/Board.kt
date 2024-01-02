@@ -1,4 +1,4 @@
-package tools
+package tools.board
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class Board<T>(val width: Int, val height: Int, val cells: List<T>) {

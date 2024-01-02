@@ -1,4 +1,6 @@
-package tools
+package tools.board
+
+import tools.range.hasIntersection
 
 data class Block(val start: Point, val end: Point) {
     fun intersect(other: Block) = Block(

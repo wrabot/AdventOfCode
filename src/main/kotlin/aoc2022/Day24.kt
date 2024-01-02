@@ -2,10 +2,10 @@
 
 package aoc2022
 
-import tools.Board
+import tools.board.Board
 import tools.Day
-import tools.Point
-import tools.shortPath
+import tools.board.Point
+import tools.graph.shortPath
 
 class Day24(test: Int? = null) : Day(2022, 24, test) {
     override fun solvePart1() = solve(0, entrance, exit)

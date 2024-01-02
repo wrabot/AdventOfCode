@@ -1,4 +1,4 @@
-package tools
+package tools.graph
 
 data class EdmondsKarp(val size: Int, val edges: List<ValuedEdge>) {
     private val neighbors = edges.indices.groupBy { edges[it].source }
@@ -49,5 +49,3 @@ data class EdmondsKarp(val size: Int, val edges: List<ValuedEdge>) {
         return connected
     }
 }
-
-data class ValuedEdge(val source: Int, val destination: Int, val value: Long)

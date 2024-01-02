@@ -1,7 +1,7 @@
 package aoc2020
 
 import tools.Day
-import tools.times
+import tools.math.times
 
 class Day13(test: Int? = null) : Day(2020, 13, test) {
     override fun solvePart1(): Any {

@@ -1,7 +1,7 @@
 package aoc2022
 
 import tools.Day
-import tools.shortPath
+import tools.graph.shortPath
 
 class Day16(test: Int? = null) : Day(2022, 16, test) {
     override fun solvePart1() = max(targets, "AA", 0, 0, 30)

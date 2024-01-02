@@ -1,5 +1,4 @@
-package tools
-
+package tools.math
 
 fun List<Double>.polynomialCoefficients(): List<Double> =
     if (all { it == 0.0 }) emptyList() else zipWithNext().map { it.second - it.first }.polynomialCoefficients() + last()

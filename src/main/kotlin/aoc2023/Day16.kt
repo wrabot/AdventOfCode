@@ -1,7 +1,10 @@
 package aoc2023
 
 import tools.*
-import tools.Direction.*
+import tools.board.Direction.*
+import tools.board.Board
+import tools.board.Direction
+import tools.board.Point
 import kotlin.math.max
 
 class Day16(test: Int? = null) : Day(2023, 16, test) {

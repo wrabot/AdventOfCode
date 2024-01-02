@@ -1,8 +1,8 @@
 package aoc2021
 
-import tools.Block
+import tools.board.Block
 import tools.Day
-import tools.Point
+import tools.board.Point
 
 class Day22(test: Int? = null) : Day(2021, 22, test) {
     override fun solvePart1(): Any {

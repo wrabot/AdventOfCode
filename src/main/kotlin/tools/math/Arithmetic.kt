@@ -1,4 +1,4 @@
-package tools
+package tools.math
 
 tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 

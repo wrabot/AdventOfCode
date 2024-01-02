@@ -1,6 +1,10 @@
 package aoc2023
 
 import tools.*
+import tools.board.Block
+import tools.board.Point
+import tools.range.hasIntersection
+import tools.range.move
 
 class Day22(test: Int? = null) : Day(2023, 22, test) {
     override fun solvePart1() = cubes.count { cube ->

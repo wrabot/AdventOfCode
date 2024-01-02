@@ -1,7 +1,7 @@
 package aoc2022
 
 import tools.Day
-import tools.Point
+import tools.board.Point
 import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(2022, 17, test) {
@@ -33,7 +33,9 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
                 }
 
                 // use to find params
-                if (findParams) patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }.add(Point(rockIndex, size()))
+                if (findParams) patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }.add(
+                    Point(rockIndex, size())
+                )
 
                 // reduce time
                 clean()

@@ -2,9 +2,9 @@
 
 package aoc2022
 
-import tools.Board
+import tools.board.Board
 import tools.Day
-import tools.Point
+import tools.board.Point
 
 class Day23(test: Int? = null) : Day(2022, 23, test) {
     override fun solvePart1(): Int {

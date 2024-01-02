@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Board
+import tools.board.Board
 import tools.Day
 
 class Day3 : Day(2020, 3) {

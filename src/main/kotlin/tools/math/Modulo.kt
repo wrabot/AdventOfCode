@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package tools
+package tools.math
 
 fun Long.times(multiplier: Long, modulo: Long): Long {
     if (this < 0) error("negative multiplicand")

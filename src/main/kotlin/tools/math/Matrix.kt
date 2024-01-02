@@ -1,6 +1,6 @@
 @file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
-package tools
+package tools.math
 
 // Not tested yet !!!
 class Matrix(val height: Int, val width: Int) {

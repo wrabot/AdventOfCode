@@ -1,8 +1,8 @@
 package aoc2021
 
-import tools.Board
+import tools.board.Board
 import tools.Day
-import tools.shortPath
+import tools.graph.shortPath
 
 class Day15(test: Int? = null) : Day(2021, 15, test) {
     override fun solvePart1() =

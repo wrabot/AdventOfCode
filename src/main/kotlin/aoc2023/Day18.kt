@@ -1,7 +1,10 @@
 package aoc2023
 
 import tools.*
-import tools.Direction.*
+import tools.board.Direction.*
+import tools.board.Board
+import tools.board.Direction
+import tools.board.Point
 
 class Day18(test: Int? = null) : Day(2023, 18, test) {
     override fun solvePart1() = instructionsPart1.solve()

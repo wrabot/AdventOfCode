@@ -1,8 +1,8 @@
 package aoc2022
 
-import tools.Board
+import tools.board.Board
 import tools.Day
-import tools.Point
+import tools.board.Point
 
 class Day22(test: Int? = null) : Day(2022, 22, test) {
     override fun solvePart1() = solve { State(Point((width + it.position.x) % width, (height + it.position.y) % height), it.directionIndex) }

@@ -1,6 +1,5 @@
-package tools
+package tools.board
 
-import kotlin.math.abs
 import kotlin.math.sqrt
 
 data class PointD(val x: Double = 0.0, val y: Double = 0.0, val z: Double = 0.0) {

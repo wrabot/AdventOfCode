@@ -1,8 +1,8 @@
 package aoc2020
 
-import tools.Board
+import tools.board.Board
 import tools.Day
-import tools.Point
+import tools.board.Point
 
 class Day11(test: Int? = null) : Day(2020, 11, test) {
     override fun solvePart1() = count(4) { seat, direction -> getOrNull(seat + direction)?.current == '#' }

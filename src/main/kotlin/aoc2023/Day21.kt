@@ -1,6 +1,10 @@
 package aoc2023
 
 import tools.*
+import tools.board.Board
+import tools.board.Point
+import tools.math.polynomial
+import tools.math.polynomialCoefficients
 
 class Day21(test: Int? = null) : Day(2023, 21, test) {
     override fun solvePart1(): Int {

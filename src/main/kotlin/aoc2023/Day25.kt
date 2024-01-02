@@ -1,8 +1,8 @@
 package aoc2023
 
 import tools.Day
-import tools.EdmondsKarp
-import tools.ValuedEdge
+import tools.graph.EdmondsKarp
+import tools.graph.ValuedEdge
 
 class Day25(test: Int? = null) : Day(2023, 25, test) {
     override fun solvePart1(): Int {

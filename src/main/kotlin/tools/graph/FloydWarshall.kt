@@ -1,4 +1,4 @@
-package tools
+package tools.graph
 
 class FloydWarshall(val size: Int, weights: Map<Pair<Int, Int>, Double>) {
     val indices = 0..<size

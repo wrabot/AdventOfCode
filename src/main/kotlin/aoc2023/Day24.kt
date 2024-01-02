@@ -1,8 +1,8 @@
 package aoc2023
 
 import tools.Day
-import tools.PointD
-import tools.gcd
+import tools.board.PointD
+import tools.math.gcd
 import kotlin.math.abs
 import kotlin.math.roundToLong
 
