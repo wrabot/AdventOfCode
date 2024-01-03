@@ -1,5 +1,6 @@
 package tools
 
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -22,8 +23,11 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
     }
 
     fun check(expectedPart1: Any, expectedPart2: Any) {
-        checkPart1(expectedPart1)
-        checkPart2(expectedPart2)
+        val duration = measureTime {
+            checkPart1(expectedPart1)
+            checkPart2(expectedPart2)
+        }
+        if (duration > 1.seconds) log("$info is slow: $duration")
     }
 
     fun checkPart1(expectedPart1: Any) {
