@@ -8,12 +8,12 @@ class Day25(test: Int? = null) : Day(2023, 25, test) {
     override fun solvePart1(): Int {
         val edmondsKarp = EdmondsKarp(nodes.size, wires.flatMap {
             listOf(
-                ValuedEdge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1),
-                ValuedEdge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1),
+                ValuedEdge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1.0),
+                ValuedEdge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1.0),
             )
         })
         var sink = 0
-        while (edmondsKarp.maxFlow(0, sink++) != 3L) edmondsKarp.clear()
+        while (edmondsKarp.maxFlow(0, sink++) != 3.0) edmondsKarp.clear()
         return edmondsKarp.connected(0).size.let { it * (nodes.size - it) }
     }
 

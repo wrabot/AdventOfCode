@@ -1,6 +1,6 @@
 package tools.graph
 
-data class ValuedEdge(val source: Int, val destination: Int, val value: Long)
+data class ValuedEdge(val source: Int, val destination: Int, val value: Double)
 
 fun bfs(size: Int, start: Int, block: (Int) -> List<Int>) {
     val done = BooleanArray(size)

@@ -2,12 +2,12 @@ package tools.graph
 
 data class EdmondsKarp(val size: Int, val edges: List<ValuedEdge>) {
     private val neighbors = edges.indices.groupBy { edges[it].source }
-    val flows = Array(size) { LongArray(size) }
+    val flows = Array(size) { DoubleArray(size) }
 
-    fun clear() = flows.forEach { it.fill(0) }
+    fun clear() = flows.forEach { it.fill(0.0) }
 
-    fun maxFlow(source: Int, sink: Int): Long {
-        var maxFlow = 0L
+    fun maxFlow(source: Int, sink: Int): Double {
+        var maxFlow = 0.0
         val todo = mutableListOf<Int>()
         val predecessor = arrayOfNulls<Int>(size)
         while (true) {
