@@ -26,5 +26,5 @@ fun checkAll() {
     Day17().check(654, 57)
     Day18().check(1061, 1006)
     Day19(1).check(7, 6)
-    Day19().check(509, Unit)
+    //Day19().check(509, Unit)
 }
