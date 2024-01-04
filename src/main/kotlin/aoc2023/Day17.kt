@@ -81,7 +81,7 @@ class Day17(test: Int? = null) : Day(2023, 17, test) {
         var todo = false
     }
 
-    private val directions = Direction.entries.filterNot { it.isDiadonal }
+    private val directions = Direction.entries.filterNot { it.isDiagonal }
     private val map =
         Board(lines[0].length, lines.size, lines.flatMap { line ->
             line.map {

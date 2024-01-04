@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package tools.graph
 
 data class EdmondsKarp(val size: Int, val edges: List<ValuedEdge>) {

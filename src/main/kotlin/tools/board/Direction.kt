@@ -1,6 +1,6 @@
 package tools.board
 
-enum class Direction(val delta: Point, val c: Char, val isDiadonal: Boolean = false) {
+enum class Direction(val delta: Point, val c: Char, val isDiagonal: Boolean = false) {
     North(Point(0, -1), '^'),
     South(Point(0, 1), 'v'),
     East(Point(1, 0), '>'),

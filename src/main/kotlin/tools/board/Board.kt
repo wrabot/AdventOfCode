@@ -8,7 +8,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         }
     }
 
-    val directions4 = Direction.entries.filterNot { it.isDiadonal }.map { it.delta }
+    val directions4 = Direction.entries.filterNot { it.isDiagonal }.map { it.delta }
     val directions8 = Direction.entries.map { it.delta }
 
     init {

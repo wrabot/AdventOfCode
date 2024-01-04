@@ -36,7 +36,7 @@ class Day23(test: Int? = null) : Day(2023, 23, test) {
         if (path.last() == end) size else getValue(path.last()).filter { it.first !in path }
             .maxOfOrNull { findPathMaxSizePart2(path + it.first, size + it.second) } ?: 0
 
-    private val directions = Direction.entries.filterNot { it.isDiadonal }
+    private val directions = Direction.entries.filterNot { it.isDiagonal }
     private val map = Board(lines[0].length, lines.size, lines.flatMap { it.toList() })
     private val start = map.points.first { map[it] == '.' }
     private val end = map.points.last { map[it] == '.' }
