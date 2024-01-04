@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day2 : Day(2019, 2) {
     override fun solvePart1() = code.execute(12, 2)

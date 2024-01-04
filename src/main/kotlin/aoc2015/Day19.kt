@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 class Day19(test: Int? = null) : Day(2015, 19, test) {
     override fun solvePart1() = replacements.flatMap { (replacement, regex) ->

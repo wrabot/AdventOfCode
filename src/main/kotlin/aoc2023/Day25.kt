@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.graph.EdmondsKarp
 import tools.graph.ValuedEdge
 

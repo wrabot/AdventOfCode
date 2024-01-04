@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day4(test: Int? = null) : Day(2022, 4, test) {
     override fun solvePart1() = sections.count { it[0] in it[1] || it[1] in it[0] }

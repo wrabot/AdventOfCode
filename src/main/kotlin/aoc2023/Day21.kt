@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.*
+import Day
 import tools.board.Board
 import tools.board.Point
 import tools.math.polynomial

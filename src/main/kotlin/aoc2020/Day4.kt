@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day4 : Day(2020, 4) {
     override fun solvePart1() = passports.count { (it.keys intersect mandatory.keys).size == 7 }

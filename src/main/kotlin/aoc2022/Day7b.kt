@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day7b(test: Int? = null) : Day(2022, 7, test) {
     override fun solvePart1() = sizes.filter { it <= 100000 }.sum()

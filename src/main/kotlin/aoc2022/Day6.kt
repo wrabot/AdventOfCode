@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day6(test: Int? = null) : Day(2022, 6, test) {
     override fun solvePart1() = lines.map { it.findMarker(4) }

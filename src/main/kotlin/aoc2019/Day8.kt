@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day8(test: Int? = null) : Day(2019, 8, test) {
     override fun solvePart1() = input.chunked(25 * 6).minBy { image -> image.count { it == '0' } }.let { image ->

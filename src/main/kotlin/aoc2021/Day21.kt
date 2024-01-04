@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day21(test: Int? = null) : Day(2021, 21, test) {
     data class Player(var position: Int, var score: Int = 0) {

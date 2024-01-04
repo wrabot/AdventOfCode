@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 import tools.board.Point
 
 class Day18(test: Int? = null) : Day(2022, 18, test) {

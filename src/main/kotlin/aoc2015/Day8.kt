@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 class Day8(test: Int? = null) : Day(2015, 8, test) {
     override fun solvePart1() = lines.sumOf { line ->

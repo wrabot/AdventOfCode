@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 import tools.graph.shortPath
 
 class Day16(test: Int? = null) : Day(2022, 16, test) {

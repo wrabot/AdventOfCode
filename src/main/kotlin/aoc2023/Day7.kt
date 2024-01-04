@@ -1,7 +1,7 @@
 package aoc2023
 
 import aoc2023.Day7.HandType.*
-import tools.Day
+import Day
 
 class Day7(test: Int? = null) : Day(2023, 7, test) {
     override fun solvePart1() = solve("?23456789TJQKA") // ? => no joker

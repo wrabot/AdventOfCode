@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day1(test: Int? = null) : Day(2021, 1, test) {
     override fun solvePart1() = depths.zipWithNext().count { it.first < it.second }

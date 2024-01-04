@@ -1,7 +1,7 @@
 package aoc2022
 
 import tools.board.Board
-import tools.Day
+import Day
 import tools.board.Point
 import kotlin.math.max
 import kotlin.math.min

@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 import java.util.*
 
 class Day6 : Day(2015, 6) {

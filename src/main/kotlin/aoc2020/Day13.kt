@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 import tools.math.times
 
 class Day13(test: Int? = null) : Day(2020, 13, test) {

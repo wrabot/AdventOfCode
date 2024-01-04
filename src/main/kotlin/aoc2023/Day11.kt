@@ -1,7 +1,7 @@
 package aoc2023
 
 import tools.board.Board
-import tools.Day
+import Day
 import tools.board.Point
 import tools.range.rangeMinMax
 

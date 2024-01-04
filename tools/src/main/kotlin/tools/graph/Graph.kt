@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package tools.graph
 
 data class ValuedEdge(val source: Int, val destination: Int, val value: Double)

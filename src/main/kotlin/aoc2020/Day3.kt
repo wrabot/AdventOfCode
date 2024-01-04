@@ -1,7 +1,7 @@
 package aoc2020
 
 import tools.board.Board
-import tools.Day
+import Day
 
 class Day3 : Day(2020, 3) {
     override fun solvePart1() = slope(3, 1)

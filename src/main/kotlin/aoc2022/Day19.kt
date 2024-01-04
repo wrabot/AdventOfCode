@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day19(test: Int? = null) : Day(2022, 19, test) {
     override fun solvePart1() = blueprints.sumOf { it.solve(24) * it.id }

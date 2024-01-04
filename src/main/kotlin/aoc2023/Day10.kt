@@ -2,7 +2,7 @@ package aoc2023
 
 import aoc2023.Day10.Type.*
 import tools.board.Board
-import tools.Day
+import Day
 import tools.board.Point
 
 class Day10(test: Int? = null) : Day(2023, 10, test) {

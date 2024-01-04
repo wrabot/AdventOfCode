@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day16(test: Int? = null) : Day(2021, 16, test) {
     override fun solvePart1() = packets.map { it.sumVersions() }

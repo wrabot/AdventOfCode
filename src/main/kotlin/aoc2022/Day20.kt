@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day20(test: Int? = null) : Day(2022, 20, test) {
     override fun solvePart1() = lines.map { Cell(it.toLong()) }.mixNumbers(1)

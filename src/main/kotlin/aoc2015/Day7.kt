@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 @Suppress("SpellCheckingInspection")
 class Day7 : Day(2015, 7) {

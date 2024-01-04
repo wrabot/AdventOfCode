@@ -2,7 +2,7 @@
 
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day25(test: Int? = null) : Day(2022, 25, test) {
     override fun solvePart1() = lines.sumOf { it.fromSNAFU() }.toSNAFU()

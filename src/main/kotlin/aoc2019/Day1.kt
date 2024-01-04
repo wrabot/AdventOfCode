@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day1 : Day(2019, 1) {
     override fun solvePart1() = lines.sumOf { it.toInt() / 3 - 2 }

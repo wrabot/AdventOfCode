@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day4(test: Int? = null) : Day(2019, 4) {
     override fun solvePart1() = passwords.count { it.count() != it.distinct().count() }

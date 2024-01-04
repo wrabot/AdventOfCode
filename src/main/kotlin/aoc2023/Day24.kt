@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.board.LineD
 import tools.board.PointD
 import tools.math.gcd

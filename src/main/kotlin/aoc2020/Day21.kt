@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day21(test: Int? = null) : Day(2020, 21, test) {
     override fun solvePart1() = foods.sumOf { it.first.minus(foodWithAllergens).size }

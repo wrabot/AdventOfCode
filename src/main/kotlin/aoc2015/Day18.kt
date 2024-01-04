@@ -1,7 +1,7 @@
 package aoc2015
 
 import tools.board.Board
-import tools.Day
+import Day
 
 class Day18(test: Int? = null) : Day(2015, 18, test) {
     override fun solvePart1(): Any {

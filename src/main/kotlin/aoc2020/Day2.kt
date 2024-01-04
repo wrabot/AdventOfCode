@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day2 : Day(2020, 2) {
     override fun solvePart1() = rules.count { (min, max, letter, password) ->

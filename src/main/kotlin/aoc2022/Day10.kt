@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day10(test: Int? = null) : Day(2022, 10, test) {
     override fun solvePart1() = (20..220 step 40).sumOf { x[it - 1] * it }

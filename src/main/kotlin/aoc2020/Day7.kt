@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day7 : Day(2020, 7) {
     override fun solvePart1() = rules.keys.filter { contains(it, "shiny gold") }.distinct().size

@@ -1,5 +1,3 @@
-@file:Suppress("MemberVisibilityCanBePrivate", "unused")
-
 package tools.graph
 
 class FloydWarshall(val size: Int, weights: Map<Pair<Int, Int>, Double>) {

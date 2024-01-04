@@ -1,7 +1,7 @@
 package aoc2023
 
 import tools.board.Board
-import tools.Day
+import Day
 import tools.board.Direction
 import tools.board.Direction.*
 import tools.board.Point

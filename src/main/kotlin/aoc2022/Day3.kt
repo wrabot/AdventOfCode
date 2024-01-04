@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day3(test: Int? = null) : Day(2022, 3, test) {
     override fun solvePart1() = rucksacks.sumOf { it.chunked(it.size / 2).commonItem() }

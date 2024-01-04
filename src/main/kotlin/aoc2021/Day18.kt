@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day18(test: Int? = null) : Day(2021, 18, test) {
     override fun solvePart1() = lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude()

@@ -3,7 +3,7 @@
 package aoc2022
 
 import tools.board.Board
-import tools.Day
+import Day
 import tools.board.Point
 import tools.graph.shortPath
 

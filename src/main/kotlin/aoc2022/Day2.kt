@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day2(test: Int? = null) : Day(2022, 2, test) {
     override fun solvePart1() = guide.sumOf { it.score() }

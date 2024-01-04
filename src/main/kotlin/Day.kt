@@ -1,10 +1,7 @@
-package tools
-
+import tools.log
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-@Suppress("MemberVisibilityCanBePrivate")
 abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, private val measure: Boolean) {
     constructor(year: Int, day: Int, test: Int? = null, measure: Boolean = false) : this(
         year,
@@ -18,7 +15,7 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
         solvePart1().apply { println("$info part 1: $this") }
     }
 
-    val part2: Any by lazy {
+    private val part2: Any by lazy {
         solvePart2().apply { println("$info part 2: $this") }
     }
 
@@ -42,8 +39,6 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
         }
     }
 
-    @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
-    @OptIn(ExperimentalTime::class)
     private fun measure(message: String, block: () -> Unit) {
         if (measure) measureTime(block).apply { log("$message: $this") } else block()
     }

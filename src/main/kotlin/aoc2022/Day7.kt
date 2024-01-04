@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.div

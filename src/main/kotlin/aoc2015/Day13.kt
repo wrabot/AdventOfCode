@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 import tools.range.combinations
 
 class Day13(test: Int? = null) : Day(2015, 13, test) {

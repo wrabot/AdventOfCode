@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day5 : Day(2020, 5) {
     override fun solvePart1() = ids.maxOrNull()!!

@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day10(test: Int? = null) : Day(2020, 10, test) {
     override fun solvePart1() = voltages.zipWithNext { a, b -> a - b }.run {

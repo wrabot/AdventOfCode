@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 import tools.board.Point
 import tools.range.merge
 import tools.range.size

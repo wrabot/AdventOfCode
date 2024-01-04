@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day1(test: Int? = null) : Day(2022, 1, test) {
     override fun solvePart1() = calories.maxOf { it.sum() }

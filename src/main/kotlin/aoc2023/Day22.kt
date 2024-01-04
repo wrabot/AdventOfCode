@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.*
+import Day
 import tools.board.Block
 import tools.board.Point
 import tools.range.hasIntersection

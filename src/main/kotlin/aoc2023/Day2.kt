@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 
 class Day2(test: Int? = null) : Day(2023, 2, test) {
     override fun solvePart1() = games.filter { game ->

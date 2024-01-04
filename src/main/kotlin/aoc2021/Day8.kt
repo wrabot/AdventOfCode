@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day8(test: Int? = null) : Day(2021, 8, test) {
     override fun solvePart1() = entries.sumOf { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }

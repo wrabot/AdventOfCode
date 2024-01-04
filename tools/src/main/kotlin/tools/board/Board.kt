@@ -1,6 +1,5 @@
 package tools.board
 
-@Suppress("MemberVisibilityCanBePrivate", "unused")
 class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     val points = (0 until height).flatMap { y ->
         (0 until width).map { x ->

@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day11(test: Int? = null) : Day(2022, 11, test) {
     override fun solvePart1() = monkeys.map { it.copy() }.run {

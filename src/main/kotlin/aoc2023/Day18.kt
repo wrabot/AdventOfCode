@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.*
+import Day
 import tools.board.Direction.*
 import tools.board.Board
 import tools.board.Direction

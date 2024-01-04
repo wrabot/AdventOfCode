@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.range.splitWith
 
 class Day5(test: Int? = null) : Day(2023, 5, test) {

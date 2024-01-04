@@ -4,7 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
-import tools.Day
+import Day
 
 class Day13(test: Int? = null) : Day(2022, 13, test) {
     override fun solvePart1() =

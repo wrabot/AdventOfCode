@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 class Day17(test: Int? = null) : Day(2021, 17, test) {
     override fun solvePart1() = findBestMaxY(xTarget, yTarget)

@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 class Day2 : Day(2015, 2) {
     private val boxes = lines.map { box -> box.split("x").map { it.toInt() } }

@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day6 : Day(2020, 6) {
     override fun solvePart1() = groups.sumOf { it.joinToString("").toSet().count() }

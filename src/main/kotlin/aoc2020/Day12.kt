@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 import kotlin.math.absoluteValue
 
 class Day12(test: Int? = null) : Day(2020, 12, test) {

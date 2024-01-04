@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 import tools.board.Point
 import kotlin.math.absoluteValue
 

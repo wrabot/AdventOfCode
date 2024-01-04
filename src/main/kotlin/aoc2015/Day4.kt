@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 import java.nio.ByteBuffer
 import java.security.MessageDigest
 

@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 import kotlin.math.sqrt
 
 class Day20(test: Int? = null) : Day(2020, 20, test) {

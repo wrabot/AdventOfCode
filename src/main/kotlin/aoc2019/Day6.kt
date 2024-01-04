@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day6 : Day(2019, 6) {
     override fun solvePart1() = orbits.keys.sumOf { it.suborbital().size }

@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package tools.math
 
 fun Long.times(multiplier: Long, modulo: Long): Long {

@@ -1,6 +1,6 @@
 package aoc2022
 
-import tools.Day
+import Day
 
 class Day5(test: Int? = null) : Day(2022, 5, test) {
     override fun solvePart1() = crates.map { it.toMutableList() }.apply {

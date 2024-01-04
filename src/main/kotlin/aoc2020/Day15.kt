@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day15(test: Int? = null) : Day(2020, 15, test) {
     override fun solvePart1() = numbers.map { it.memory(2020) }

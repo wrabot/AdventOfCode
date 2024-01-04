@@ -1,7 +1,7 @@
 package aoc2021
 
 import tools.board.Board
-import tools.Day
+import Day
 
 class Day9(test: Int? = null) : Day(2021, 9, test) {
     override fun solvePart1() = lowPoints.sumOf { board[it] + 1 }

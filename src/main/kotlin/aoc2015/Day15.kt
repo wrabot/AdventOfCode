@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 class Day15(test: Int? = null) : Day(2015, 15, test) {
     override fun solvePart1() = max(0, 0, ::propertiesScore)

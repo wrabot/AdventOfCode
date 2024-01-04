@@ -1,6 +1,6 @@
 package aoc2019
 
-import tools.Day
+import Day
 
 class Day9(test: Int? = null) : Day(2019, 9, test) {
     override fun solvePart1() = Runtime(code).run { generateSequence { execute(1) } }.toList()

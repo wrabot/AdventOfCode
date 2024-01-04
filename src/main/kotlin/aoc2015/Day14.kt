@@ -1,6 +1,6 @@
 package aoc2015
 
-import tools.Day
+import Day
 
 class Day14(test: Int? = null) : Day(2015, 14, test) {
     override fun solvePart1() = reindeer.maxOf { it.distance(duration) }

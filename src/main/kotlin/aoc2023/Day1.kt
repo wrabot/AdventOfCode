@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 
 class Day1 : Day(2023, 1) {
     override fun solvePart1() = lines.sumOf { it.calibrationPart1().toInt() }

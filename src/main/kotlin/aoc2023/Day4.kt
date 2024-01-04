@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.text.groupValues
 import tools.text.toWords
 

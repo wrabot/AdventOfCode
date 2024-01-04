@@ -1,6 +1,6 @@
 package aoc2021
 
-import tools.Day
+import Day
 
 
 class Day24 : Day(2021, 24) {

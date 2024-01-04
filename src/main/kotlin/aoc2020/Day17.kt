@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day17(test: Int? = null) : Day(2020, 17, test) {
     override fun solvePart1() = cycle(lines.createCells(null))

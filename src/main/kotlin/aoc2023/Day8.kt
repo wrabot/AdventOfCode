@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 
 class Day8(test: Int? = null) : Day(2023, 8, test) {
     override fun solvePart1() = (path("AAA") { it == "ZZZ" }.count() - 1) * directions.size

@@ -1,6 +1,6 @@
 package aoc2020
 
-import tools.Day
+import Day
 
 class Day18 : Day(2020, 18) {
     override fun solvePart1() = list.map { Expr(it, false).eval() }.sum()

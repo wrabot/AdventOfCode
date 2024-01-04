@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 
 class Day3(test: Int? = null) : Day(2023, 3, test) {
     private val height = lines.count()

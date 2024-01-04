@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.text.toWords
 import kotlin.math.ceil
 import kotlin.math.floor

@@ -1,6 +1,6 @@
 package aoc2023
 
-import tools.Day
+import Day
 import tools.range.size
 
 class Day19(test: Int? = null) : Day(2023, 19, test) {
