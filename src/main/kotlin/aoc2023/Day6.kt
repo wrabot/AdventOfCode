@@ -1,7 +1,7 @@
 package aoc2023
 
 import Day
-import tools.text.toWords
+import tools.toWords
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.sqrt

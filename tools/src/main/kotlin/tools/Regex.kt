@@ -1,4 +1,4 @@
-package tools.text
+package tools
 
 private val wordsRegex = Regex("\\w+")
 fun String.toWords() = wordsRegex.findAll(this).map { it.value }

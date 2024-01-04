@@ -1,7 +1,12 @@
-package tools.range
+package tools
 
 import kotlin.math.max
 import kotlin.math.min
+
+fun IntRange.size() = last - first + 1
+fun IntRange.move(offset: Int) = first + offset..last + offset
+fun IntRange.hasIntersection(other: IntRange) = first in other || last in other || other.first in this
+fun rangeMinMax(a: Int, b: Int) = min(a, b)..max(a, b)
 
 fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
     sortedBy { it.first }.forEach {
@@ -12,15 +17,6 @@ fun List<IntRange>.merge() = mutableListOf<IntRange>().also { merge ->
             else -> merge.add(it)
         }
     }
-}
-
-fun <T : Comparable<T>> OpenEndRange<T>.splitWith(other: OpenEndRange<T>) = when {
-    start >= other.endExclusive -> Triple(null, null, this)
-    endExclusive <= other.start -> Triple(this, null, null)
-    start >= other.start && endExclusive <= other.endExclusive -> Triple(null, this, null)
-    start >= other.start -> Triple(null, start..<other.endExclusive, other.endExclusive..<endExclusive)
-    endExclusive <= other.endExclusive -> Triple(start..<other.start, other.start..<endExclusive, null)
-    else -> Triple(start..<other.start, other, other.endExclusive..<endExclusive)
 }
 
 fun LongRange.splitWith(other: LongRange) = when {

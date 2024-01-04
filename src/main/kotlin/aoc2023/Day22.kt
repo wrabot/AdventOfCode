@@ -3,8 +3,8 @@ package aoc2023
 import Day
 import tools.board.Block
 import tools.board.Point
-import tools.range.hasIntersection
-import tools.range.move
+import tools.hasIntersection
+import tools.move
 
 class Day22(test: Int? = null) : Day(2023, 22, test) {
     override fun solvePart1() = cubes.count { cube ->
@@ -12,7 +12,7 @@ class Day22(test: Int? = null) : Day(2023, 22, test) {
         cubes.filter { it !== cube }.check()
     }
 
-    fun List<Cube>.check(): Boolean {
+    private fun List<Cube>.check(): Boolean {
         forEach { cube ->
             while (cube.zRange.first > 1) {
                 cube.offset--

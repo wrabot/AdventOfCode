@@ -2,8 +2,8 @@ package aoc2022
 
 import Day
 import tools.board.Point
-import tools.range.merge
-import tools.range.size
+import tools.merge
+import tools.size
 import kotlin.math.abs
 
 class Day15(test: Int? = null) : Day(2022, 15, test) {
