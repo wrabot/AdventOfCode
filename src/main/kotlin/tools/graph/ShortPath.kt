@@ -3,19 +3,19 @@ package tools.graph
 fun <Node : Any> shortPath(
     start: Node,
     end: Node,
-    cost: (origin: Node, destination: Node) -> Int = { _, _ -> 1 },
-    estimatedEndCost: (Node) -> Int = { 0 }, // A*
+    cost: (origin: Node, destination: Node) -> Double = { _, _ -> 1.0 },
+    estimatedEndCost: (Node) -> Double = { 0.0 }, // A*
     neighbors: (Node) -> List<Node>
 ) = shortPath(start, isEnd = { this == end }, cost, estimatedEndCost, neighbors)
 
 fun <Node : Any> shortPath(
     start: Node,
     isEnd: Node.() -> Boolean,
-    cost: (origin: Node, destination: Node) -> Int = { _, _ -> 1 },
-    toEndMinimalCost: (Node) -> Int = { 0 }, // A*
+    cost: (origin: Node, destination: Node) -> Double = { _, _ -> 1.0 },
+    toEndMinimalCost: (Node) -> Double = { 0.0 }, // A*
     neighbors: Node.() -> List<Node>
 ): List<Node> {
-    val extendedStart = ExtendedNode(start, 0, toEndMinimalCost(start), true)
+    val extendedStart = ExtendedNode(start, 0.0, toEndMinimalCost(start), true)
     val extendedNodes = mutableMapOf(start to extendedStart)
     val todo = mutableListOf(extendedStart)
     while (true) {
@@ -58,8 +58,8 @@ fun <Node : Any> shortPath(
 
 private data class ExtendedNode<Node : Any>(
     val node: Node,
-    var fromStartCost: Int,
-    var minimalCost: Int,
+    var fromStartCost: Double,
+    var minimalCost: Double,
     var todo: Boolean
 ) : Comparable<ExtendedNode<Node>> {
     var predecessor: ExtendedNode<Node>? = null
@@ -74,8 +74,4 @@ private data class ExtendedNode<Node : Any>(
     companion object {
         private var nextId = Int.MIN_VALUE
     }
-}
-
-fun List<Triple<Any, Any, Any?>>.toGraphWiz() = joinToString("\n", "digraph {\n", "\n}") {
-    "${it.first} -> ${it.second}" + if (it.third == null) "" else " [label=${it.third}]"
 }
