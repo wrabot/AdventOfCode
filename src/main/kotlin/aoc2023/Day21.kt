@@ -3,6 +3,7 @@ package aoc2023
 import Day
 import tools.board.Board
 import tools.board.Point
+import tools.board.directions4
 import tools.math.polynomial
 import tools.math.polynomialCoefficients
 
@@ -27,9 +28,9 @@ class Day21(test: Int? = null) : Day(2023, 21, test) {
             tiles.count().toDouble()
         }.polynomialCoefficients().polynomial((target / size - 2).toDouble()).toLong()
     }
-    
+
     fun Set<Point>.next() = flatMap { tile ->
-        garden.directions4.map { tile + it }.filter { garden[it.mod()].c != '#' }
+        directions4.map { tile + it }.filter { garden[it.mod()].c != '#' }
     }.toSet()
 
     private fun Point.mod() = Point(x.mod(garden.width), y.mod(garden.height))

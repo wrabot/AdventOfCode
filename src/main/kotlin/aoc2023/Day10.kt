@@ -50,8 +50,7 @@ class Day10(test: Int? = null) : Day(2023, 10, test) {
 
     private fun nextPipe(origin: Point, direction: Direction): Pipe? {
         val destination = origin + direction.delta
-        if (!board.isValid(destination)) return null
-        val destinationTile = board[destination]
+        val destinationTile = board.getOrNull(destination) ?: return null
         val newDirection = when (destinationTile.type) {
             Vertical -> when (direction) {
                 Direction.North, Direction.South -> direction

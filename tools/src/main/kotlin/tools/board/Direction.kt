@@ -10,3 +10,6 @@ enum class Direction(val delta: Point, val c: Char, val isDiagonal: Boolean = fa
     SouthWest(Point(-1, 1), 'L', true),
     SouthEast(Point(1, 1), 'J', true),
 }
+
+val directions4 = Direction.entries.filterNot { it.isDiagonal }.map { it.delta }
+val directions8 = Direction.entries.map { it.delta }

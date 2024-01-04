@@ -7,8 +7,8 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         }
     }
 
-    val directions4 = Direction.entries.filterNot { it.isDiagonal }.map { it.delta }
-    val directions8 = Direction.entries.map { it.delta }
+    val xRange = 0..<width
+    val yRange = 0..<height
 
     init {
         if (cells.size != width * height) throw Error("invalid board ${cells.size} !=  $width * $height (${width * height})")
@@ -20,12 +20,12 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
         it.joinToString("").substring(start.x, end.x + 1)
     }.subList(start.y, end.y + 1).joinToString("\n")
 
-    fun isValid(x: Int, y: Int) = x in 0 until width && y in 0 until height
+    private fun isValid(x: Int, y: Int) = x in xRange && y in yRange
     fun getOrNull(x: Int, y: Int) = if (isValid(x, y)) cells[y * width + x] else null
     operator fun get(x: Int, y: Int) =
         getOrNull(x, y) ?: throw Error("invalid cell : x=$x y=$y width=$width height=$height")
 
-    fun isValid(point: Point) = isValid(point.x, point.y)
+    private fun isValid(point: Point) = isValid(point.x, point.y)
     fun getOrNull(point: Point) = getOrNull(point.x, point.y)
     operator fun get(point: Point) = get(point.x, point.y)
 
@@ -35,10 +35,7 @@ class Board<T>(val width: Int, val height: Int, val cells: List<T>) {
     fun zone4(point: Point, predicate: (Point) -> Boolean) =
         zone(point) { neighbors4(it).filter(predicate) }
 
-    fun zone8(point: Point, predicate: (Point) -> Boolean) =
-        zone(point) { neighbors8(it).filter(predicate) }
-
-    fun zone(point: Point, neighbors: (Point) -> List<Point>): Set<Point> =
+    private fun zone(point: Point, neighbors: (Point) -> List<Point>): Set<Point> =
         sortedSetOf<Point>({ p1, p2 -> (p2.y - p1.y) * width + p2.x - p1.x }, point).apply {
             val todo = mutableListOf(point)
             while (true) neighbors(todo.removeFirstOrNull() ?: break).forEach { if (add(it)) todo.add(it) }

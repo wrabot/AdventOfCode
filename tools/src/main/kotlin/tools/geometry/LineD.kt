@@ -1,7 +1,7 @@
-package tools.board
+package tools.geometry
 
 data class LineD(val origin: PointD, val vector: PointD) {
-    // return the t of intersection point = origin + vector * t
+    // return null or the t of intersection point : origin + vector * t == other.origin + other.vector * u
     fun intersectXY(other: LineD): Double? {
         val dv = vector.x * other.vector.y - vector.y * other.vector.x
         if (dv == 0.0) return null

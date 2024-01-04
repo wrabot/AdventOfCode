@@ -1,8 +1,8 @@
 package aoc2023
 
 import Day
-import tools.board.LineD
-import tools.board.PointD
+import tools.geometry.LineD
+import tools.geometry.PointD
 import tools.math.gcd
 import kotlin.math.abs
 
