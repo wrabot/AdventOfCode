@@ -1,7 +1,7 @@
 package aoc2023
 
-import tools.board.Board
 import Day
+import tools.board.Board
 import tools.board.Direction
 import tools.board.Direction.*
 import tools.board.Point
@@ -57,8 +57,8 @@ class Day17(test: Int? = null) : Day(2023, 17, test) {
     data class Cell(val heatLoss: Int, val fromStartHeatLoss: Map<Direction, Array<Int?>>) {
         override fun toString(): String {
             return "[$heatLoss ${
-                fromStartHeatLoss.map {
-                    it.key.c.toString() + it.value.toList().dropLastWhile { it == null }
+                fromStartHeatLoss.map { entry ->
+                    entry.key.c.toString() + entry.value.toList().dropLastWhile { it == null }
                 }
             }]"
         }

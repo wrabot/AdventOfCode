@@ -1,6 +1,7 @@
 package aoc2022
 
 import Day
+import tools.toWords
 
 class Day5(test: Int? = null) : Day(2022, 5, test) {
     override fun solvePart1() = crates.map { it.toMutableList() }.apply {
@@ -33,8 +34,8 @@ class Day5(test: Int? = null) : Day(2022, 5, test) {
         }.map { it.toList() }
     }
 
-    private val moves = input.split("\n\n")[1].lines().map {
-        val (quantity, source, destination) = it.split(" ").mapNotNull { it.toIntOrNull() };
+    private val moves = input.split("\n\n")[1].lines().map { line ->
+        val (quantity, source, destination) = line.toWords().mapNotNull { it.toIntOrNull() }.toList()
         Move(quantity, source - 1, destination - 1)
     }
 

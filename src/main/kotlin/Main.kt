@@ -1,5 +1,4 @@
 import tools.log
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
 
 fun main() {

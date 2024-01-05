@@ -3,8 +3,8 @@ package aoc2020
 import Day
 
 class Day18 : Day(2020, 18) {
-    override fun solvePart1() = list.map { Expr(it, false).eval() }.sum()
-    override fun solvePart2() = list.map { Expr(it, true).eval() }.sum()
+    override fun solvePart1() = list.sumOf { Expr(it, false).eval() }
+    override fun solvePart2() = list.sumOf { Expr(it, true).eval() }
 
     data class Expr(val text: String, val part2: Boolean) {
         fun eval(): Long {

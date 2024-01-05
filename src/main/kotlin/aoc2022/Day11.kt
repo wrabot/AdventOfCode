@@ -35,6 +35,8 @@ class Day11(test: Int? = null) : Day(2022, 11, test) {
     private fun List<Monkey>.businessLevel() =
         map { it.inspectCount }.sortedDescending().take(2).reduce { acc, i -> acc * i }
 
+    // for debug
+    @Suppress("unused")
     private val testMonkeys = listOf(
         Monkey(mutableListOf(79, 98), { it * 19 }, 23, 2, 3),
         Monkey(mutableListOf(54, 65, 75, 74), { it + 6 }, 19, 2, 0),

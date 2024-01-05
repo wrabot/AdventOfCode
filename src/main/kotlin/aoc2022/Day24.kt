@@ -1,9 +1,7 @@
-@file:Suppress("PrivatePropertyName")
-
 package aoc2022
 
-import tools.board.Board
 import Day
+import tools.board.Board
 import tools.board.Point
 import tools.graph.shortPath
 
@@ -74,6 +72,7 @@ class Day24(test: Int? = null) : Day(2022, 24, test) {
                 Point(0, -1) -> "^"
                 else -> winds.size.toString()
             }
+
             expedition -> "E"
             else -> content.toString()
         }

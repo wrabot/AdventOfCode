@@ -38,9 +38,9 @@ data class EdmondsKarp(val size: Int, val edges: List<ValuedEdge>) {
 
     fun connected(start: Int): Set<Int> {
         val connected = mutableSetOf<Int>()
-        bfs(size, start) {
-            connected.add(it)
-            neighbors[it].orEmpty().mapNotNull {
+        bfs(size, start) { current ->
+            connected.add(current)
+            neighbors[current].orEmpty().mapNotNull {
                 val edge = edges[it]
                 val d = edge.destination
                 if (flows[edge.source][d] < edge.value) d else null

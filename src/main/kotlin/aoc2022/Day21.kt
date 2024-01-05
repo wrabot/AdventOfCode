@@ -21,7 +21,7 @@ class Day21(test: Int? = null) : Day(2022, 21, test) {
         return solve(buildTree(left), buildTree(right) as Long) as Long
     }
 
-    fun solve(tree: Any?, expected: Long): Any? {
+    private fun solve(tree: Any?, expected: Long): Any? {
         if (tree == null) return expected
         if (tree !is Triple<*, *, *>) error("!!!triple")
         val (left, op, right) = tree

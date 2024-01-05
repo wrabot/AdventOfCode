@@ -56,7 +56,8 @@ class Day9(test: Int? = null) : Day(2022, 9, test) {
         } to distance.toInt()
     }
 
-    // to debug
+    // for debug
+    @Suppress("unused")
     private fun Array<Point>.log() {
         val minX = minOf { it.x }
         val minY = minOf { it.y }

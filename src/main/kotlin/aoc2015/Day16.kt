@@ -18,7 +18,7 @@ class Day16(test: Int? = null) : Day(2015, 16, test) {
 
     data class Aunt(val name: String, val properties: Map<String, Int>)
 
-    val aunts = lines.map { line ->
+    private val aunts = lines.map { line ->
         val (name, properties) = line.split(": ", limit = 2)
         Aunt(name, properties.split(", ").associate {
             val (property, value) = it.split(": ")
@@ -26,7 +26,7 @@ class Day16(test: Int? = null) : Day(2015, 16, test) {
         })
     }
 
-    val clues = mapOf(
+    private val clues = mapOf(
         "children" to 3,
         "cats" to 7,
         "samoyeds" to 2,

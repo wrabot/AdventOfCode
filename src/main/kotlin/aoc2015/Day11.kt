@@ -10,8 +10,8 @@ class Day11(test: Int? = null) : Day(2015, 11, test) {
         return next()
     }
 
-    private val digits = ('a'..'z') - listOf('i', 'l', 'o')
-    var password = input.toList()
+    private val digits = ('a'..'z') - setOf('i', 'l', 'o')
+    private var password = input.toList()
 
     private fun next(): String {
         do {

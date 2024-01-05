@@ -12,7 +12,7 @@ class Day17(test: Int? = null) : Day(2022, 17, test) {
         with(params!!) { (rocks / rockStep) * sizeStep + solve(rockIndex + (rocks % rockStep).toInt()) }
     }
 
-    fun Board.solve(rocks: Int) = apply {
+    private fun Board.solve(rocks: Int) = apply {
         val patterns = mutableMapOf<Pair<Int, Int>, MutableList<Point>>()
         val findParams = rocks <= 0
         while (findParams || rockIndex < rocks) {
