@@ -1,8 +1,9 @@
 package aoc2021
 
-import tools.board.Block
 import Day
+import tools.board.Block
 import tools.board.Point
+import tools.size
 
 class Day22(test: Int? = null) : Day(2021, 22, test) {
     override fun solvePart1(): Any {
@@ -33,6 +34,8 @@ class Day22(test: Int? = null) : Day(2021, 22, test) {
         }
         return count
     }
+
+    private fun Block.size() = xRange.size().toLong() * yRange.size() * zRange.size()
 
     data class Step(val mode: Boolean, val cuboid: Block)
 
