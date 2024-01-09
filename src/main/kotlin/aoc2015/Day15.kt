@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day15(test: Int? = null) : Day(2015, 15, test) {
+class Day15(test: Int? = null) : Day(test) {
     override fun solvePart1() = max(0, 0, ::propertiesScore)
     override fun solvePart2() = max(0, 0) {
         if (ingredients.sumOf { it.calories * it.quantity } == 500) propertiesScore() else 0

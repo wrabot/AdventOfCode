@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day2 : Day(2015, 2) {
+class Day2 : Day() {
     private val boxes = lines.map { box -> box.split("x").map { it.toInt() } }
 
     override fun solvePart1() =

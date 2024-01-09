@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day2 : Day(2020, 2) {
+class Day2 : Day() {
     override fun solvePart1() = rules.count { (min, max, letter, password) ->
         password.count { it.toString() == letter } in min.toInt()..max.toInt()
     }

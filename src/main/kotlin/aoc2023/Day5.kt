@@ -3,7 +3,7 @@ package aoc2023
 import Day
 import tools.splitWith
 
-class Day5(test: Int? = null) : Day(2023, 5, test) {
+class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1() = seeds.minOfOrNull { seed ->
         maps.fold(seed) { acc, map ->
             map.find { acc in it.sourceRange }?.move(acc) ?: acc

@@ -6,7 +6,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
 import Day
 
-class Day13(test: Int? = null) : Day(2022, 13, test) {
+class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1() =
         packets.mapIndexedNotNull { index, pair -> if (compare(pair[0], pair[1]) >= 0) index + 1 else null }.sum()
 

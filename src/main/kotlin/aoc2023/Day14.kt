@@ -3,7 +3,7 @@ package aoc2023
 import tools.board.Board
 import Day
 
-class Day14(test: Int? = null) : Day(2023, 14, test) {
+class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         val dish = createDish()
         dish.tiltNorth()

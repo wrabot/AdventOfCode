@@ -6,7 +6,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day23(test: Int? = null) : Day(2022, 23, test) {
+class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         val board = createBoard()
         repeat(10) { board.nextTurn(it) }

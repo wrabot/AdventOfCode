@@ -4,7 +4,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day25(test: Int? = null) : Day(2021, 25, test) {
+class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val sea = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it) } })
         var step = 0

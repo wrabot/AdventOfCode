@@ -3,7 +3,7 @@ package aoc2021
 import tools.board.Board
 import Day
 
-class Day11(test: Int? = null) : Day(2021, 11, test) {
+class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() : Any {
         repeat(100) { step() }
         return flashes

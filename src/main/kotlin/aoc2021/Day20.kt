@@ -3,7 +3,7 @@ package aoc2021
 import tools.board.Board
 import Day
 
-class Day20(test: Int? = null) : Day(2021, 20, test) {
+class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         repeat(2) { image = image.enhance(algo) }
         return image.litPixelCount()

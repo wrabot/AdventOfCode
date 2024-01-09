@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day9(test: Int? = null) : Day(2023, 9, test) {
+class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = report.sumOf { it.findNext() }
     private fun List<Int>.findNext(): Int =
         if (all { it == 0 }) 0 else last() + zipWithNext().map { it.second - it.first }.findNext()

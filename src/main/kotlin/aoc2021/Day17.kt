@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day17(test: Int? = null) : Day(2021, 17, test) {
+class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = findBestMaxY(xTarget, yTarget)
 
     override fun solvePart2() = countVelocities(xTarget, yTarget)

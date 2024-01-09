@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.graph.shortPath
 
-class Day15(test: Int? = null) : Day(2021, 15, test) {
+class Day15(test: Int? = null) : Day(test) {
     override fun solvePart1() =
         minRisk(
             Board(

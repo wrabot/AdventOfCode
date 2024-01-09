@@ -6,7 +6,7 @@ import tools.board.Point
 import tools.log
 import kotlin.math.abs
 
-class Day9(test: Int? = null) : Day(2022, 9, test) {
+class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = mutableSetOf(Point(0, 0)).apply {
         var head = Point(0, 0)
         var tail = Point(0, 0)

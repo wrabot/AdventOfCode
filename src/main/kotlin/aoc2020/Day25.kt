@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day25(test: Int? = null) : Day(2020, 25, test) {
+class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val card = lines[0].toInt()
         val door = lines[1].toInt()

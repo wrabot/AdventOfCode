@@ -4,7 +4,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day12(test: Int? = null) : Day(2022, 12, test) {
+class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = board[start].distance
     override fun solvePart2() = board.cells.filter { it.height == 0 }.minOf { it.distance }
 

@@ -3,7 +3,7 @@ package aoc2015
 import Day
 import tools.combinations
 
-class Day13(test: Int? = null) : Day(2015, 13, test) {
+class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1() = persons.drop(1).toList().combinations().maxOf {
         (listOf(persons.first()) + it + persons.first()).happiness()
     }

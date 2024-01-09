@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day8(test: Int? = null) : Day(2021, 8, test) {
+class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = entries.sumOf { entry -> entry.second.count { it.size in listOf(2, 3, 4, 7) } }
 
     override fun solvePart2() = entries.sumOf { entry ->

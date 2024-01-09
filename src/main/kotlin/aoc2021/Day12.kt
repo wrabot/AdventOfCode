@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day12(test: Int? = null) : Day(2021, 12, test) {
+class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = countPaths(links, listOf("start"), false)
 
     override fun solvePart2() = countPaths(links, listOf("start"), true)

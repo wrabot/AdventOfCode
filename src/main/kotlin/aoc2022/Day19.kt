@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day19(test: Int? = null) : Day(2022, 19, test) {
+class Day19(test: Int? = null) : Day(test) {
     override fun solvePart1() = blueprints.sumOf { it.solve(24) * it.id }
     override fun solvePart2() = blueprints.take(3).map { it.solve(32) }.reduce { acc, i -> acc * i }
 

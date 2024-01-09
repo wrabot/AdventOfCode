@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day20(test: Int? = null) : Day(2023, 20, test) {
+class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1(): Long {
         var high = 0L
         var low = 0L

@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day16(test: Int? = null) : Day(2021, 16, test) {
+class Day16(test: Int? = null) : Day(test) {
     override fun solvePart1() = packets.map { it.sumVersions() }
 
     override fun solvePart2() = packets.map { it.evaluate() }

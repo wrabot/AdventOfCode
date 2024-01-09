@@ -4,7 +4,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day11(test: Int? = null) : Day(2020, 11, test) {
+class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = count(4) { seat, direction -> getOrNull(seat + direction)?.current == '#' }
 
     override fun solvePart2() = count(5) { seat, direction ->

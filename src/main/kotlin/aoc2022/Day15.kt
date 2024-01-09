@@ -6,7 +6,7 @@ import tools.merge
 import tools.size
 import kotlin.math.abs
 
-class Day15(test: Int? = null) : Day(2022, 15, test) {
+class Day15(test: Int? = null) : Day(test) {
     override fun solvePart1() =
         couples.mapNotNull { it.scanPart1(rowPart1) }.merge().sumOf { it.size() } - beacons.count { it.y == rowPart1 }
 

@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day16(test: Int? = null) : Day(2020, 16, test) {
+class Day16(test: Int? = null) : Day(test) {
     override fun solvePart1() = otherTickets.flatten().filter { value -> validRules.none { value in it } }.sum()
 
     override fun solvePart2(): Any {

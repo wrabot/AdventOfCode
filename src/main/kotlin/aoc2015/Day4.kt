@@ -4,7 +4,7 @@ import Day
 import java.nio.ByteBuffer
 import java.security.MessageDigest
 
-class Day4 : Day(2015, 4) {
+class Day4 : Day() {
     override fun solvePart1() = find { it in 0..0xFFF }
     override fun solvePart2() = find { it in 0..0xFF }
 

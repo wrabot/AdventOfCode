@@ -5,7 +5,7 @@ import Day
 import tools.board.Point
 import tools.rangeMinMax
 
-class Day11(test: Int? = null) : Day(2023, 11, test) {
+class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(2)
 
     override fun solvePart2() = solve(1000000)

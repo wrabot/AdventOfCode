@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day3(test: Int? = null) : Day(2021, 3, test) {
+class Day3(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val length = lines[0].length
         val threshold = lines.size / 2

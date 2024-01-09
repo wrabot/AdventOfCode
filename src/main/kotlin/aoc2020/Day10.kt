@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day10(test: Int? = null) : Day(2020, 10, test) {
+class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1() = voltages.zipWithNext { a, b -> a - b }.run {
         count { it == 1 } * (count { it == 3 } + 1)
     }

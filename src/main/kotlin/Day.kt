@@ -2,10 +2,8 @@ import tools.log
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
 
-abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, private val measure: Boolean) {
-    constructor(year: Int, day: Int, test: Int? = null, measure: Boolean = false) : this(
-        year,
-        day,
+abstract class Day(inputFileName: String, detail: String, private val measure: Boolean) {
+    constructor(test: Int? = null, measure: Boolean = false) : this(
         test?.let { "test$it.txt" } ?: "input.txt",
         test?.let { " test $it" } ?: "",
         measure
@@ -43,11 +41,12 @@ abstract class Day(year: Int, day: Int, inputFileName: String, detail: String, p
         if (measure) measureTime(block).apply { log("$message: $this") } else block()
     }
 
-    protected val input = javaClass.classLoader!!.getResource("aoc$year/day$day/$inputFileName")!!.readText()
+    private val path = javaClass.name.replace('.', '/').lowercase()
+    protected val input = javaClass.classLoader!!.getResource("$path/$inputFileName")!!.readText()
     protected val lines = input.lines()
 
     protected abstract fun solvePart1(): Any
     protected abstract fun solvePart2(): Any
 
-    private val info = "year $year day $day$detail"
+    private val info = "$path $detail"
 }

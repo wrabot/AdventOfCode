@@ -5,7 +5,7 @@ import tools.board.Block
 import tools.board.Point
 import tools.size
 
-class Day22(test: Int? = null) : Day(2021, 22, test) {
+class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val halfSize = 50
         val fullSize = halfSize * 2 + 1

@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day7 : Day(2020, 7) {
+class Day7 : Day() {
     override fun solvePart1() = rules.keys.filter { contains(it, "shiny gold") }.distinct().size
     override fun solvePart2() = count("shiny gold")
 

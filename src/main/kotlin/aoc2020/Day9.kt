@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day9 : Day(2020, 9) {
+class Day9 : Day() {
     override fun solvePart1(): Any {
         for (i in 25 until numbers.size) {
             val number = numbers[i]

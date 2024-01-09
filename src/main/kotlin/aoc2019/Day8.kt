@@ -2,7 +2,7 @@ package aoc2019
 
 import Day
 
-class Day8(test: Int? = null) : Day(2019, 8, test) {
+class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = input.chunked(25 * 6).minBy { image -> image.count { it == '0' } }.let { image ->
         image.count { it == '1' } * image.count { it == '2' }
     }

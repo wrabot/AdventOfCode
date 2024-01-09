@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day22(test: Int? = null) : Day(2020, 22, test) {
+class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val deck1 = deck1Init.toMutableList()
         val deck2 = deck2Init.toMutableList()

@@ -6,7 +6,7 @@ import tools.board.Point
 import tools.hasIntersection
 import tools.move
 
-class Day22(test: Int? = null) : Day(2023, 22, test) {
+class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() = cubes.count { cube ->
         cubes.forEach { it.offset = 0 }
         cubes.filter { it !== cube }.check()

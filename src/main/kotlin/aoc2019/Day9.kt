@@ -2,7 +2,7 @@ package aoc2019
 
 import Day
 
-class Day9(test: Int? = null) : Day(2019, 9, test) {
+class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = Runtime(code).run { generateSequence { execute(1) } }.toList()
 
     override fun solvePart2() = Runtime(code).execute(2)!!

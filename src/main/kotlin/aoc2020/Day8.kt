@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day8 : Day(2020, 8) {
+class Day8 : Day() {
     override fun solvePart1() = execute().run { acc }
 
     override fun solvePart2(): Any {

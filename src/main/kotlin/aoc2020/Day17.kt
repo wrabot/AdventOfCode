@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day17(test: Int? = null) : Day(2020, 17, test) {
+class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = cycle(lines.createCells(null))
     override fun solvePart2() = cycle(lines.createCells(0))
 

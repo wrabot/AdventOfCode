@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day18(test: Int? = null) : Day(2021, 18, test) {
+class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = lines.map { parseNumber(it).number }.reduce { acc, number -> acc + number }.magnitude()
 
     override fun solvePart2() = lines.indices.maxOf { first ->

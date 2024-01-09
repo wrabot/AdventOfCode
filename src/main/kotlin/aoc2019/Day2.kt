@@ -2,7 +2,7 @@ package aoc2019
 
 import Day
 
-class Day2 : Day(2019, 2) {
+class Day2 : Day() {
     override fun solvePart1() = code.execute(12, 2)
 
     override fun solvePart2() = (0..9999).first { code.execute(it / 100, it % 100) == 19690720 }

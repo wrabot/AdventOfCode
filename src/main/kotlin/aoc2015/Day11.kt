@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day11(test: Int? = null) : Day(2015, 11, test) {
+class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = next()
 
     override fun solvePart2(): Any {

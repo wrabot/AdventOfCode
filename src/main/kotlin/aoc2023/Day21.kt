@@ -7,7 +7,7 @@ import tools.board.directions4
 import tools.math.polynomial
 import tools.math.polynomialCoefficients
 
-class Day21(test: Int? = null) : Day(2023, 21, test) {
+class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         var tiles = setOf(garden.points.first { garden[it].c == 'S' })
         repeat(64) { step ->

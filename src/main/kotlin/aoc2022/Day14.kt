@@ -6,7 +6,7 @@ import tools.board.Point
 import kotlin.math.max
 import kotlin.math.min
 
-class Day14(test: Int? = null) : Day(2022, 14, test) {
+class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         sendSand { it.y < cave.height - 1 }
         return sandCount

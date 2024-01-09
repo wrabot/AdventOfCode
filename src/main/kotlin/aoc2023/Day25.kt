@@ -4,7 +4,7 @@ import Day
 import tools.graph.EdmondsKarp
 import tools.graph.ValuedEdge
 
-class Day25(test: Int? = null) : Day(2023, 25, test) {
+class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         val edmondsKarp = EdmondsKarp(nodes.size, wires.flatMap {
             listOf(

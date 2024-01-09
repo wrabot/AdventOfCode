@@ -3,7 +3,7 @@ package aoc2020
 import Day
 import kotlin.math.absoluteValue
 
-class Day12(test: Int? = null) : Day(2020, 12, test) {
+class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         var x = 0
         var y = 0

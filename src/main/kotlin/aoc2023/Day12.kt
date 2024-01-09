@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day12(test: Int? = null) : Day(2023, 12, test) {
+class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = rows.sumOf { it.arrangements(0, 0, 0) }
 
     override fun solvePart2() = rows.map { row ->

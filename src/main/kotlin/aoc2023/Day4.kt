@@ -4,7 +4,7 @@ import Day
 import tools.groupValues
 import tools.toWords
 
-class Day4(test: Int? = null) : Day(2023, 4, test) {
+class Day4(test: Int? = null) : Day(test) {
     override fun solvePart1() = cards.sumOf { card ->
         card.myWinning.let { if (it <= 1) it else 1 shl (it - 1) }
     }

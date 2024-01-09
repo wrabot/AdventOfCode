@@ -3,7 +3,7 @@ package aoc2021
 import Day
 
 
-class Day24 : Day(2021, 24) {
+class Day24 : Day() {
     override fun solvePart1() = "99919692496939".takeIf { test(it) == 0 } ?: ""
     override fun solvePart2() = "81914111161714".takeIf { test(it) == 0 } ?: ""
 

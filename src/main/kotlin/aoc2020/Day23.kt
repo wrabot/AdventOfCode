@@ -3,7 +3,7 @@ package aoc2020
 import Day
 import java.util.*
 
-class Day23 : Day(2020, 23) {
+class Day23 : Day() {
     override fun solvePart1(): Any {
         val cups = firstCups.toMutableList()
         repeat(100) {

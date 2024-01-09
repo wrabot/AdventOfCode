@@ -3,7 +3,7 @@ package aoc2023
 import Day
 import tools.size
 
-class Day19(test: Int? = null) : Day(2023, 19, test) {
+class Day19(test: Int? = null) : Day(test) {
     override fun solvePart1() = parts.sumOf { it.countPart1("in") }
 
     private fun Part.countPart1(workflow: String): Int = when (workflow) {

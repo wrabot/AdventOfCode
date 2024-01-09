@@ -5,7 +5,7 @@ import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.div
 
-class Day7(test: Int? = null) : Day(2022, 7, test) {
+class Day7(test: Int? = null) : Day(test) {
     override fun solvePart1() = sizes.filter { it <= 100000 }.sum()
     override fun solvePart2() = sizes.filter { space + it >= 30000000 }.min()
 

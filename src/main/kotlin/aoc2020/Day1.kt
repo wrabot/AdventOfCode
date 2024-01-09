@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day1 : Day(2020, 1) {
+class Day1 : Day() {
     override fun solvePart1() = numbers.product(2020)!!
 
     override fun solvePart2(): Any {

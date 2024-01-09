@@ -3,7 +3,7 @@ package aoc2022
 import Day
 import tools.toWords
 
-class Day5(test: Int? = null) : Day(2022, 5, test) {
+class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1() = crates.map { it.toMutableList() }.apply {
         moves.forEach { move ->
             repeat(move.quantity) {

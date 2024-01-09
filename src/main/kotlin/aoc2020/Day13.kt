@@ -3,7 +3,7 @@ package aoc2020
 import Day
 import tools.math.times
 
-class Day13(test: Int? = null) : Day(2020, 13, test) {
+class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val min = lines[0].toInt()
         return lines[1].split(",").mapNotNull { it.toIntOrNull() }

@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day14(test: Int? = null) : Day(2020, 14, test) {
+class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1() : Any {
         var maskOff = 0L
         var maskOn = 0L

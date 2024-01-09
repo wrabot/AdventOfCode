@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day19 : Day(2020, 19) {
+class Day19 : Day() {
     override fun solvePart1(): Any {
         val regex0 = rules.createRegex("0").toRegex()
         return messages.count { it.matches(regex0) }

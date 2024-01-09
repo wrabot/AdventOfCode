@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day1 : Day(2023, 1) {
+class Day1 : Day() {
     override fun solvePart1() = lines.sumOf { it.calibrationPart1().toInt() }
     private fun String.calibrationPart1() = first { it.isDigit() }.toString() + last { it.isDigit() }
 

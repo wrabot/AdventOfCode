@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day2(test: Int? = null) : Day(2023, 2, test) {
+class Day2(test: Int? = null) : Day(test) {
     override fun solvePart1() = games.filter { game ->
         game.subsets.all { it.red <= 12 } && game.subsets.all { it.green <= 13 } && game.subsets.all { it.blue <= 14 }
     }.sumOf { it.id }

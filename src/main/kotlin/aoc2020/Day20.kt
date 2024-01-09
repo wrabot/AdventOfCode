@@ -3,7 +3,7 @@ package aoc2020
 import Day
 import kotlin.math.sqrt
 
-class Day20(test: Int? = null) : Day(2020, 20, test) {
+class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1() = corners.map { it.key.id }.distinct().reduce { acc, i -> acc * i }
 
     override fun solvePart2(): Any {

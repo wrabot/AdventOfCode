@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day20(test: Int? = null) : Day(2022, 20, test) {
+class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1() = lines.map { Cell(it.toLong()) }.mixNumbers(1)
 
     override fun solvePart2() = lines.map { Cell(it.toLong() * 811589153) }.mixNumbers(10)

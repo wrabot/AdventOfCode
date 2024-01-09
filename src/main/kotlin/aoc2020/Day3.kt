@@ -3,7 +3,7 @@ package aoc2020
 import tools.board.Board
 import Day
 
-class Day3 : Day(2020, 3) {
+class Day3 : Day() {
     override fun solvePart1() = slope(3, 1)
 
     override fun solvePart2() = listOf(1 to 1, 3 to 1, 5 to 1, 7 to 1, 1 to 2)

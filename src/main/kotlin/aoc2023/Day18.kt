@@ -6,7 +6,7 @@ import tools.board.Board
 import tools.board.Direction
 import tools.board.Point
 
-class Day18(test: Int? = null) : Day(2023, 18, test) {
+class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()
 
     override fun solvePart2() = instructionsPart2.solve()

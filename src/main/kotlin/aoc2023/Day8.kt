@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day8(test: Int? = null) : Day(2023, 8, test) {
+class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = (path("AAA") { it == "ZZZ" }.count() - 1) * directions.size
 
     override fun solvePart2() = map.keys.filter(::isStart).map { path(it, ::isEnd).checkPath() }

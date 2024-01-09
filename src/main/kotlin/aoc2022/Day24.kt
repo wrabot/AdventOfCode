@@ -5,7 +5,7 @@ import tools.board.Board
 import tools.board.Point
 import tools.graph.shortPath
 
-class Day24(test: Int? = null) : Day(2022, 24, test) {
+class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(0, entrance, exit)
     override fun solvePart2() = solve(solve(solve(0, entrance, exit), exit, entrance), entrance, exit)
 

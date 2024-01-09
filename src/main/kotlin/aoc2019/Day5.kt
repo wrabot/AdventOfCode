@@ -2,7 +2,7 @@ package aoc2019
 
 import Day
 
-class Day5 : Day(2019, 5) {
+class Day5 : Day() {
     override fun solvePart1() = Runtime(code.toMutableList(), 1).execute()
 
     override fun solvePart2() = Runtime(code.toMutableList(), 5).execute()

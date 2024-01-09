@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day11(test: Int? = null) : Day(2022, 11, test) {
+class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = monkeys.map { it.copy() }.run {
         repeat(20) {
             forEach { monkey ->

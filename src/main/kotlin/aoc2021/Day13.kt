@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day13(test: Int? = null) : Day(2021, 13, test) {
+class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1() = folds.take(1).foldDots(dots).count()
 
     override fun solvePart2(): Any {

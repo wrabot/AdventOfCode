@@ -6,7 +6,7 @@ import tools.geometry.PointD
 import tools.math.gcd
 import kotlin.math.abs
 
-class Day24(test: Int? = null) : Day(2023, 24, test) {
+class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1() = hailstones.mapIndexed { index, hailstone ->
         hailstones.drop(index + 1).count {
             val t = hailstone.intersectXY(it) ?: return@count false

@@ -3,7 +3,7 @@ package aoc2022
 import Day
 import tools.board.Point
 
-class Day18(test: Int? = null) : Day(2022, 18, test) {
+class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = faces.size
 
     override fun solvePart2(): Int {

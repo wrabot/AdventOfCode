@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day8(test: Int? = null) : Day(2015, 8, test) {
+class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = lines.sumOf { line ->
         line.length - line.substring(1, line.length - 1)
             .replace("\\\"", "\"")

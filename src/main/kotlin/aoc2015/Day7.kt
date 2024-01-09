@@ -3,7 +3,7 @@ package aoc2015
 import Day
 
 @Suppress("SpellCheckingInspection")
-class Day7 : Day(2015, 7) {
+class Day7 : Day() {
     override fun solvePart1() = eval("a")
 
     override fun solvePart2(): Any {

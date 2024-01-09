@@ -3,7 +3,7 @@ package aoc2015
 import kotlinx.serialization.json.*
 import Day
 
-class Day12(test: Int? = null) : Day(2015, 12, test) {
+class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = Json.parseToJsonElement(input).sum(false)
     override fun solvePart2() = Json.parseToJsonElement(input).sum(true)
 

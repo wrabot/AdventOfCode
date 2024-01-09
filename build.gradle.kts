@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("wrabot.competitive:CompetitiveTools:0.1")
+    implementation("wrabot.competitive:CompetitiveTools:0.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 

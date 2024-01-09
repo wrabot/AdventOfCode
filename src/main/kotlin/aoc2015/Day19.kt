@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day19(test: Int? = null) : Day(2015, 19, test) {
+class Day19(test: Int? = null) : Day(test) {
     override fun solvePart1() = replacements.flatMap { (replacement, regex) ->
         regex.toRegex().findAll(molecule).map { molecule.replaceRange(it.range, replacement) }
     }.distinct().count()

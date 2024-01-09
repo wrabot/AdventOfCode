@@ -4,7 +4,7 @@ import Day
 import tools.board.Point
 import kotlin.math.max
 
-class Day17(test: Int? = null) : Day(2022, 17, test) {
+class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = Board().solve(2022)
     override fun solvePart2() = Board().run {
         solve(0)

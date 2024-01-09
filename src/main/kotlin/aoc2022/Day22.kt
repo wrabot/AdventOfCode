@@ -4,7 +4,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day22(test: Int? = null) : Day(2022, 22, test) {
+class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve { State(Point((width + it.position.x) % width, (height + it.position.y) % height), it.directionIndex) }
     override fun solvePart2() = solve { mapping[it.position] ?: it }
 

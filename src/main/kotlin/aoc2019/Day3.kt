@@ -4,7 +4,7 @@ import Day
 import tools.board.Point
 import kotlin.math.absoluteValue
 
-class Day3(test: Int? = null) : Day(2019, 3, test) {
+class Day3(test: Int? = null) : Day(test) {
     override fun solvePart1() = intersections.minOf { it.x.absoluteValue + it.y.absoluteValue }
 
     override fun solvePart2() = intersections.minOf { point -> wires.sumOf { it.indexOf(point) } }

@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day2(test: Int? = null) : Day(2022, 2, test) {
+class Day2(test: Int? = null) : Day(test) {
     override fun solvePart1() = guide.sumOf { it.score() }
     override fun solvePart2() = guide.map { it.first to (it.first + it.second + 2) % 3 }.sumOf { it.score() }
     private fun Pair<Int, Int>.score() = ((4 + second - first) % 3) * 3 + 1 + second

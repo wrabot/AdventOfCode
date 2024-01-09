@@ -5,7 +5,7 @@ import Day
 import tools.board.Point
 import tools.board.directions4
 
-class Day8(test: Int? = null) : Day(2022, 8, test) {
+class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = board.points.count { point ->
         val height = board[point]
         directions4.any { point.isVisible(height, it) }

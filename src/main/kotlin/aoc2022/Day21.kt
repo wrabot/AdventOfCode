@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day21(test: Int? = null) : Day(2022, 21, test) {
+class Day21(test: Int? = null) : Day(test) {
 
     // part1
 

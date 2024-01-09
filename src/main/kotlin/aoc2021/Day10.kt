@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day10(test: Int? = null) : Day(2021, 10, test) {
+class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1() = simplifiedChunks.sumOf { chunk ->
         when (chunk.find { it in listOf(')', ']', '}', '>') }) {
             ')' -> 3

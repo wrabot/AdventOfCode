@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day5 : Day(2020, 5) {
+class Day5 : Day() {
     override fun solvePart1() = ids.maxOrNull()!!
 
     override fun solvePart2() = ids.filterIndexed { index, i -> index + ids.first() != i }.first() - 1

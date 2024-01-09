@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day15(test: Int? = null) : Day(2020, 15, test) {
+class Day15(test: Int? = null) : Day(test) {
     override fun solvePart1() = numbers.map { it.memory(2020) }
     override fun solvePart2() = numbers.map { it.memory(30000000) }
 

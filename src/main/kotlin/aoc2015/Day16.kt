@@ -3,7 +3,7 @@ package aoc2015
 import Day
 
 @Suppress("SpellCheckingInspection")
-class Day16(test: Int? = null) : Day(2015, 16, test) {
+class Day16(test: Int? = null) : Day(test) {
     override fun solvePart1() = aunts.single { aunt -> aunt.properties.all { it.value == clues[it.key] } }.name
 
     override fun solvePart2() = aunts.single { aunt ->

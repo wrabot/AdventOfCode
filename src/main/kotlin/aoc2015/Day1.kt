@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day1 : Day(2015, 1) {
+class Day1 : Day() {
     override fun solvePart1() = lines[0].sumOf { if (it == '(') 1L else -1 }
 
     override fun solvePart2() =

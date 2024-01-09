@@ -6,7 +6,7 @@ import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.sqrt
 
-class Day6(test: Int? = null) : Day(2023, 6, test) {
+class Day6(test: Int? = null) : Day(test) {
     override fun solvePart1() = racesPart1.fold(1) { acc, race -> acc * race.records1() }
 
     private val racesPart1 = lines[0].toWords().zip(lines[1].toWords()).drop(1)

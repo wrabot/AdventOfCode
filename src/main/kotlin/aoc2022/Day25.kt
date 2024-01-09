@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 
-class Day25(test: Int? = null) : Day(2022, 25, test) {
+class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1() = lines.sumOf { it.fromSNAFU() }.toSNAFU()
     override fun solvePart2() = Unit
 

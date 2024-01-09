@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day4 : Day(2020, 4) {
+class Day4 : Day() {
     override fun solvePart1() = passports.count { (it.keys intersect mandatory.keys).size == 7 }
 
     override fun solvePart2() = passports.count { passport ->

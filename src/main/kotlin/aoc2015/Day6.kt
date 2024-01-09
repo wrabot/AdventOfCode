@@ -3,7 +3,7 @@ package aoc2015
 import Day
 import java.util.*
 
-class Day6 : Day(2015, 6) {
+class Day6 : Day() {
     override fun solvePart1(): Any {
         val binaryLights = BitSet(size * size)
         orders.forEach {

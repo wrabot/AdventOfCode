@@ -3,7 +3,7 @@ package aoc2015
 import Day
 import tools.board.Point
 
-class Day3 : Day(2015, 3) {
+class Day3 : Day() {
     override fun solvePart1(): Any {
         val houses = mutableSetOf(start)
         var current = start

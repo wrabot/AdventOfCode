@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day14(test: Int? = null) : Day(2015, 14, test) {
+class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1() = reindeer.maxOf { it.distance(duration) }
     override fun solvePart2(): Any {
         for (t in 1..duration) {

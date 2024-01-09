@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day17(test: Int? = null) : Day(2015, 17, test) {
+class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = containers.combinations(150)
     override fun solvePart2() = containers.combinations(150, 0)!!.first
 

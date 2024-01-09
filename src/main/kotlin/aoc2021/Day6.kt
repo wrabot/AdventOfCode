@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day6(test: Int? = null) : Day(2021, 6, test) {
+class Day6(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         lines[0].split(",").map { generation[it.toInt()]++ }
         repeat(80) { step() }

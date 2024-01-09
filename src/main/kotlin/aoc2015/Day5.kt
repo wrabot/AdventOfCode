@@ -3,7 +3,7 @@ package aoc2015
 import Day
 
 @Suppress("SpellCheckingInspection")
-class Day5 : Day(2015, 5) {
+class Day5 : Day() {
     override fun solvePart1(): Any {
         val required = List(26) { ('a' + it).toString().repeat(2) }
         val forbidden = listOf("ab", "cd", "pq", "xy")

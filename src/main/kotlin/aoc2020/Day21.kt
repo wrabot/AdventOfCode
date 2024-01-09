@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day21(test: Int? = null) : Day(2020, 21, test) {
+class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1() = foods.sumOf { it.first.minus(foodWithAllergens.toSet()).size }
     override fun solvePart2() = foodWithAllergens.joinToString(",")
 

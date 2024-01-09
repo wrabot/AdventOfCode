@@ -4,7 +4,7 @@ import Day
 import tools.board.Point
 import kotlin.math.absoluteValue
 
-class Day19(test: Int? = null) : Day(2021, 19, test) {
+class Day19(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val rotateScanners: MutableList<List<List<Point>>> = scanners.drop(1).map { it.rotate() }.toMutableList()
         val toTry = mutableListOf(scanners[0])

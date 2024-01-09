@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day15(test: Int? = null) : Day(2023, 15, test) {
+class Day15(test: Int? = null) : Day(test) {
     override fun solvePart1() = input.split(',').sumOf { it.hash() }
     override fun solvePart2(): Int {
         val boxes = Array(256) { mutableListOf<Pair<String, Int>>() }

@@ -5,7 +5,7 @@ import Day
 import tools.board.Direction
 import tools.board.Point
 
-class Day23(test: Int? = null) : Day(2023, 23, test) {
+class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1() = findPathMaxSizePart1()
 
     private fun findPathMaxSizePart1(path: List<Point> = listOf(start)): Int {

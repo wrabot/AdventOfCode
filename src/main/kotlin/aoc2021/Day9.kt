@@ -3,7 +3,7 @@ package aoc2021
 import tools.board.Board
 import Day
 
-class Day9(test: Int? = null) : Day(2021, 9, test) {
+class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = lowPoints.sumOf { board[it] + 1 }
 
     override fun solvePart2() = lowPoints.map { lowPoint -> board.zone4(lowPoint) { board[it] != 9 }.count() }

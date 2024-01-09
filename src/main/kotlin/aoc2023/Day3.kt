@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day3(test: Int? = null) : Day(2023, 3, test) {
+class Day3(test: Int? = null) : Day(test) {
     private val height = lines.count()
     private val width = lines[0].count()
     private val yIndices = 0 until height

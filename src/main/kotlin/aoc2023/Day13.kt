@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 
-class Day13(test: Int? = null) : Day(2023, 13, test) {
+class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1() = maps.sumOf { it.summarize() }
 
     override fun solvePart2() = maps.sumOf { map ->

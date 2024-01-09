@@ -3,7 +3,7 @@ package aoc2021
 import Day
 import tools.board.Point
 
-class Day5(test: Int? = null) : Day(2021, 5, test) {
+class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         segments.forEach { segment ->
             if (segment.first.x == segment.second.x) {

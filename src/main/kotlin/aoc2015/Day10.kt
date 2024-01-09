@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 
-class Day10(test: Int? = null) : Day(2015, 10, test) {
+class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         sequence = input.map { it.toString().toInt() }
         repeat(40) { next() }

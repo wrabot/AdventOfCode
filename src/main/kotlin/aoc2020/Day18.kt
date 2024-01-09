@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day18 : Day(2020, 18) {
+class Day18 : Day() {
     override fun solvePart1() = list.sumOf { Expr(it, false).eval() }
     override fun solvePart2() = list.sumOf { Expr(it, true).eval() }
 

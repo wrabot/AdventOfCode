@@ -3,7 +3,7 @@ package aoc2015
 import tools.board.Board
 import Day
 
-class Day18(test: Int? = null) : Day(2015, 18, test) {
+class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         val board = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it == '#') } })
         repeat(100) { board.step() }

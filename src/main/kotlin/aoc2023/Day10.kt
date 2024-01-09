@@ -5,7 +5,7 @@ import tools.board.Board
 import Day
 import tools.board.Point
 
-class Day10(test: Int? = null) : Day(2023, 10, test) {
+class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         board[start].distance = 0
         val todo = Direction.entries.map { Pipe(start, it, it) }.toMutableList()

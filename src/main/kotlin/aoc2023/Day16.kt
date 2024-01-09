@@ -7,7 +7,7 @@ import tools.board.Direction
 import tools.board.Point
 import kotlin.math.max
 
-class Day16(test: Int? = null) : Day(2023, 16, test) {
+class Day16(test: Int? = null) : Day(test) {
     override fun solvePart1() = countBeams(0, 0, East)
 
     override fun solvePart2() = max(

@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day14(test: Int? = null) : Day(2021, 14, test) {
+class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         repeat(10) { step() }
         return difference()

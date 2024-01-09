@@ -2,7 +2,7 @@ package aoc2020
 
 import Day
 
-class Day24(test: Int? = null) : Day(2020, 24, test) {
+class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
         lines.forEach { Tile(0, 0).goToTile(it).run { if (!blacks.remove(this)) blacks.add(this) } }
         return blacks.size

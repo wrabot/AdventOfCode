@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 
-class Day1(test: Int? = null) : Day(2021, 1, test) {
+class Day1(test: Int? = null) : Day(test) {
     override fun solvePart1() = depths.zipWithNext().count { it.first < it.second }
     override fun solvePart2() = depths.windowed(3).map { it.sum() }.zipWithNext().count { it.first < it.second }
 
