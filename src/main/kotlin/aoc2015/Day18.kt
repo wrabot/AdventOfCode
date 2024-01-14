@@ -1,17 +1,18 @@
 package aoc2015
 
-import tools.board.Board
 import Day
+import tools.board.Board
+import tools.board.toBoard
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
-        val board = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it == '#') } })
+        val board = lines.toBoard { Cell(it == '#') }
         repeat(100) { board.step() }
         return board.cells.count { it.current }
     }
 
     override fun solvePart2(): Any {
-        val board = Board(lines[0].length, lines.size, lines.flatMap { line -> line.map { Cell(it == '#') } })
+        val board = lines.toBoard { Cell(it == '#') }
         repeat(100) {
             board.forceCorners()
             board.step()
@@ -32,11 +33,11 @@ class Day18(test: Int? = null) : Day(test) {
     }
 
     private fun Board<Cell>.step() {
-        points.forEach { point ->
-            when (neighbors8(point).count { this[it].current }) {
-                2 -> this[point].next = this[point].current
-                3 -> this[point].next = true
-                else -> this[point].next = false
+        xy.forEach { xy ->
+            when (neighbors8(xy).count { this[it].current }) {
+                2 -> this[xy].next = this[xy].current
+                3 -> this[xy].next = true
+                else -> this[xy].next = false
             }
         }
         cells.forEach { it.current = it.next }

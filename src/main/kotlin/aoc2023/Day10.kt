@@ -1,9 +1,8 @@
 package aoc2023
 
+import Day
 import aoc2023.Day10.Type.*
 import tools.board.Board
-import Day
-import tools.board.Point
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -31,12 +30,12 @@ class Day10(test: Int? = null) : Day(test) {
         }
         assert(board.cells.all { it.isClassified() })
         //println(board)
-        return board.points.filter { board[it].rightSide != null }
+        return board.xy.filter { board[it].rightSide != null }
             .partition { board[it].rightSide!! }.toList()
             .first { zone -> zone.all { it.notOnBorder() } }.count()
     }
 
-    private fun setZone(origin: Point, direction: Direction, rightSide: Boolean) {
+    private fun setZone(origin: Board.XY, direction: Direction, rightSide: Boolean) {
         val point = origin + if (rightSide) direction.right else direction.left
         val tile = board.getOrNull(point) ?: return
         if (tile.distance != null || tile.rightSide == rightSide) return
@@ -44,11 +43,11 @@ class Day10(test: Int? = null) : Day(test) {
             .forEach { board[it].rightSide = rightSide }
     }
 
-    private fun Point.notOnBorder() = x in 1..<board.width - 1 && y in 1..<board.height - 1
+    private fun Board.XY.notOnBorder() = x in 1..<board.width - 1 && y in 1..<board.height - 1
 
     // common
 
-    private fun nextPipe(origin: Point, direction: Direction): Pipe? {
+    private fun nextPipe(origin: Board.XY, direction: Direction): Pipe? {
         val destination = origin + direction.delta
         val destinationTile = board.getOrNull(destination) ?: return null
         val newDirection = when (destinationTile.type) {
@@ -92,13 +91,14 @@ class Day10(test: Int? = null) : Day(test) {
     }
 
 
-    data class Pipe(val origin: Point, val direction: Direction, val previousDirection: Direction)
+    data class Pipe(val origin: Board.XY, val direction: Direction, val previousDirection: Direction)
 
-    enum class Direction(val delta: Point, val right: Point, val left: Point) {
-        North(Point(0, -1), Point(1, 0), Point(-1, 0)),
-        West(Point(-1, 0), Point(0, -1), Point(0, 1)),
-        East(Point(1, 0), Point(0, 1), Point(0, -1)),
-        South(Point(0, 1), Point(-1, 0), Point(1, 0))
+    // TODO use directions
+    enum class Direction(val delta: Board.XY, val right: Board.XY, val left: Board.XY) {
+        North(Board.XY(0, -1), Board.XY(1, 0), Board.XY(-1, 0)),
+        West(Board.XY(-1, 0), Board.XY(0, -1), Board.XY(0, 1)),
+        East(Board.XY(1, 0), Board.XY(0, 1), Board.XY(0, -1)),
+        South(Board.XY(0, 1), Board.XY(-1, 0), Board.XY(1, 0))
     }
 
     // Parse input
@@ -132,5 +132,5 @@ class Day10(test: Int? = null) : Day(test) {
         }
     })
 
-    private val start = board.points.first { board[it].type == Start }
+    private val start = board.xy.first { board[it].type == Start }
 }

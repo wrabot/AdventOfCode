@@ -2,16 +2,11 @@ package aoc2021
 
 import Day
 import tools.board.Board
+import tools.board.toBoard
 import tools.graph.shortPath
 
 class Day15(test: Int? = null) : Day(test) {
-    override fun solvePart1() =
-        minRisk(
-            Board(
-                lines[0].length,
-                lines.size,
-                lines.flatMap { line -> line.map { Cell(it.toString().toDouble()) } })
-        )
+    override fun solvePart1() = minRisk(lines.toBoard { Cell(it.toString().toDouble()) })
 
     override fun solvePart2() = minRisk(
         Board(
@@ -31,8 +26,8 @@ class Day15(test: Int? = null) : Day(test) {
     }
 
     private fun minRisk(cave: Board<Cell>) = shortPath(
-        cave.points.first(),
-        cave.points.last(),
+        cave.xy.first(),
+        cave.xy.last(),
         { _, destination -> cave[destination].risk }
     ) { cave.neighbors4(it) }.drop(1).sumOf { cave[it].risk }.toInt()
 }

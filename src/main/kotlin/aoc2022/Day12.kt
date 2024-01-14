@@ -1,8 +1,7 @@
 package aoc2022
 
-import tools.board.Board
 import Day
-import tools.board.Point
+import tools.board.Board
 
 class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = board[start].distance
@@ -18,8 +17,8 @@ class Day12(test: Int? = null) : Day(test) {
         } - 'a'
         Cell(content = it, height = height, distance = Int.MAX_VALUE)
     })
-    val start = board.points.first { board[it].content == 'S' }
-    val end = board.points.first { board[it].content == 'E' }
+    val start = board.xy.first { board[it].content == 'S' }
+    val end = board.xy.first { board[it].content == 'E' }
 
     init {
         board[end].distance = 0
@@ -29,7 +28,7 @@ class Day12(test: Int? = null) : Day(test) {
         }
     }
 
-    private fun List<Point>.computeDistance(): List<Point> = flatMap {
+    private fun List<Board.XY>.computeDistance(): List<Board.XY> = flatMap {
         val cell = board[it]
         val distance = cell.distance + 1
         board.neighbors4(it).mapNotNull { point ->

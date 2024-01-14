@@ -1,7 +1,7 @@
 package aoc2021
 
-import tools.board.Board
 import Day
+import tools.board.Board
 
 class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
@@ -28,8 +28,8 @@ class Day20(test: Int? = null) : Day(test) {
 
     private fun Board<Char>.enhance(algo: String): Board<Char> {
         val outside = cells[0]
-        val rows = points.map { point ->
-            (-1..1).flatMap { dy -> (-1..1).map { dx -> getOrNull(point.x + dx, point.y + dy) ?: outside } }
+        val rows = xy.map { xy ->
+            (-1..1).flatMap { dy -> (-1..1).map { dx -> getOrNull(xy.x + dx, xy.y + dy) ?: outside } }
                 .joinToString("") { if (it == '#') "1" else "0" }
                 .toInt(2)
                 .let { algo[it] }

@@ -1,8 +1,7 @@
 package aoc2022
 
-import tools.board.Board
 import Day
-import tools.board.Point
+import tools.board.Board
 import kotlin.math.max
 import kotlin.math.min
 
@@ -20,10 +19,10 @@ class Day14(test: Int? = null) : Day(test) {
         return sandCount
     }
 
-    private val sandFall = Point(500, 0)
-    private val directions = listOf(Point(0, 1), Point(-1, 1), Point(1, 1))
+    private val sandFall = Board.XY(500, 0)
+    private val directions = listOf(Board.XY(0, 1), Board.XY(-1, 1), Board.XY(1, 1))
 
-    private fun sendSand(goingOn: (Point) -> Boolean) {
+    private fun sendSand(goingOn: (Board.XY) -> Boolean) {
         var sand = sandFall
         while (goingOn(sand)) {
             sand = directions.map { sand + it }.find { cave[it].content == '.' } ?: sandFall.apply {
@@ -43,9 +42,9 @@ class Day14(test: Int? = null) : Day(test) {
 
     init {
         val lines = lines.map { line ->
-            line.split(" -> ").map { point ->
-                val (x, y) = point.split(",").map { it.toInt() }
-                Point(x, y)
+            line.split(" -> ").map { xy ->
+                val (x, y) = xy.split(",").map { it.toInt() }
+                Board.XY(x, y)
             }
         }
         val height = lines.flatten().run { maxOf { it.y } } + 3
@@ -55,12 +54,14 @@ class Day14(test: Int? = null) : Day(test) {
             when {
                 line.first.x == line.second.x ->
                     (min(line.first.y, line.second.y)..max(line.first.y, line.second.y)).map {
-                        Point(line.first.x, it)
+                        Board.XY(line.first.x, it)
                     }
+
                 line.first.y == line.second.y ->
                     (min(line.first.x, line.second.x)..max(line.first.x, line.second.x)).map {
-                        Point(it, line.first.y)
+                        Board.XY(it, line.first.y)
                     }
+
                 else -> error("invalid input")
             }
         }.distinct()

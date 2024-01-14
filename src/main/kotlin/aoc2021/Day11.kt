@@ -34,13 +34,13 @@ class Day11(test: Int? = null) : Day(test) {
         board.cells.forEach { it.level++ }
         do {
             var flash = false
-            board.points.forEach { point ->
-                val cell = board[point]
+            board.xy.forEach { xy ->
+                val cell = board[xy]
                 if (!cell.flash && cell.level > 9) {
                     cell.flash = true
                     flash = true
                     flashes++
-                    board.neighbors8(point).forEach { board[it].level++ }
+                    board.neighbors8(xy).forEach { board[it].level++ }
                 }
             }
         } while (flash)

@@ -1,10 +1,9 @@
 package aoc2023
 
 import Day
-import tools.board.Direction.*
 import tools.board.Board
 import tools.board.Direction
-import tools.board.Point
+import tools.board.Direction.*
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()
@@ -12,20 +11,20 @@ class Day18(test: Int? = null) : Day(test) {
     override fun solvePart2() = instructionsPart2.solve()
 
     private fun List<Instruction>.solve(): Long {
-        val points = runningFold(Point(0, 0)) { acc, instruction ->
+        val xy = runningFold(Board.XY(0, 0)) { acc, instruction ->
             acc + instruction.direction.delta * instruction.length
         }
-        val columns = points.map { it.x }.sorted().distinct()
-        val rows = points.map { it.y }.sorted().distinct()
+        val columns = xy.map { it.x }.sorted().distinct()
+        val rows = xy.map { it.y }.sorted().distinct()
         val width = columns.size * 2 - 1
         val height = rows.size * 2 - 1
         val map = Board(width, height, List(width * height) { Cell('.') })
-        val origin = Point(2 * columns.indexOf(0), 2 * rows.indexOf(0))
+        val origin = Board.XY(2 * columns.indexOf(0), 2 * rows.indexOf(0))
 
-        map.points.forEach { point ->
-            map[point].size = Point(
-                if (point.x % 2 == 0) 1 else columns[point.x / 2 + 1] - columns[point.x / 2] - 1,
-                if (point.y % 2 == 0) 1 else rows[point.y / 2 + 1] - rows[point.y / 2] - 1
+        map.xy.forEach { xy ->
+            map[xy].size = Board.XY(
+                if (xy.x % 2 == 0) 1 else columns[xy.x / 2 + 1] - columns[xy.x / 2] - 1,
+                if (xy.y % 2 == 0) 1 else rows[xy.y / 2 + 1] - rows[xy.y / 2] - 1
             )
         }
 
@@ -44,13 +43,13 @@ class Day18(test: Int? = null) : Day(test) {
             }
         }
 
-        return (map.zone4(origin + Point(1, 1)) { map[it].c == '.' } + map.points.filter { map[it].c == '#' }).sumOf {
+        return (map.zone4(origin + Board.XY(1, 1)) { map[it].c == '.' } + map.xy.filter { map[it].c == '#' }).sumOf {
             map[it].size.run { x.toLong() * y }
         }
     }
 
     data class Cell(var c: Char) {
-        var size: Point = Point(1, 1)
+        var size: Board.XY = Board.XY(1, 1)
         override fun toString() = c.toString()
     }
 

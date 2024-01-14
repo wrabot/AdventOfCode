@@ -1,8 +1,7 @@
 package aoc2023
 
-import tools.board.Board
 import Day
-import tools.board.Point
+import tools.board.Board
 import tools.rangeMinMax
 
 class Day11(test: Int? = null) : Day(test) {
@@ -16,13 +15,13 @@ class Day11(test: Int? = null) : Day(test) {
         }
     } / 2
 
-    fun distance(a: Point, b: Point, factor: Long) =
-        a.distance(b) + (factor - 1) * (emptyColumn.emptyCount(a.x, b.x) + emptyRows.emptyCount(a.y, b.y))
+    fun distance(a: Board.XY, b: Board.XY, factor: Long) =
+        (a-b).manhattan() + (factor - 1) * (emptyColumn.emptyCount(a.x, b.x) + emptyRows.emptyCount(a.y, b.y))
 
     private fun List<Int>.emptyCount(a: Int, b: Int) = count { it in rangeMinMax(a, b) }
 
     private val universe = Board(lines[0].length, lines.size, lines.flatMap { it.toList() })
-    private val galaxies = universe.points.filter { universe[it] == '#' }
+    private val galaxies = universe.xy.filter { universe[it] == '#' }
 
     private val emptyRows = (0..<universe.height).filter { y ->
         (0..<universe.width).all { universe[it, y] == '.' }

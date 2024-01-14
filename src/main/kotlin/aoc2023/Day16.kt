@@ -1,10 +1,9 @@
 package aoc2023
 
 import Day
-import tools.board.Direction.*
 import tools.board.Board
 import tools.board.Direction
-import tools.board.Point
+import tools.board.Direction.*
 import kotlin.math.max
 
 class Day16(test: Int? = null) : Day(test) {
@@ -17,7 +16,7 @@ class Day16(test: Int? = null) : Day(test) {
 
     private fun countBeams(x: Int, y: Int, direction: Direction): Int {
         map.cells.forEach { it.incomingBeams.clear() }
-        val todo = mutableListOf(Beam(Point(x, y), direction))
+        val todo = mutableListOf(Beam(Board.XY(x, y), direction))
         while (true) {
             val beam = todo.removeFirstOrNull() ?: break
             val cell = map.getOrNull(beam.point) ?: continue
@@ -30,7 +29,7 @@ class Day16(test: Int? = null) : Day(test) {
         return map.cells.count { it.incomingBeams.isNotEmpty() }
     }
 
-    data class Beam(val point: Point, val direction: Direction)
+    data class Beam(val point: Board.XY, val direction: Direction)
 
     data class Cell(val c: Char) {
         val incomingBeams = mutableSetOf<Direction>()

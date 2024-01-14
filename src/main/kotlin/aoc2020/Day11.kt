@@ -1,16 +1,17 @@
 package aoc2020
 
-import tools.board.Board
 import Day
-import tools.board.Point
+import tools.board.Board
+import tools.board.Direction
+import tools.board.toBoard
 
 class Day11(test: Int? = null) : Day(test) {
-    override fun solvePart1() = count(4) { seat, direction -> getOrNull(seat + direction)?.current == '#' }
+    override fun solvePart1() = count(4) { seat, direction -> getOrNull(seat + direction.delta)?.current == '#' }
 
     override fun solvePart2() = count(5) { seat, direction ->
         var current = seat
         while (true) {
-            current += direction
+            current += direction.delta
             when (getOrNull(current)?.current) {
                 '.' -> continue
                 '#' -> return@count true
@@ -22,22 +23,17 @@ class Day11(test: Int? = null) : Day(test) {
 
     data class Seat(var current: Char, var next: Char = current)
 
-    private val directions = listOf(
-        Point(1, 0), Point(1, -1), Point(0, -1), Point(-1, -1),
-        Point(-1, 0), Point(-1, 1), Point(0, 1), Point(1, 1)
-    )
-
-    fun count(min: Int, occupied: Board<Seat>.(Point, Point) -> Boolean): Int {
-        val plane = Board(lines[0].length, lines.size, lines.flatMap { it.map(::Seat) })
+    fun count(min: Int, occupied: Board<Seat>.(Board.XY, Direction) -> Boolean): Int {
+        val plane = lines.toBoard(::Seat)
         while (true) {
             var modified = false
-            plane.points.forEach { point ->
-                val seat = plane[point]
-                if (seat.current == 'L' && directions.none { plane.occupied(point, it) }) {
+            plane.xy.forEach { xy ->
+                val seat = plane[xy]
+                if (seat.current == 'L' && Direction.entries.none { plane.occupied(xy, it) }) {
                     seat.next = '#'
                     modified = true
                 }
-                if (seat.current == '#' && directions.count { plane.occupied(point, it) } >= min) {
+                if (seat.current == '#' && Direction.entries.count { plane.occupied(xy, it) } >= min) {
                     seat.next = 'L'
                     modified = true
                 }

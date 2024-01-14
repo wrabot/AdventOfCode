@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction
 import tools.board.Direction.*
-import tools.board.Point
+import tools.board.directions4
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = findCost(1, 3)
@@ -12,8 +12,8 @@ class Day17(test: Int? = null) : Day(test) {
 
     private fun findCost(min: Int, max: Int): Int {
         map.cells.forEach { it.clear() }
-        val todo = mutableListOf<Point>()
-        directions.forEach {
+        val todo = mutableListOf<Board.XY>()
+        directions4.forEach {
             val next = start + it.delta
             val cell = map.getOrNull(next)
             if (cell != null) {
@@ -26,7 +26,7 @@ class Day17(test: Int? = null) : Day(test) {
             val current = todo.removeFirstOrNull() ?: break
             val currentCell = map[current]
             currentCell.todo = false
-            directions.forEach { direction ->
+            directions4.forEach { direction ->
                 val next = current + direction.delta
                 val nextCell = map.getOrNull(next)
                 if (nextCell != null) {
@@ -81,13 +81,12 @@ class Day17(test: Int? = null) : Day(test) {
         var todo = false
     }
 
-    private val directions = Direction.entries.filterNot { it.isDiagonal }
     private val map =
         Board(lines[0].length, lines.size, lines.flatMap { line ->
             line.map {
-                Cell(it.toString().toInt(), directions.associateWith { arrayOfNulls(10) })
+                Cell(it.toString().toInt(), directions4.associateWith { arrayOfNulls(10) })
             }
         })
-    private val start = Point(0, 0)
-    private val end = Point(map.width - 1, map.height - 1)
+    private val start = Board.XY(0, 0)
+    private val end = Board.XY(map.width - 1, map.height - 1)
 }
