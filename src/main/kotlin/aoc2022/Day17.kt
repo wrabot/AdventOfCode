@@ -33,9 +33,9 @@ class Day17(test: Int? = null) : Day(test) {
                 }
 
                 // use to find params
-                if (findParams) patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }.add(
-                    Point(rockIndex, size())
-                )
+                if (findParams)
+                    patterns.getOrPut((rockIndex % rockContent.size) to commandIndex) { mutableListOf() }
+                        .add(Point(rockIndex, size()))
 
                 // reduce time
                 clean()
@@ -46,7 +46,10 @@ class Day17(test: Int? = null) : Day(test) {
             }
             if (findParams) {
                 params = patterns.values.filter { it.size >= 3 }
-                    .firstNotNullOfOrNull { list -> list.zipWithNext().map { it.second - it.first }.distinct().singleOrNull()?.let { Params(it.x, it.y) } }
+                    .firstNotNullOfOrNull { list ->
+                        list.zipWithNext().map { it.second - it.first }.distinct()
+                            .singleOrNull()?.let { Params(it.x, it.y) }
+                    }
                 if (params != null) break
             }
         }
@@ -95,22 +98,32 @@ class Day17(test: Int? = null) : Day(test) {
         fun toString(rock: Rock, bottomX: Int, bottomY: Int) = max(size(), bottomY + rock.height).let { size ->
             (0 until size).joinToString("\n") {
                 val y = size - it - 1
-                "|" + (0..6).joinToString("") { x -> if (rock.isRock(x - bottomX, y - bottomY)) "@" else get(x, y).content.toString() } + "|"
+                "|" + (0..6).joinToString("") { x ->
+                    if (rock.isRock(x - bottomX, y - bottomY)) "@" else get(
+                        x,
+                        y
+                    ).content.toString()
+                } + "|"
             } + "\n+-------+"
         }
 
-        fun size() = columns.maxOf { column -> column.filter { it.value.content == '#' }.maxOfOrNull { it.key + 1 } ?: 0 }
-        fun isValid(rock: Rock, bottomX: Int, bottomY: Int) = isValid(bottomX, bottomY) && isValid(bottomX + rock.width - 1, bottomY + rock.height - 1) &&
-                (0 until rock.width).all { x ->
-                    (0 until rock.height).all { y ->
-                        !rock.isRock(x, y) || get(x + bottomX, y + bottomY).content != '#'
+        fun size() =
+            columns.maxOf { column -> column.filter { it.value.content == '#' }.maxOfOrNull { it.key + 1 } ?: 0 }
+
+        fun isValid(rock: Rock, bottomX: Int, bottomY: Int) =
+            isValid(bottomX, bottomY) && isValid(bottomX + rock.width - 1, bottomY + rock.height - 1) &&
+                    (0 until rock.width).all { x ->
+                        (0 until rock.height).all { y ->
+                            !rock.isRock(x, y) || get(x + bottomX, y + bottomY).content != '#'
+                        }
                     }
-                }
 
         operator fun get(x: Int, y: Int) = getOrNull(x, y) ?: throw Error("invalid cell : x=$x y=$y")
 
         fun clean() {
-            val min = columns.minOf { column -> column.filter { it.value.content == '#' }.maxOfOrNull { it.key } ?: 0 } - 100 // 0,1 cause issues, 2 is OK, 100 is large
+            val min = columns.minOf { column ->
+                column.filter { it.value.content == '#' }.maxOfOrNull { it.key } ?: 0
+            } - 100 // 0,1 cause issues, 2 is OK, 100 is large
             columns.indices.forEach { x -> columns[x] = columns[x].filterKeys { it >= min }.toMutableMap() }
         }
 

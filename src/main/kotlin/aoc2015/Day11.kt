@@ -30,6 +30,6 @@ class Day11(test: Int? = null) : Day(test) {
         windowed(3, 1).any { it == (it.first()..it.first() + 2).toList() }
 
     private fun List<Char>.hasDoublePair() =
-                windowed(2, 1).withIndex().filter { it.value.first() == it.value.last() }
-                    .takeIf { it.isNotEmpty() }?.run { last().index - first().index >= 2 } ?: false
+        windowed(2, 1).withIndex().filter { it.value.first() == it.value.last() }
+            .takeIf { it.isNotEmpty() }?.run { last().index - first().index >= 2 } ?: false
 }

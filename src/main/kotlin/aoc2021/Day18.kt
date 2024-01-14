@@ -19,6 +19,7 @@ class Day18(test: Int? = null) : Day(test) {
             val second = parseNumber(input.drop(first.offset + 1))
             ParseResult(NumberPair(first.number, second.number), first.offset + 1 + second.offset + 1)
         }
+
         else -> ParseResult(NumberValue(input.first().toString().toInt()), 2)
     }
 

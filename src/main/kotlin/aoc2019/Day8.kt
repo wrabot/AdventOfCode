@@ -9,5 +9,5 @@ class Day8(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = input.toList().chunked(25 * 6).reduce { image, layer ->
         image.zip(layer).map { if (it.first == '2') it.second else it.first }
-    }.joinToString("") { if (it == '0') " " else "#" }.chunked(25).joinToString("") {"\n$it" }
+    }.joinToString("") { if (it == '0') " " else "#" }.chunked(25).joinToString("") { "\n$it" }
 }

@@ -13,7 +13,7 @@ class Day7 : Day() {
     }
 
     private fun contains(container: String, name: String): Boolean =
-       rules.getValue(container).any { it.second == name || contains(it.second, name) }
+        rules.getValue(container).any { it.second == name || contains(it.second, name) }
 
     private fun count(container: String): Int = rules.getValue(container).sumOf { it.first * (1 + count(it.second)) }
 }

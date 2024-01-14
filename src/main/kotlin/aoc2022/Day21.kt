@@ -36,6 +36,7 @@ class Day21(test: Int? = null) : Day(test) {
                     else -> error("!!!op")
                 }
             )
+
             right is Long -> solve(
                 left,
                 when (op) {
@@ -46,6 +47,7 @@ class Day21(test: Int? = null) : Day(test) {
                     else -> error("!!!op")
                 }
             )
+
             else -> error("!!!long")
         }
     }

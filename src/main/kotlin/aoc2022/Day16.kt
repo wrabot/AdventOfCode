@@ -12,10 +12,17 @@ class Day16(test: Int? = null) : Day(test) {
         max(mine, "AA", 0, 0, 26) + max(elephant, "AA", 0, 0, 26)
     }
 
-    private fun max(remaining: List<String>, current: String, release: Int, total: Int, time: Int): Int = remaining.mapNotNull {
-        val delay = distances[current]!![it]!! + 1
-        if (delay >= time) null else max(remaining.minus(it), it, release + valves[it]!!.rate, total + release * delay, time - delay)
-    }.maxOrNull() ?: (total + release * time)
+    private fun max(remaining: List<String>, current: String, release: Int, total: Int, time: Int): Int =
+        remaining.mapNotNull {
+            val delay = distances[current]!![it]!! + 1
+            if (delay >= time) null else max(
+                remaining.minus(it),
+                it,
+                release + valves[it]!!.rate,
+                total + release * delay,
+                time - delay
+            )
+        }.maxOrNull() ?: (total + release * time)
 
     data class Valve(val name: String, val rate: Int, val neighbors: List<String>)
 

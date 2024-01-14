@@ -27,5 +27,5 @@ class Day10(test: Int? = null) : Day(test) {
         sequence = output
     }
 
-    private lateinit var sequence : List<Int>
+    private lateinit var sequence: List<Int>
 }

@@ -1,7 +1,7 @@
 package aoc2022
 
-import tools.board.Board
 import Day
+import tools.board.Board
 import tools.board.Point
 import tools.log
 import kotlin.math.abs
@@ -33,7 +33,7 @@ class Day9(test: Int? = null) : Day(test) {
         }
     }.size
 
-   private fun MutableSet<Point>.move(rope: Array<Point>, index: Int, destination: Point) {
+    private fun MutableSet<Point>.move(rope: Array<Point>, index: Int, destination: Point) {
         rope[index] = destination
         if (index == rope.size - 1) {
             add(rope[index])

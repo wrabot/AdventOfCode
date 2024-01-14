@@ -24,15 +24,18 @@ class Day7(test: Int? = null) : Day(test) {
                     ls = false
                     path = path.parent
                 }
+
                 line.startsWith("$ cd") -> {
                     ls = false
                     path /= line.removePrefix("$ cd ")
                 }
+
                 ls && line.startsWith("dir ") -> dirs.add(path / line.removePrefix("dir "))
                 ls -> {
                     val (size, name) = line.split(" ")
                     files[path / name] = size.toInt()
                 }
+
                 else -> error("should not happen")
             }
         }

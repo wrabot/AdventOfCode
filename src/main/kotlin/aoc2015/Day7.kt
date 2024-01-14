@@ -32,6 +32,7 @@ class Day7 : Day() {
                     "RSHIFT" -> eval(expression[0]) shr expression[2].toInt()
                     else -> error("invalid operation")
                 }
+
                 else -> error("invalid size")
             }
         }

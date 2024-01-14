@@ -20,6 +20,7 @@ class Day12(test: Int? = null) : Day(test) {
                     path + it.second,
                     acceptTwoSmallInPath
                 )
+
                 acceptTwoSmallInPath -> countPaths(links, path + it.second, false)
                 else -> 0
             }

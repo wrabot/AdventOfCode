@@ -21,6 +21,7 @@ class Day12(test: Int? = null) : Day(test) {
                     270 -> y -= value
                     else -> error("Should not happen")
                 }
+
                 'R' -> dir = (dir + 360 - value) % 360
                 'L' -> dir = (dir + value) % 360
                 else -> error("Should not happen")
@@ -44,14 +45,17 @@ class Day12(test: Int? = null) : Day(test) {
                     x += value * wx
                     y += value * wy
                 }
+
                 'R' -> rotate(wx, wy, 360 - value).let {
                     wx = it.first
                     wy = it.second
                 }
+
                 'L' -> rotate(wx, wy, value).let {
                     wx = it.first
                     wy = it.second
                 }
+
                 else -> error("Should not happen")
             }
         }

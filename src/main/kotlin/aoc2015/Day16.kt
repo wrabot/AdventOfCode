@@ -9,7 +9,7 @@ class Day16(test: Int? = null) : Day(test) {
     override fun solvePart2() = aunts.single { aunt ->
         aunt.properties.all {
             when (it.key) {
-                "cats", "trees" ->  it.value > clues[it.key]!!
+                "cats", "trees" -> it.value > clues[it.key]!!
                 "pomeranians", "goldfish" -> it.value < clues[it.key]!!
                 else -> it.value == clues[it.key]
             }

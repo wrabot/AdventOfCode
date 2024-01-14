@@ -23,5 +23,5 @@ class Day13(test: Int? = null) : Day(test) {
             persons.add(b)
             happiness[a to b] = gain.toInt()
         }
-     }
+    }
 }

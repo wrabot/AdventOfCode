@@ -1,10 +1,10 @@
 package aoc2022
 
+import Day
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
-import Day
 
 class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1() =
@@ -31,6 +31,7 @@ class Day13(test: Int? = null) : Day(test) {
             .dropWhile { it == 0 }.run {
                 firstOrNull() ?: (right.size - left.size)
             }
+
         else -> error("!!!!")
     }
 }

@@ -26,7 +26,7 @@ class Day7(test: Int? = null) : Day(test) {
 
         fun execute(input: Int?): Int? {
             var i = input
-            while(true) {
+            while (true) {
                 if (offset >= memory.size) error("no opcode")
                 val opcode = read()
                 val firstMode = opcode / 100 % 10
@@ -34,7 +34,7 @@ class Day7(test: Int? = null) : Day(test) {
                 when (opcode % 100) {
                     1 -> read3().run { memory[third] = first.toValue(firstMode) + second.toValue(secondMode) }
                     2 -> read3().run { memory[third] = first.toValue(firstMode) * second.toValue(secondMode) }
-                    3 -> with (i ?: break) {
+                    3 -> with(i ?: break) {
                         memory[read()] = this
                         i = null
                     }

@@ -11,7 +11,7 @@ class Day6(test: Int? = null) : Day(test) {
 
     override fun solvePart2(): Any {
         part1 // force part1
-        repeat(256 - 80) {  step() }
+        repeat(256 - 80) { step() }
         return generation.sum()
     }
 

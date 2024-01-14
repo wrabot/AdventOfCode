@@ -16,7 +16,7 @@ class Day15(test: Int? = null) : Day(test) {
     }
 
     data class Couple(val sensor: Point, val beacon: Point, val distance: Int = sensor.distance(beacon)) {
-        fun scanPart1(y: Int)= (distance - abs(y - sensor.y)).takeIf { it >= 0 }?.let {
+        fun scanPart1(y: Int) = (distance - abs(y - sensor.y)).takeIf { it >= 0 }?.let {
             (sensor.x - it)..(sensor.x + it)
         }
 

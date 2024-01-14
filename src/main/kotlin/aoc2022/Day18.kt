@@ -31,7 +31,10 @@ class Day18(test: Int? = null) : Day(test) {
         }
         var todo = outsides.toSet()
         while (todo.isNotEmpty()) {
-            todo = todo.flatMap { point -> directions.map { point + it }.filter { it.x in xRange && it.y in yRange && it.z in zRange && it !in outsides && it !in lavas } }.toSet()
+            todo = todo.flatMap { point ->
+                directions.map { point + it }
+                    .filter { it.x in xRange && it.y in yRange && it.z in zRange && it !in outsides && it !in lavas }
+            }.toSet()
             outsides.addAll(todo)
         }
         return faces.count { it in outsides }
@@ -42,7 +45,8 @@ class Day18(test: Int? = null) : Day(test) {
         Point(x, y, z)
     }.toSet()
 
-    private val directions = listOf(Point(x = -1), Point(x = 1), Point(y = -1), Point(y = 1), Point(z = -1), Point(z = 1))
+    private val directions =
+        listOf(Point(x = -1), Point(x = 1), Point(y = -1), Point(y = 1), Point(z = -1), Point(z = 1))
 
-    private val faces by lazy { lavas.flatMap { lava -> directions.map {lava + it }.filter { it !in lavas } } }
+    private val faces by lazy { lavas.flatMap { lava -> directions.map { lava + it }.filter { it !in lavas } } }
 }

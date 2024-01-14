@@ -3,7 +3,7 @@ package aoc2020
 import Day
 
 class Day14(test: Int? = null) : Day(test) {
-    override fun solvePart1() : Any {
+    override fun solvePart1(): Any {
         var maskOff = 0L
         var maskOn = 0L
         val mem = mutableMapOf<Long, Long>()
@@ -14,6 +14,7 @@ class Day14(test: Int? = null) : Day(test) {
                     maskOff = mask.replace('X', '1').toLong(2)
                     maskOn = mask.replace('X', '0').toLong(2)
                 }
+
                 line.startsWith("mem") -> {
                     val (address, value) = line.removePrefix("mem[").split("] = ").map { it.toLong() }
                     mem[address] = ((value and maskOff) or maskOn)
@@ -23,7 +24,7 @@ class Day14(test: Int? = null) : Day(test) {
         return mem.values.sum()
     }
 
-    override fun solvePart2() : Any {
+    override fun solvePart2(): Any {
         var maskOff = 0L
         val maskOn = mutableListOf<Long>()
         val mem = mutableMapOf<Long, Long>()
@@ -40,6 +41,7 @@ class Day14(test: Int? = null) : Day(test) {
                         }
                     }
                 }
+
                 line.startsWith("mem") -> {
                     val (address, value) = line.removePrefix("mem[").split("] = ").map { it.toLong() }
                     maskOn.forEach { mem[(address and maskOff) or it] = value }

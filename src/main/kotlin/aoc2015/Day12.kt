@@ -1,7 +1,7 @@
 package aoc2015
 
-import kotlinx.serialization.json.*
 import Day
+import kotlinx.serialization.json.*
 
 class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = Json.parseToJsonElement(input).sum(false)

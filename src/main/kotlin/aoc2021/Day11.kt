@@ -1,15 +1,15 @@
 package aoc2021
 
-import tools.board.Board
 import Day
+import tools.board.Board
 
 class Day11(test: Int? = null) : Day(test) {
-    override fun solvePart1() : Any {
+    override fun solvePart1(): Any {
         repeat(100) { step() }
         return flashes
     }
 
-    override fun solvePart2() : Any {
+    override fun solvePart2(): Any {
         part1 // force part1
         var step = 100
         while (board.cells.any { it.level != 0 }) {

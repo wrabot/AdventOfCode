@@ -26,8 +26,13 @@ class Day5 : Day() {
                     // part 2 start
                     5 -> read2().run { if (first.toValue(firstMode) != 0) offset = second.toValue(secondMode) }
                     6 -> read2().run { if (first.toValue(firstMode) == 0) offset = second.toValue(secondMode) }
-                    7 -> read3().run { memory[third] = if (first.toValue(firstMode) < second.toValue(secondMode)) 1 else 0 }
-                    8 -> read3().run { memory[third] = if (first.toValue(firstMode) == second.toValue(secondMode)) 1 else 0 }
+                    7 -> read3().run {
+                        memory[third] = if (first.toValue(firstMode) < second.toValue(secondMode)) 1 else 0
+                    }
+
+                    8 -> read3().run {
+                        memory[third] = if (first.toValue(firstMode) == second.toValue(secondMode)) 1 else 0
+                    }
                     // part 2 end
                     99 -> break
                     else -> error("invalid opcode $opcode")

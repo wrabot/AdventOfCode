@@ -16,7 +16,7 @@ class Day11(test: Int? = null) : Day(test) {
     } / 2
 
     fun distance(a: Board.XY, b: Board.XY, factor: Long) =
-        (a-b).manhattan() + (factor - 1) * (emptyColumn.emptyCount(a.x, b.x) + emptyRows.emptyCount(a.y, b.y))
+        (a - b).manhattan() + (factor - 1) * (emptyColumn.emptyCount(a.x, b.x) + emptyRows.emptyCount(a.y, b.y))
 
     private fun List<Int>.emptyCount(a: Int, b: Int) = count { it in rangeMinMax(a, b) }
 

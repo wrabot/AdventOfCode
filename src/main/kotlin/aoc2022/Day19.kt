@@ -61,10 +61,12 @@ class Day19(test: Int? = null) : Day(test) {
                 minerals[oreIndex] -= geodeRobotOreCost
                 minerals[obsidianIndex] -= geodeRobotObsidianCost
             }
+
             obsidianIndex -> {
                 minerals[oreIndex] -= obsidianRobotOreCost
                 minerals[clayIndex] -= obsidianRobotClayCost
             }
+
             clayIndex -> minerals[oreIndex] -= clayRobotOreCost
             oreIndex -> minerals[oreIndex] -= oreRobotOreCost
             else -> {}
@@ -75,7 +77,8 @@ class Day19(test: Int? = null) : Day(test) {
 
     data class State(val minerals: List<Int>, val robots: List<Int>) : Comparable<State> {
         override fun compareTo(other: State) = (0..3).reversed().map { index ->
-            robots[index].compareTo(other.robots[index]).takeIf { it != 0 } ?: minerals[index].compareTo(other.minerals[index])
+            robots[index].compareTo(other.robots[index]).takeIf { it != 0 }
+                ?: minerals[index].compareTo(other.minerals[index])
         }.dropWhile { it == 0 }.firstOrNull() ?: 0
     }
 
@@ -98,6 +101,7 @@ class Day19(test: Int? = null) : Day(test) {
         Regex("Blueprint (.*): Each ore robot costs (.*) ore\\. Each clay robot costs (.*) ore\\. Each obsidian robot costs (.*) ore and (.*) clay\\. Each geode robot costs (.*) ore and (.*) obsidian\\.")
 
     private val blueprints = lines.map { line ->
-        regex.matchEntire(line)!!.groupValues.drop(1).map { it.toInt() }.let { Blueprint(it[0], it[1], it[2], it[3], it[4], it[5], it[6]) }
+        regex.matchEntire(line)!!.groupValues.drop(1).map { it.toInt() }
+            .let { Blueprint(it[0], it[1], it[2], it[3], it[4], it[5], it[6]) }
     }
 }

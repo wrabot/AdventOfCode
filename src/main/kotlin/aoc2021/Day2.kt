@@ -26,6 +26,7 @@ class Day2(test: Int? = null) : Day(test) {
                     position += it.second
                     depth += it.second * aim
                 }
+
                 "up" -> aim -= it.second
                 "down" -> aim += it.second
             }

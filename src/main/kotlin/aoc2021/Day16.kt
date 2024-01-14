@@ -52,6 +52,7 @@ class Day16(test: Int? = null) : Day(test) {
                 val value = blocks.take(count).joinToString("") { it.drop(1) }.toLong(2)
                 ParseResult(Packet.Literal(version, value), offset + count * 5)
             }
+
             else -> {
                 val packets = mutableListOf<Packet>()
                 if (packetPayload[0] == '0') {
