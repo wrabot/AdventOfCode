@@ -9,10 +9,11 @@ repositories {
 }
 
 dependencies {
-    implementation("wrabot.competitive:CompetitiveTools:0.8")
+    testImplementation("wrabot.competitive:CompetitiveTools:0.8")
     // to test new CompetitiveTools
-    //implementation("wrabot.competitive:CompetitiveTools") { version { branch = "main" } }
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    //testImplementation("wrabot.competitive:CompetitiveTools") { version { branch = "main" } }
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
 }
 
 application {

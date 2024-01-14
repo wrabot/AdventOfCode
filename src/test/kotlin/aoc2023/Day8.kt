@@ -5,11 +5,8 @@ import Day
 class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = (path("AAA") { it == "ZZZ" }.count() - 1) * directions.size
 
-    override fun solvePart2() = map.keys.filter(::isStart).map { path(it, ::isEnd).checkPath() }
+    override fun solvePart2() = map.keys.filter(::isStart).map { path(it, ::isEnd) }
         .fold(directions.size.toLong()) { acc, path -> acc * (path.count() - 1) }
-
-    // Assumption : on a path, stays on same exit after the same number of steps
-    private fun Sequence<String>.checkPath() = apply { assert(path(last()) { it == last() }.count() == count()) }
 
     private fun isStart(s: String) = s.endsWith('A')
     private fun isEnd(s: String) = s.endsWith('Z')
