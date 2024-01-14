@@ -1,7 +1,7 @@
 package aoc2019
 
 import Day
-import tools.board.Point
+import tools.geometry.Point
 import kotlin.math.absoluteValue
 
 class Day3(test: Int? = null) : Day(test) {

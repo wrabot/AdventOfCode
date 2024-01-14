@@ -1,7 +1,7 @@
 package aoc2022
 
 import Day
-import tools.board.Point
+import tools.geometry.Point
 import tools.merge
 import tools.size
 import kotlin.math.abs

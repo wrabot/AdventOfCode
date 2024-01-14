@@ -1,7 +1,7 @@
 package aoc2022
 
 import Day
-import tools.board.Point
+import tools.geometry.Point
 import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(test) {

@@ -1,8 +1,8 @@
 package aoc2023
 
 import Day
-import tools.board.Block
-import tools.board.Point
+import tools.geometry.Block
+import tools.geometry.Point
 import tools.hasIntersection
 import tools.move
 

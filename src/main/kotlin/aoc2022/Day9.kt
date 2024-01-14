@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 import tools.board.Board
-import tools.board.Point
+import tools.geometry.Point
 import tools.log
 import kotlin.math.abs
 

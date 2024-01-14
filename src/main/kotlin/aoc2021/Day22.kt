@@ -1,8 +1,8 @@
 package aoc2021
 
 import Day
-import tools.board.Block
-import tools.board.Point
+import tools.geometry.Block
+import tools.geometry.Point
 import tools.size
 
 class Day22(test: Int? = null) : Day(test) {
