@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.directions4
+import tools.board.Direction4
 
 class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1() = findPathMaxSizePart1()
@@ -10,8 +10,8 @@ class Day23(test: Int? = null) : Day(test) {
     private fun findPathMaxSizePart1(path: List<Board.XY> = listOf(start)): Int {
         val last = path.last()
         if (last == end) return path.size - 1
-        return directions4.maxOf {
-            val point = last + it.delta
+        return Direction4.entries.maxOf {
+            val point = last + it.xy
             val c = map.getOrNull(point) ?: return@maxOf 0
             if (c != '.' && c != it.c) return@maxOf 0
             if (point in path) return@maxOf 0

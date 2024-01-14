@@ -2,9 +2,8 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.Direction
-import tools.board.Direction.*
-import tools.board.directions4
+import tools.board.Direction4
+import tools.board.Direction4.*
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = findCost(1, 3)
@@ -13,8 +12,8 @@ class Day17(test: Int? = null) : Day(test) {
     private fun findCost(min: Int, max: Int): Int {
         map.cells.forEach { it.clear() }
         val todo = mutableListOf<Board.XY>()
-        directions4.forEach {
-            val next = start + it.delta
+        Direction4.entries.forEach {
+            val next = start + it.xy
             val cell = map.getOrNull(next)
             if (cell != null) {
                 cell.fromStartHeatLoss[it]!![0] = cell.heatLoss
@@ -26,8 +25,8 @@ class Day17(test: Int? = null) : Day(test) {
             val current = todo.removeFirstOrNull() ?: break
             val currentCell = map[current]
             currentCell.todo = false
-            directions4.forEach { direction ->
-                val next = current + direction.delta
+            Direction4.entries.forEach { direction ->
+                val next = current + direction.xy
                 val nextCell = map.getOrNull(next)
                 if (nextCell != null) {
                     //same direction
@@ -54,7 +53,7 @@ class Day17(test: Int? = null) : Day(test) {
         return map[end].fromStartHeatLoss.mapNotNull { it.value.filterNotNull().minOrNull() }.min()
     }
 
-    data class Cell(val heatLoss: Int, val fromStartHeatLoss: Map<Direction, Array<Int?>>) {
+    data class Cell(val heatLoss: Int, val fromStartHeatLoss: Map<Direction4, Array<Int?>>) {
         override fun toString(): String {
             return "[$heatLoss ${
                 fromStartHeatLoss.map { entry ->
@@ -65,7 +64,7 @@ class Day17(test: Int? = null) : Day(test) {
 
         fun clear() = fromStartHeatLoss.values.forEach { it.fill(null) }
 
-        fun update(direction: Direction, index: Int, neighborFromStartHeatLoss: Int): Boolean {
+        fun update(direction: Direction4, index: Int, neighborFromStartHeatLoss: Int): Boolean {
             val currentFromStartHeatLoss = fromStartHeatLoss[direction]!![index]
             val newFromStartHeatLoss = neighborFromStartHeatLoss + heatLoss
             if (currentFromStartHeatLoss == null || newFromStartHeatLoss < currentFromStartHeatLoss) {
@@ -84,7 +83,7 @@ class Day17(test: Int? = null) : Day(test) {
     private val map =
         Board(lines[0].length, lines.size, lines.flatMap { line ->
             line.map {
-                Cell(it.toString().toInt(), directions4.associateWith { arrayOfNulls(10) })
+                Cell(it.toString().toInt(), Direction4.entries.associateWith { arrayOfNulls(10) })
             }
         })
     private val start = Board.XY(0, 0)

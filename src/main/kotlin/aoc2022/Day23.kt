@@ -4,8 +4,8 @@ package aoc2022
 
 import Day
 import tools.board.Board
-import tools.board.Direction
-import tools.board.Direction.*
+import tools.board.Direction8
+import tools.board.Direction8.*
 
 class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -46,7 +46,7 @@ class Day23(test: Int? = null) : Day(test) {
         val moves = movingElves.mapNotNull { origin ->
             directions.find { areFree(origin, it.first) }?.let { origin to it.second }
         }
-            .groupBy({ it.first + it.second.delta }, { it.first }).mapNotNull { it.value.singleOrNull()?.to(it.key) }
+            .groupBy({ it.first + it.second.xy }, { it.first }).mapNotNull { it.value.singleOrNull()?.to(it.key) }
         moves.forEach {
             this[it.first].setFree()
             this[it.second].setElf()
@@ -54,8 +54,8 @@ class Day23(test: Int? = null) : Day(test) {
         return true
     }
 
-    private fun Board<Cell>.areFree(origin: Board.XY, directions: List<Direction>) =
-        directions.all { this[origin + it.delta].isFree() }
+    private fun Board<Cell>.areFree(origin: Board.XY, directions: List<Direction8>) =
+        directions.all { this[origin + it.xy].isFree() }
 
 
     private val directions = listOf(

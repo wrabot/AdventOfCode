@@ -2,8 +2,8 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.Direction
-import tools.board.Direction.*
+import tools.board.Direction4
+import tools.board.Direction4.*
 import kotlin.math.max
 
 class Day16(test: Int? = null) : Day(test) {
@@ -14,7 +14,7 @@ class Day16(test: Int? = null) : Day(test) {
         (0..<map.width).maxOf { max(countBeams(it, 0, South), countBeams(it, map.height - 1, North)) },
     )
 
-    private fun countBeams(x: Int, y: Int, direction: Direction): Int {
+    private fun countBeams(x: Int, y: Int, direction: Direction4): Int {
         map.cells.forEach { it.incomingBeams.clear() }
         val todo = mutableListOf(Beam(Board.XY(x, y), direction))
         while (true) {
@@ -23,16 +23,16 @@ class Day16(test: Int? = null) : Day(test) {
             if (beam.direction in cell.incomingBeams) continue
             cell.incomingBeams.add(beam.direction)
             cell.outgoing(beam.direction) {
-                todo.add(Beam(beam.point + it.delta, it))
+                todo.add(Beam(beam.point + it.xy, it))
             }
         }
         return map.cells.count { it.incomingBeams.isNotEmpty() }
     }
 
-    data class Beam(val point: Board.XY, val direction: Direction)
+    data class Beam(val point: Board.XY, val direction: Direction4)
 
     data class Cell(val c: Char) {
-        val incomingBeams = mutableSetOf<Direction>()
+        val incomingBeams = mutableSetOf<Direction4>()
 
         override fun toString() = when {
             c != '.' || incomingBeams.size == 0 -> c
@@ -40,7 +40,7 @@ class Day16(test: Int? = null) : Day(test) {
             else -> incomingBeams.size
         }.toString()
 
-        fun outgoing(incoming: Direction, block: (Direction) -> Unit) {
+        fun outgoing(incoming: Direction4, block: (Direction4) -> Unit) {
             when (c) {
                 '.' -> block(incoming)
                 '\\' -> when (incoming) {

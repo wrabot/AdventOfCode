@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 import tools.board.Board
-import tools.board.Direction
+import tools.board.Direction4
 import tools.board.toBoard
 import tools.graph.shortPath
 
@@ -39,14 +39,14 @@ class Day24(test: Int? = null) : Day(test) {
     }
 
     private fun createBoard() = lines.toBoard { c ->
-        val d = Direction.entries.find { it.c == c }
+        val d = Direction4.entries.find { it.c == c }
         if (d != null) Cell('.', listOf(d)) else Cell(c)
     }
 
     private fun Board<Cell>.nextBoard(): Board<Cell> {
-        val nextWinds = xy.flatMap { point ->
-            this[point].winds.map {
-                it to Board.XY(modulo(point.x + it.delta.x, width), modulo(point.y + it.delta.y, height))
+        val nextWinds = xy.flatMap { xy ->
+            this[xy].winds.map {
+                it to Board.XY(modulo(xy.x + it.xy.x, width), modulo(xy.y + it.xy.y, height))
             }
         }.groupBy({ it.second }, { it.first })
         return Board(width, height, xy.map { Cell(this[it].content, nextWinds[it].orEmpty()) })
@@ -54,7 +54,7 @@ class Day24(test: Int? = null) : Day(test) {
 
     private fun modulo(value: Int, size: Int) = (size + value - 3) % (size - 2) + 1
 
-    data class Cell(val content: Char, val winds: List<Direction> = emptyList(), var expedition: Boolean = false) {
+    data class Cell(val content: Char, val winds: List<Direction4> = emptyList(), var expedition: Boolean = false) {
         fun isEmpty() = content != '#' && winds.isEmpty()
 
         override fun toString() = when {

@@ -3,13 +3,13 @@ package aoc2023
 import Day
 import aoc2023.Day10.Type.*
 import tools.board.Board
-import tools.board.Direction
-import tools.board.Direction.*
+import tools.board.Direction4
+import tools.board.Direction4.*
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         board[start].distance = 0
-        val todo = Direction.entries.map { Pipe(start, it, it) }.toMutableList()
+        val todo = Direction4.entries.map { Pipe(start, it, it) }.toMutableList()
         while (true) {
             val pipe = todo.removeFirstOrNull() ?: break
             val nextPipe = nextPipe(pipe.origin, pipe.direction) ?: continue
@@ -22,7 +22,7 @@ class Day10(test: Int? = null) : Day(test) {
     }
 
     override fun solvePart2(): Int {
-        var next = Direction.entries.firstNotNullOf { nextPipe(start, it) }
+        var next = Direction4.entries.firstNotNullOf { nextPipe(start, it) }
         while (true) {
             setZone(next.origin, next.direction, true)
             setZone(next.origin, next.previousDirection, true)
@@ -37,8 +37,8 @@ class Day10(test: Int? = null) : Day(test) {
             .first { zone -> zone.all { it.notOnBorder() } }.count()
     }
 
-    private fun setZone(origin: Board.XY, direction: Direction, rightSide: Boolean) {
-        val point = origin + (if (rightSide) direction.right else direction.left).delta
+    private fun setZone(origin: Board.XY, direction: Direction4, rightSide: Boolean) {
+        val point = origin + (if (rightSide) direction.right else direction.left).xy
         val tile = board.getOrNull(point) ?: return
         if (tile.distance != null || tile.rightSide == rightSide) return
         board.zone4(point) { board[it].distance == null && tile.rightSide == null }
@@ -49,8 +49,8 @@ class Day10(test: Int? = null) : Day(test) {
 
     // common
 
-    private fun nextPipe(origin: Board.XY, direction: Direction): Pipe? {
-        val destination = origin + direction.delta
+    private fun nextPipe(origin: Board.XY, direction: Direction4): Pipe? {
+        val destination = origin + direction.xy
         val destinationTile = board.getOrNull(destination) ?: return null
         val newDirection = when (destinationTile.type) {
             V -> when (direction) {
@@ -92,26 +92,7 @@ class Day10(test: Int? = null) : Day(test) {
         return newDirection?.let { Pipe(destination, it, direction) }
     }
 
-
-    data class Pipe(val origin: Board.XY, val direction: Direction, val previousDirection: Direction)
-
-    private val Direction.right
-        get() = when (this) {
-            North -> East
-            South -> West
-            West -> North
-            East -> South
-            else -> error("unexpected direction")
-        }
-
-    private val Direction.left
-        get() = when (this) {
-            North -> West
-            South -> East
-            West -> South
-            East -> North
-            else -> error("unexpected direction")
-        }
+    data class Pipe(val origin: Board.XY, val direction: Direction4, val previousDirection: Direction4)
 
     // Parse input
 

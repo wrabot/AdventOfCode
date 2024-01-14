@@ -2,8 +2,8 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.Direction
-import tools.board.Direction.*
+import tools.board.Direction4
+import tools.board.Direction4.*
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()
@@ -12,7 +12,7 @@ class Day18(test: Int? = null) : Day(test) {
 
     private fun List<Instruction>.solve(): Long {
         val xy = runningFold(Board.XY(0, 0)) { acc, instruction ->
-            acc + instruction.direction.delta * instruction.length
+            acc + instruction.direction.xy * instruction.length
         }
         val columns = xy.map { it.x }.sorted().distinct()
         val rows = xy.map { it.y }.sorted().distinct()
@@ -33,7 +33,7 @@ class Day18(test: Int? = null) : Day(test) {
         forEach { instruction ->
             var length = instruction.length
             while (length > 0) {
-                position += instruction.direction.delta
+                position += instruction.direction.xy
                 length -= when (instruction.direction) {
                     North, South -> map[position].size.y
                     East, West -> map[position].size.x
@@ -53,7 +53,7 @@ class Day18(test: Int? = null) : Day(test) {
         override fun toString() = c.toString()
     }
 
-    data class Instruction(val direction: Direction, val length: Int)
+    data class Instruction(val direction: Direction4, val length: Int)
 
     private val regex = "(.) (.*) \\(#(.*)\\)".toRegex()
     private val instructionsPart1 = lines.map { line ->
