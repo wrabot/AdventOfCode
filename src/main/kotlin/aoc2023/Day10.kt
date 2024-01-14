@@ -3,6 +3,8 @@ package aoc2023
 import Day
 import aoc2023.Day10.Type.*
 import tools.board.Board
+import tools.board.Direction
+import tools.board.Direction.*
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -36,7 +38,7 @@ class Day10(test: Int? = null) : Day(test) {
     }
 
     private fun setZone(origin: Board.XY, direction: Direction, rightSide: Boolean) {
-        val point = origin + if (rightSide) direction.right else direction.left
+        val point = origin + (if (rightSide) direction.right else direction.left).delta
         val tile = board.getOrNull(point) ?: return
         if (tile.distance != null || tile.rightSide == rightSide) return
         board.zone4(point) { board[it].distance == null && tile.rightSide == null }
@@ -51,37 +53,37 @@ class Day10(test: Int? = null) : Day(test) {
         val destination = origin + direction.delta
         val destinationTile = board.getOrNull(destination) ?: return null
         val newDirection = when (destinationTile.type) {
-            Vertical -> when (direction) {
-                Direction.North, Direction.South -> direction
+            V -> when (direction) {
+                North, South -> direction
                 else -> null
             }
 
-            Horizontal -> when (direction) {
-                Direction.West, Direction.East -> direction
+            H -> when (direction) {
+                West, East -> direction
                 else -> null
             }
 
-            NorthWest -> when (direction) {
-                Direction.South -> Direction.West
-                Direction.East -> Direction.North
+            NW -> when (direction) {
+                South -> West
+                East -> North
                 else -> null
             }
 
-            NorthEast -> when (direction) {
-                Direction.South -> Direction.East
-                Direction.West -> Direction.North
+            NE -> when (direction) {
+                South -> East
+                West -> North
                 else -> null
             }
 
-            SouthWest -> when (direction) {
-                Direction.North -> Direction.West
-                Direction.East -> Direction.South
+            SW -> when (direction) {
+                North -> West
+                East -> South
                 else -> null
             }
 
-            SouthEast -> when (direction) {
-                Direction.North -> Direction.East
-                Direction.West -> Direction.South
+            SE -> when (direction) {
+                North -> East
+                West -> South
                 else -> null
             }
 
@@ -93,17 +95,27 @@ class Day10(test: Int? = null) : Day(test) {
 
     data class Pipe(val origin: Board.XY, val direction: Direction, val previousDirection: Direction)
 
-    // TODO use directions
-    enum class Direction(val delta: Board.XY, val right: Board.XY, val left: Board.XY) {
-        North(Board.XY(0, -1), Board.XY(1, 0), Board.XY(-1, 0)),
-        West(Board.XY(-1, 0), Board.XY(0, -1), Board.XY(0, 1)),
-        East(Board.XY(1, 0), Board.XY(0, 1), Board.XY(0, -1)),
-        South(Board.XY(0, 1), Board.XY(-1, 0), Board.XY(1, 0))
-    }
+    private val Direction.right
+        get() = when (this) {
+            North -> East
+            South -> West
+            West -> North
+            East -> South
+            else -> error("unexpected direction")
+        }
+
+    private val Direction.left
+        get() = when (this) {
+            North -> West
+            South -> East
+            West -> South
+            East -> North
+            else -> error("unexpected direction")
+        }
 
     // Parse input
 
-    enum class Type { Ground, Start, Vertical, Horizontal, NorthWest, NorthEast, SouthWest, SouthEast }
+    enum class Type { Ground, Start, V, H, NW, NE, SW, SE }
     data class Tile(val type: Type, var distance: Int? = null, var rightSide: Boolean? = null) {
 
         fun isClassified() = distance != null || rightSide != null
@@ -120,12 +132,12 @@ class Day10(test: Int? = null) : Day(test) {
                 when (it) {
                     '.' -> Ground
                     'S' -> Start
-                    '|' -> Vertical
-                    '-' -> Horizontal
-                    'J' -> NorthWest
-                    'L' -> NorthEast
-                    '7' -> SouthWest
-                    'F' -> SouthEast
+                    '|' -> V
+                    '-' -> H
+                    'J' -> NW
+                    'L' -> NE
+                    '7' -> SW
+                    'F' -> SE
                     else -> error("unexpected \"$it\"")
                 }
             )

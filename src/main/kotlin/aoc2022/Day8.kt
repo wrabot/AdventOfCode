@@ -2,17 +2,16 @@ package aoc2022
 
 import Day
 import tools.board.Board
-import tools.board.directions4
 
 class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = board.xy.count { xy ->
         val height = board[xy]
-        directions4.any { xy.isVisible(height, it.delta) }
+        board.directions4.any { xy.isVisible(height, it) }
     }
 
     override fun solvePart2() = board.xy.maxOf { point ->
         val height = board[point]
-        directions4.map { point.score(height, it.delta, 0) }.reduce { acc, b -> acc * b }
+        board.directions4.map { point.score(height, it, 0) }.reduce { acc, b -> acc * b }
     }
 
     private fun Board.XY.isVisible(height: Int, direction: Board.XY): Boolean = (this + direction).let { next ->

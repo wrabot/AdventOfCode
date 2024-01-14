@@ -3,6 +3,9 @@ package aoc2022
 import Day
 import tools.board.Board
 import tools.board.Board.XY
+import tools.board.Direction
+import tools.board.Direction.*
+import tools.board.directions4
 
 class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() =
@@ -66,10 +69,15 @@ class Day22(test: Int? = null) : Day(test) {
         var state = State(start, 0)
         moves.forEach { move ->
             repeat(move.first) {
-                board[state.position].move = directionChars[state.directionIndex]
+                board[state.position].move = directions[state.directionIndex].c
                 var next = state
                 while (true) {
-                    next = board.mapping(State(next.position + directions[state.directionIndex], state.directionIndex))
+                    next = board.mapping(
+                        State(
+                            next.position + directions[state.directionIndex].delta,
+                            state.directionIndex
+                        )
+                    )
                     when (board[next.position].content) {
                         '#' -> break
                         '.' -> {
@@ -79,7 +87,10 @@ class Day22(test: Int? = null) : Day(test) {
                     }
                 }
             }
-            state = State(state.position, (directions.size + state.directionIndex + move.second) % directions.size)
+            state = State(
+                state.position,
+                (directions.size + state.directionIndex + move.second) % directions.size
+            )
         }
         return (state.position.y + 1) * 1000 + 4 * (state.position.x + 1) + state.directionIndex
     }
@@ -95,8 +106,7 @@ class Day22(test: Int? = null) : Day(test) {
         Board(width, size, joinToString("") { it.padEnd(width, ' ') }.map { Cell(it) })
     }
 
-    private val directionChars = listOf('>', 'v', '<', '^')
-    private val directions = listOf(XY(1, 0), XY(0, 1), XY(-1, 0), XY(0, -1))
+    private val directions = listOf(East, South, West, North)
     private val start = XY(lines[0].indexOfFirst { it != ' ' }, 0)
     private val moves = lines.last().replace("R", " R ").replace("L", " L ").split(" ").plus(" ")
         .chunked(2) {

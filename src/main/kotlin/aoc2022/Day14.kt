@@ -2,6 +2,7 @@ package aoc2022
 
 import Day
 import tools.board.Board
+import tools.board.Direction.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -20,12 +21,12 @@ class Day14(test: Int? = null) : Day(test) {
     }
 
     private val sandFall = Board.XY(500, 0)
-    private val directions = listOf(Board.XY(0, 1), Board.XY(-1, 1), Board.XY(1, 1))
+    private val directions = listOf(South, SouthWest, SouthEast)
 
     private fun sendSand(goingOn: (Board.XY) -> Boolean) {
         var sand = sandFall
         while (goingOn(sand)) {
-            sand = directions.map { sand + it }.find { cave[it].content == '.' } ?: sandFall.apply {
+            sand = directions.map { sand + it.delta }.find { cave[it].content == '.' } ?: sandFall.apply {
                 sandCount++
                 cave[sand].content = 'O'
             }
