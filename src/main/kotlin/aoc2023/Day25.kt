@@ -2,19 +2,28 @@ package aoc2023
 
 import Day
 import tools.graph.EdmondsKarp
-import tools.graph.ValuedEdge
+import tools.graph.bfs
 
 class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         val edmondsKarp = EdmondsKarp(nodes.size, wires.flatMap {
             listOf(
-                ValuedEdge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1.0),
-                ValuedEdge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1.0),
+                EdmondsKarp.Edge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1.0),
+                EdmondsKarp.Edge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1.0),
             )
         })
-        var sink = 0
-        while (edmondsKarp.maxFlow(0, sink++) != 3.0) edmondsKarp.clear()
-        return edmondsKarp.connected(0).size.let { it * (nodes.size - it) }
+        val source = 0
+        var sink = 1
+        while (edmondsKarp.maxFlow(source, sink++) != 3.0) edmondsKarp.clear()
+        val neighbors = edmondsKarp.edges.groupBy({ it.source }, { it.destination })
+        var connected = 0
+        bfs(nodes.size, source) { current ->
+            connected++
+            neighbors[current].orEmpty().mapNotNull {
+                if (edmondsKarp.flows[current][it] == 0.0) it else null
+            }
+        }
+        return connected * (nodes.size - connected)
     }
 
     override fun solvePart2() = Unit

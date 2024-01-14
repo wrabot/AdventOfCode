@@ -1,7 +1,7 @@
 package aoc2023
 
 import Day
-import tools.groupValues
+import tools.match
 import tools.toWords
 
 class Day4(test: Int? = null) : Day(test) {
@@ -20,7 +20,7 @@ class Day4(test: Int? = null) : Day(test) {
 
     private val cards = Regex("Card\\s+(\\d+):(.*)\\|(.*)").run {
         lines.map { line ->
-            groupValues(line).let { Card(it[0].toInt(), it[1].toIntSet(), it[2].toIntSet()) }
+            line.match(this)!!.let { Card(it[0].toInt(), it[1].toIntSet(), it[2].toIntSet()) }
         }
     }
 
