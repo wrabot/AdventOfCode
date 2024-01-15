@@ -9,7 +9,7 @@ import tools.math.polynomialCoefficients
 class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
         var tiles = setOf(garden.xy.first { garden[it].c == 'S' })
-        repeat(64) { step ->
+        repeat(64) {
             tiles.forEach { garden[it].step = false }
             tiles = tiles.flatMap { point -> garden.neighbors4(point).filter { garden[it].c != '#' } }.toSet()
             tiles.forEach { garden[it].step = true }

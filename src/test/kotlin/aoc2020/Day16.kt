@@ -16,7 +16,7 @@ class Day16(test: Int? = null) : Day(test) {
         while (true) {
             val singles = validIndices.filterValues { it.size == 1 }
             if (singles.size == validIndices.size) break
-            val singlesValues = singles.values.flatten()
+            val singlesValues = singles.values.flatten().toSet()
             validIndices.forEach { if (it.value.size > 1) it.value.removeAll(singlesValues) }
         }
         return validIndices.filter { it.key.startsWith("departure") }

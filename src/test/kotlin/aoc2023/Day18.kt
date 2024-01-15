@@ -11,11 +11,11 @@ class Day18(test: Int? = null) : Day(test) {
     override fun solvePart2() = instructionsPart2.solve()
 
     private fun List<Instruction>.solve(): Long {
-        val xy = runningFold(Board.XY(0, 0)) { acc, instruction ->
+        val xyList = runningFold(Board.XY(0, 0)) { acc, instruction ->
             acc + instruction.direction.xy * instruction.length
         }
-        val columns = xy.map { it.x }.sorted().distinct()
-        val rows = xy.map { it.y }.sorted().distinct()
+        val columns = xyList.map { it.x }.sorted().distinct()
+        val rows = xyList.map { it.y }.sorted().distinct()
         val width = columns.size * 2 - 1
         val height = rows.size * 2 - 1
         val map = Board(width, height, List(width * height) { Cell('.') })

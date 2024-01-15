@@ -23,7 +23,7 @@ abstract class Day(inputFileName: String, detail: String) {
         Assert.assertEquals(expectedPart1.toString(), part1.toString())
     }
 
-    fun checkPart2(expectedPart2: Any) {
+    private fun checkPart2(expectedPart2: Any) {
         Assert.assertEquals(expectedPart2.toString(), part2.toString())
     }
 

@@ -1,5 +1,3 @@
-@file:Suppress("PrivatePropertyName")
-
 package aoc2022
 
 import Day
