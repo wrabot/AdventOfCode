@@ -2,9 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.Direction4
-import tools.math.polynomial
-import tools.math.polynomialCoefficients
+import tools.math.PolynomialInterpolation
 
 class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -19,17 +17,19 @@ class Day21(test: Int? = null) : Day(test) {
 
     override fun solvePart2(): Long {
         val target = 26501365
+        val periodicValuesSize = 3
         val size = garden.width // input is square and intrinsic period is size !
         var tiles = setOf(garden.xy.first { garden[it].c == 'S' })
         repeat(target % size) { tiles = tiles.next() }
-        return List(3) {
+        val periodicValues = List(periodicValuesSize) {
             if (it != 0) repeat(size) { tiles = tiles.next() }
             tiles.count().toDouble()
-        }.polynomialCoefficients().polynomial((target / size - 2).toDouble()).toLong()
+        }
+        return PolynomialInterpolation(periodicValues)((target / size - periodicValuesSize + 1).toDouble()).toLong()
     }
 
     fun Set<Board.XY>.next() = flatMap { tile ->
-        Direction4.entries.map { tile + it.xy }.filter { garden[it.mod()].c != '#' }
+        Board.xy4dir.map { tile + it }.filter { garden[it.mod()].c != '#' }
     }.toSet()
 
     private fun Board.XY.mod() = Board.XY(x.mod(garden.width), y.mod(garden.height))
