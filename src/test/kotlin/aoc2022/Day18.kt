@@ -2,17 +2,20 @@ package aoc2022
 
 import Day
 import tools.geometry.Point
+import tools.intRange
+import tools.contains
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = faces.size
 
     override fun solvePart2(): Int {
-        val xRange = lavas.minOf { it.x }..lavas.maxOf { it.x }
-        val yRange = lavas.minOf { it.y }..lavas.maxOf { it.y }
-        val zRange = lavas.minOf { it.z }..lavas.maxOf { it.z }
+        val xRange = intRange(lavas.minOf { it.x }..lavas.maxOf { it.x })
+        val yRange = intRange(lavas.minOf { it.y }..lavas.maxOf { it.y })
+        val zRange = intRange(lavas.minOf { it.z }..lavas.maxOf { it.z })
         val outsides = mutableSetOf<Point>()
         for (x in xRange) {
             for (y in yRange) {
+                IntProgression
                 outsides.add(Point(x, y, zRange.first - 1))
                 outsides.add(Point(x, y, zRange.last + 1))
             }

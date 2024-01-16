@@ -6,7 +6,7 @@ import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = Board().solve(2022)
-    override fun solvePart2() = Board().run {
+    override fun solvePart2() : Long = Board().run {
         solve(0)
         val rocks = 1000000000000 - rockIndex
         with(params!!) { (rocks / rockStep) * sizeStep + solve(rockIndex + (rocks % rockStep).toInt()) }
@@ -48,7 +48,7 @@ class Day17(test: Int? = null) : Day(test) {
                 params = patterns.values.filter { it.size >= 3 }
                     .firstNotNullOfOrNull { list ->
                         list.zipWithNext().map { it.second - it.first }.distinct()
-                            .singleOrNull()?.let { Params(it.x, it.y) }
+                            .singleOrNull()?.let { Params(it.x.toInt(), it.y.toInt()) }
                     }
                 if (params != null) break
             }

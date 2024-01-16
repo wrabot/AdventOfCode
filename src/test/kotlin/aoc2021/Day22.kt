@@ -3,7 +3,7 @@ package aoc2021
 import Day
 import tools.geometry.Block
 import tools.geometry.Point
-import tools.size
+import tools.intRange
 
 class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
@@ -11,14 +11,12 @@ class Day22(test: Int? = null) : Day(test) {
         val fullSize = halfSize * 2 + 1
         val reactor = Array(fullSize * fullSize * fullSize) { false }
         val reactorBlock = Block(Point(-halfSize, -halfSize, -halfSize), Point(halfSize, halfSize, halfSize))
-        procedure.forEach {
-            val block = it.cuboid.intersect(reactorBlock)
-            if (block != null)
-                for (x in block.start.x..block.end.x)
-                    for (y in block.start.y..block.end.y)
-                        for (z in block.start.z..block.end.z)
-                            reactor[((z + halfSize) * fullSize + (y + halfSize)) * fullSize + (x + halfSize)] =
-                                it.mode
+        for (step in procedure) {
+            val block = step.cuboid.intersect(reactorBlock) ?: continue
+            for (x in intRange(block.start.x..block.end.x))
+                for (y in intRange(block.start.y..block.end.y))
+                    for (z in intRange(block.start.z..block.end.z))
+                        reactor[((z + halfSize) * fullSize + (y + halfSize)) * fullSize + (x + halfSize)] = step.mode
         }
         return reactor.count { it }
     }
@@ -28,14 +26,12 @@ class Day22(test: Int? = null) : Day(test) {
         val exclusions = mutableListOf<Block>()
         procedure.reversed().forEach { step ->
             if (step.mode) {
-                count += step.cuboid.size() - exclusions.mapNotNull { it.intersect(step.cuboid) }.sum()
+                count += step.cuboid.size().toLong() - exclusions.mapNotNull { it.intersect(step.cuboid) }.sum()
             }
             exclusions.add(step.cuboid)
         }
         return count
     }
-
-    private fun Block.size() = xRange.size().toLong() * yRange.size() * zRange.size()
 
     data class Step(val mode: Boolean, val cuboid: Block)
 
@@ -53,6 +49,8 @@ class Day22(test: Int? = null) : Day(test) {
         }
     }
 
-    private fun List<Block>.sum(): Long =
-        if (isEmpty()) 0 else first().size() + drop(1).sum() - drop(1).mapNotNull { it.intersect(first()) }.sum()
+    private fun Block.size() = (end - start).run { (x.toLong() + 1) * (y.toLong() + 1) * (z.toLong() + 1) }
+
+    private fun List<Block>.sum(): Long = if (isEmpty()) 0 else
+        first().size().toLong() + drop(1).sum() - drop(1).mapNotNull { it.intersect(first()) }.sum()
 }

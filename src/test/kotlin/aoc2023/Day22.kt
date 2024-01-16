@@ -4,6 +4,7 @@ import Day
 import tools.geometry.Block
 import tools.geometry.Point
 import tools.hasIntersection
+import tools.intRange
 import tools.move
 
 class Day22(test: Int? = null) : Day(test) {
@@ -50,17 +51,17 @@ class Day22(test: Int? = null) : Day(test) {
     data class Cube(val block: Block) {
         var offset = 0
             set(value) {
+                zRange = zRange.move(value - field)
                 field = value
-                zRange = block.zRange.move(offset)
             }
 
         fun hasIntersection(other: Cube) =
-            xRange.hasIntersection(other.xRange) &&
-                    yRange.hasIntersection(other.yRange) && zRange.hasIntersection(other.zRange)
+            xRange.hasIntersection(other.xRange) && yRange.hasIntersection(other.yRange) && zRange.hasIntersection(other.zRange)
 
-        private val xRange = block.xRange
-        private val yRange = block.yRange
-        var zRange = block.zRange
+        private val xRange = intRange(block.start.x..block.end.x)
+        private val yRange = intRange(block.start.y..block.end.y)
+        var zRange = intRange(block.start.z..block.end.z)
+            private set
     }
 
     private val cubes: List<Cube>

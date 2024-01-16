@@ -1,31 +1,24 @@
 package aoc2022
 
 import Day
-import tools.board.Board
+import tools.geometry.Origin
 import tools.geometry.Point
-import tools.log
-import kotlin.math.abs
 
 class Day9(test: Int? = null) : Day(test) {
-    override fun solvePart1() = mutableSetOf(Point(0, 0)).apply {
-        var head = Point(0, 0)
-        var tail = Point(0, 0)
+    override fun solvePart1() = mutableSetOf(Origin).apply {
+        var head = Origin
+        var tail = Origin
         moves.forEach { move ->
             repeat(move.second) {
                 head += move.first
-                val diff = head - tail
-                if (abs(diff.x) == 2) {
-                    tail = Point(head.x - diff.x / 2, head.y)
-                } else if (abs(diff.y) == 2) {
-                    tail = Point(head.x, head.y - diff.y / 2)
-                }
+                tail = tail.moveTail(head)
                 add(tail)
             }
         }
     }.size
 
-    override fun solvePart2() = mutableSetOf(Point(0, 0)).apply {
-        val rope = Array(10) { Point(0, 0) }
+    override fun solvePart2() = mutableSetOf(Origin).apply {
+        val rope = Array(10) { Origin }
         moves.forEach { move ->
             repeat(move.second) {
                 move(rope, 0, rope[0] + move.first)
@@ -39,34 +32,25 @@ class Day9(test: Int? = null) : Day(test) {
             add(rope[index])
             return
         }
-        val delta = rope[index + 1] - destination
-        val dx = if (abs(delta.x) == 2) delta.x / 2 else 0
-        val dy = if (abs(delta.y) == 2) delta.y / 2 else 0
-        if (dx != 0 || dy != 0) move(rope, index + 1, Point(destination.x + dx, destination.y + dy))
+        move(rope, index + 1, rope[index + 1].moveTail(destination))
     }
+
+    private fun Point.moveTail(head: Point): Point {
+        val diff = (head - this).run { Point(x.middle(), y.middle()) }
+        return if (diff == Origin) this else head - diff
+    }
+
+    private fun Double.middle() = (this / 2).toInt()
+
+    private val directions = mapOf(
+        "U" to Point(0, 1),
+        "D" to Point(0, -1),
+        "R" to Point(1, 0),
+        "L" to Point(-1, 0),
+    )
 
     private val moves = lines.map {
         val (direction, distance) = it.split(" ")
-        when (direction) {
-            "U" -> Point(0, 1)
-            "D" -> Point(0, -1)
-            "R" -> Point(1, 0)
-            "L" -> Point(-1, 0)
-            else -> error("!!!")
-        } to distance.toInt()
-    }
-
-    // for debug
-    @Suppress("unused")
-    private fun Array<Point>.log() {
-        val minX = minOf { it.x }
-        val minY = minOf { it.y }
-        val width = maxOf { it.x } - minX + 1
-        val height = maxOf { it.y } - minY + 1
-        Board(width, height, MutableList(width * height) { '.' }.apply {
-            this@log.forEachIndexed { index, point ->
-                this[(height - 1 - point.y + minY) * width + (point.x - minX)] = '0' + index
-            }
-        }).log()
+        directions[direction]!! to distance.toInt()
     }
 }

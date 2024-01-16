@@ -31,7 +31,6 @@ class Day14(test: Int? = null) : Day(test) {
                 cave[sand].content = 'O'
             }
         }
-        //cave.toString(Point(500 - cave.height, 0), Point(500 + cave.height - 1, cave.height - 1)).log()
     }
 
     private var sandCount = 0

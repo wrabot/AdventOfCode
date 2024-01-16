@@ -1,11 +1,12 @@
 package aoc2020
 
 import Day
+import tools.geometry.Origin
 import tools.geometry.Point
 
 class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
-        lines.forEach { Point().goToTile(it).run { if (!blacks.remove(this)) blacks.add(this) } }
+        lines.forEach { Origin.goToTile(it).run { if (!blacks.remove(this)) blacks.add(this) } }
         return blacks.size
     }
 

@@ -1,6 +1,7 @@
 package aoc2021
 
 import Day
+import tools.geometry.Origin
 import tools.geometry.Point
 import kotlin.math.absoluteValue
 
@@ -29,7 +30,7 @@ class Day19(test: Int? = null) : Day(test) {
             positions.maxOf {
                 (it.x - a.x).absoluteValue + (it.y - a.y).absoluteValue + (it.z - a.z).absoluteValue
             }
-        }
+        }.toInt()
     }
 
     private val scanners = lines.fold(emptyList<List<Point>>()) { scanners, line ->
@@ -42,16 +43,14 @@ class Day19(test: Int? = null) : Day(test) {
         }
     }
 
-    private val done = mutableListOf(Point(0, 0, 0) to scanners[0])
+    private val done = mutableListOf(Origin to scanners[0])
 
     // 48 but really 24
     private fun List<Point>.rotate() =
         (1..3).runningFold(this) { points, _ -> points.map(Point::rotateX) }
             .flatMap { (1..3).runningFold(it) { points, _ -> points.map(Point::rotateY) } }
             .flatMap { (1..2).runningFold(it) { points, _ -> points.map(Point::rotateZ) } }
-            //.apply { count().log() }
             .distinct()
-    //.apply { count().log() }
 
     private fun findScanner(
         rotateScanners: MutableList<List<List<Point>>>,
@@ -73,3 +72,7 @@ class Day19(test: Int? = null) : Day(test) {
         return null
     }
 }
+
+private fun Point.rotateX() = Point(x, -z, y)
+private fun Point.rotateY() = Point(z, y, -x)
+private fun Point.rotateZ() = Point(-y, x, z)
