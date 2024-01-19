@@ -1,7 +1,6 @@
 package aoc2021
 
 import Day
-import tools.geometry.Origin
 import tools.geometry.Point
 import kotlin.math.absoluteValue
 
@@ -43,7 +42,7 @@ class Day19(test: Int? = null) : Day(test) {
         }
     }
 
-    private val done = mutableListOf(Origin to scanners[0])
+    private val done = mutableListOf(Point.Zero to scanners[0])
 
     // 48 but really 24
     private fun List<Point>.rotate() =

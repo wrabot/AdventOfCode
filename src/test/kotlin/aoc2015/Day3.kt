@@ -1,13 +1,12 @@
 package aoc2015
 
 import Day
-import tools.geometry.Origin
 import tools.geometry.Point
 
 class Day3 : Day() {
     override fun solvePart1(): Any {
-        val houses = mutableSetOf(Origin)
-        var current = Origin
+        val houses = mutableSetOf(Point.Zero)
+        var current = Point.Zero
         lines[0].forEach {
             current = current.next(it)
             houses.add(current)
@@ -16,9 +15,9 @@ class Day3 : Day() {
     }
 
     override fun solvePart2(): Any {
-        val houses = mutableSetOf(Origin)
-        var previous = Origin
-        var current = Origin
+        val houses = mutableSetOf(Point.Zero)
+        var previous = Point.Zero
+        var current = Point.Zero
         lines[0].forEach {
             val next = previous.next(it)
             previous = current

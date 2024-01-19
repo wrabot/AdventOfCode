@@ -1,13 +1,12 @@
 package aoc2022
 
 import Day
-import tools.geometry.Origin
 import tools.geometry.Point
 
 class Day9(test: Int? = null) : Day(test) {
-    override fun solvePart1() = mutableSetOf(Origin).apply {
-        var head = Origin
-        var tail = Origin
+    override fun solvePart1() = mutableSetOf(Point.Zero).apply {
+        var head = Point.Zero
+        var tail = Point.Zero
         moves.forEach { move ->
             repeat(move.second) {
                 head += move.first
@@ -17,8 +16,8 @@ class Day9(test: Int? = null) : Day(test) {
         }
     }.size
 
-    override fun solvePart2() = mutableSetOf(Origin).apply {
-        val rope = Array(10) { Origin }
+    override fun solvePart2() = mutableSetOf(Point.Zero).apply {
+        val rope = Array(10) { Point.Zero }
         moves.forEach { move ->
             repeat(move.second) {
                 move(rope, 0, rope[0] + move.first)
@@ -37,7 +36,7 @@ class Day9(test: Int? = null) : Day(test) {
 
     private fun Point.moveTail(head: Point): Point {
         val diff = (head - this).run { Point(x.middle(), y.middle()) }
-        return if (diff == Origin) this else head - diff
+        return if (diff == Point.Zero) this else head - diff
     }
 
     private fun Double.middle() = (this / 2).toInt()
