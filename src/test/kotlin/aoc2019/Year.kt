@@ -69,8 +69,7 @@ class Year2019 {
     }
 
     @Test
-    fun day11() {
-        Day11().check(
+    fun day11() = Day11().check(
             1930,
             """
             
@@ -82,5 +81,11 @@ class Year2019 {
             X    X    X  X X  X XXXX  XX  XXXX  XX    
             """.trimIndent()
         )
+
+    @Test
+    fun day12() {
+        //Day12(1).check(179, 2772)
+        //Day12(2).check(1940, 4686774924)
+        Day12().check(8044, 362375881472136)
     }
 }
