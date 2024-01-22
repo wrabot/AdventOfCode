@@ -67,4 +67,20 @@ class Year2019 {
         //Day10(4).check(210, 802)
         Day10().check(230, 1205)
     }
+
+    @Test
+    fun day11() {
+        Day11().check(
+            1930,
+            """
+            
+            XXX  XXXX X  X X  X XXXX  XX  XXXX X  X   
+            X  X X    X X  X  X X    X  X    X X  X   
+            X  X XXX  XX   XXXX XXX  X      X  X  X   
+            XXX  X    X X  X  X X    X     X   X  X   
+            X    X    X X  X  X X    X  X X    X  X   
+            X    X    X  X X  X XXXX  XX  XXXX  XX    
+            """.trimIndent()
+        )
+    }
 }
