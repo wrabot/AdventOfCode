@@ -70,17 +70,17 @@ class Year2019 {
 
     @Test
     fun day11() = Day11().check(
-            1930,
-            """
-            
-            XXX  XXXX X  X X  X XXXX  XX  XXXX X  X   
-            X  X X    X X  X  X X    X  X    X X  X   
-            X  X XXX  XX   XXXX XXX  X      X  X  X   
-            XXX  X    X X  X  X X    X     X   X  X   
-            X    X    X X  X  X X    X  X X    X  X   
-            X    X    X  X X  X XXXX  XX  XXXX  XX    
-            """.trimIndent()
-        )
+        1930,
+        """
+        
+        XXX  XXXX X  X X  X XXXX  XX  XXXX X  X   
+        X  X X    X X  X  X X    X  X    X X  X   
+        X  X XXX  XX   XXXX XXX  X      X  X  X   
+        XXX  X    X X  X  X X    X     X   X  X   
+        X    X    X X  X  X X    X  X X    X  X   
+        X    X    X  X X  X XXXX  XX  XXXX  XX    
+        """.trimIndent()
+    )
 
     @Test
     fun day12() {
@@ -88,4 +88,7 @@ class Year2019 {
         //Day12(2).check(1940, 4686774924)
         Day12().check(8044, 362375881472136)
     }
+
+    @Test
+    fun day13() = Day13().check(255, 12338)
 }
