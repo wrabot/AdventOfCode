@@ -20,7 +20,7 @@ abstract class Day(resourceName: String) {
         Assert.assertEquals(expectedPart1.toString(), part1.toString())
     }
 
-    private fun checkPart2(expectedPart2: Any) {
+    fun checkPart2(expectedPart2: Any) {
         Assert.assertEquals(expectedPart2.toString(), part2.toString())
     }
 

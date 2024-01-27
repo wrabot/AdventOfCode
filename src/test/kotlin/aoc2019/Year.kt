@@ -104,4 +104,16 @@ class Year2019 {
 
     @Test
     fun day15() = Day15().check(298, 346)
+
+    @Test
+    fun day16() {
+        Day16(1).checkPart1("24176176")
+        Day16(2).checkPart1("73745418")
+        Day16(3).checkPart1("52432133")
+        Day16().checkPart1("44098263")
+        Day16(4).checkPart2("84462026")
+        Day16(5).checkPart2("78725270")
+        Day16(6).checkPart2("53553731")
+        Day16().check("44098263", "12482168")
+    }
 }
