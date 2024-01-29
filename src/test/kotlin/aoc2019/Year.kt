@@ -116,4 +116,7 @@ class Year2019 {
         Day16(6).checkPart2("53553731")
         Day16().check("44098263", "12482168")
     }
+
+    @Test
+    fun day17() = Day17().check(5724, 732985)
 }
