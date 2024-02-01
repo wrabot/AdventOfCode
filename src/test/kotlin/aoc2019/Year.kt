@@ -119,4 +119,19 @@ class Year2019 {
 
     @Test
     fun day17() = Day17().check(5724, 732985)
+
+    @Test
+    fun day18() {
+        Day18(1).checkPart1(8)
+        Day18(2).checkPart1(86)
+        Day18(3).checkPart1(132)
+        Day18(4).checkPart1(136)
+        Day18(5).checkPart1(81)
+        Day18().checkPart1(5858)
+        //Day18(21).checkPart2(8)
+        //Day18(22).checkPart2(24)
+        //Day18(23).checkPart2(32)
+        //Day18(24).checkPart2(72)
+        Day18(20).checkPart2(2144) // input with transformation
+    }
 }
