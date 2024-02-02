@@ -134,4 +134,7 @@ class Year2019 {
         //Day18(24).checkPart2(72)
         Day18(20).checkPart2(2144) // input with transformation
     }
+
+    @Test
+    fun day19() = Day19().check(183, 11221248)
 }
