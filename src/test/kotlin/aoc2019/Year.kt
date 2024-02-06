@@ -143,6 +143,9 @@ class Year2019 {
         //Day20(1).check(23, 26)
         //Day20(2).checkPart1(58)
         //Day20(3).checkPart2(396)
-        Day20().check(442,5208)
+        Day20().check(442, 5208)
     }
+
+    @Test
+    fun day21() = Day21().check(19354890, 1140664209)
 }
