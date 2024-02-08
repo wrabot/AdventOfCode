@@ -1,7 +1,9 @@
 package aoc2020
 
 import Day
-import tools.math.times
+import tools.math.Modular
+import tools.math.bi
+import java.math.BigInteger
 
 class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {
@@ -11,11 +13,11 @@ class Day13(test: Int? = null) : Day(test) {
     }
 
     override fun solvePart2() = lines[1].split(",")
-        .mapIndexedNotNull { index, s -> s.toLongOrNull()?.to(index.toLong()) }
+        .mapIndexedNotNull { index, s -> s.toBigIntegerOrNull()?.to(index.bi) }
         .reduce { acc, v ->
             val a = acc.first * v.first
             var f = acc.first
-            while (f % v.first != 1L) f += acc.first
-            a to a + acc.second - f.times(v.second + acc.second, a)
+            while (f % v.first != 1.bi) f += acc.first
+            Modular(a).run { a to a + acc.second - f * (v.second + acc.second) }
         }.second
 }
