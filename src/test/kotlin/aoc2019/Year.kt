@@ -148,4 +148,7 @@ class Year2019 {
 
     @Test
     fun day21() = Day21().check(19354890, 1140664209)
+
+    @Test
+    fun day22() = Day22().check(6326, 40522432670594)
 }
