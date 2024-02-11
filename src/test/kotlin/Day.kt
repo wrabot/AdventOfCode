@@ -1,10 +1,7 @@
 import org.junit.Assert
 
-abstract class Day(inputFileName: String, detail: String) {
-    constructor(test: Int? = null) : this(
-        test?.let { "test$it.txt" } ?: "input.txt",
-        test?.let { " test $it" } ?: "",
-    )
+abstract class Day(resourceName: String) {
+    constructor(test: Int? = null) : this(test?.let { "test$it" } ?: "input")
 
     val part1: Any by lazy {
         solvePart1().apply { println("$info part 1: $this") }
@@ -28,11 +25,11 @@ abstract class Day(inputFileName: String, detail: String) {
     }
 
     private val path = javaClass.name.replace('.', '/').lowercase()
-    protected val input = javaClass.classLoader!!.getResource("$path/$inputFileName")!!.readText()
+    protected val input = javaClass.classLoader!!.getResource("$path/$resourceName.txt")!!.readText()
     protected val lines = input.lines()
 
     protected abstract fun solvePart1(): Any
     protected abstract fun solvePart2(): Any
 
-    private val info = "$path $detail"
+    private val info = "$path $resourceName"
 }
