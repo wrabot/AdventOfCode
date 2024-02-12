@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.toBoard
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = findCost(1, 3)
@@ -80,12 +81,9 @@ class Day17(test: Int? = null) : Day(test) {
         var todo = false
     }
 
-    private val map =
-        Board(lines[0].length, lines.size, lines.flatMap { line ->
-            line.map {
-                Cell(it.toString().toInt(), Direction4.entries.associateWith { arrayOfNulls(10) })
-            }
-        })
-    private val start = Board.XY(0, 0)
-    private val end = Board.XY(map.width - 1, map.height - 1)
+    private val map = lines.toBoard { 
+        Cell(it.toString().toInt(), Direction4.entries.associateWith { arrayOfNulls(10) }) 
+    }
+    private val start = map.xy.first()
+    private val end = map.xy.last()
 }
