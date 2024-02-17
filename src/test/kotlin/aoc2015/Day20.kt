@@ -1,26 +1,41 @@
 package aoc2015
 
 import Day
+import kotlin.math.sqrt
 
 class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
-        var house = 2
-        while (true) {
-            if (presents(house) >= goal) return house
-            house++
-        }
+        var i = 1
+        while (sigma(i) < goal / 10) i++
+        return i
     }
 
-    override fun solvePart2() = Unit
-
-    private fun presents(house: Int): Int {
-        var presents = house
-        for (i in 1..(house + 1) / 2) {
-            if (house % i == 0) presents += i
+    private val cache = mutableMapOf(1 to 1)
+    fun sigma(n: Int): Int = cache.getOrPut(n) {
+        for (d in 2..sqrt(n.toFloat()).toInt()) {
+            if (n % d != 0) continue
+            var r = n
+            var p = d
+            while (r % d == 0) {
+                r /= d
+                p *= d
+            }
+            return@getOrPut (p - 1) / (d - 1) * sigma(r)
         }
-        return presents * 10
+        n + 1
     }
 
+    override fun solvePart2(): Int {
+        val g = goal / 11
+        val houses = IntArray(g)
+        for (elf in 1..g) {
+            repeat(50) {
+                val n = elf * (it + 1)
+                if (n < houses.size) houses[n] += elf
+            }
+        }
+        return houses.indexOfFirst { it > g }
+    }
 
     private val goal = input.toInt()
 }
