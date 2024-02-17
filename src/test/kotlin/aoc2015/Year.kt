@@ -77,7 +77,7 @@ class Year2015 {
 
     @Test
     fun day19() {
-        Day19(1).check(7, 6)
-        //Day19().check(509, Unit)
+        Day19(1).checkPart1(7)
+        Day19().check(509, 195)
     }
 }
