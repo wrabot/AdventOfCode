@@ -5,31 +5,21 @@ import tools.graph.shortPath
 import tools.toWords
 
 class Day22(test: Int? = null) : Day(test) {
-    override fun solvePart1() = minCost(false)
-    override fun solvePart2() = minCost(true)
+    override fun solvePart1() = minCost(initialState)
+    override fun solvePart2() = minCost(initialState.copy(hard = true))
 
-    private fun minCost(hard: Boolean) = shortPath(
-        initialState,
-        isEnd = { didIWin() == true }, // I win
-        cost = { _, next -> next.spell?.run { cost.toDouble() } ?: 0.0 }
-    ) {
-        when {
-            didIWin() == false -> emptyList() // boss wins
-            spell == null -> validSpells.map { myTurn(it, hard) }// my turn
-            else -> listOf(bossTurn())// boss turn
-        }
-    }.sumOf { it.spell?.cost ?: 0 }
+    private fun minCost(start: State) = shortPath(
+        start = start,
+        isEnd = State::isEnd,
+        cost = { _, to -> to.cost.toDouble() },
+        neighbors = State::neighbors
+    ).sumOf { it.cost }
 
     private val initialState = State(
         enemyDamage = lines[1].toWords().last().toInt(),
         enemyHP = lines[0].toWords().last().toInt(),
         myHP = 50,
         mana = 500,
-        armor = 0,
-        shield = 0,
-        poison = 0,
-        recharge = 0,
-        spell = null
     )
 
     enum class Spell(val cost: Int) { Missile(53), Drain(73), Shield(113), Poison(173), Recharge(229) }
@@ -39,23 +29,33 @@ class Day22(test: Int? = null) : Day(test) {
         val enemyHP: Int,
         val myHP: Int,
         val mana: Int,
-        val armor: Int,
-        val shield: Int,
-        val poison: Int,
-        val recharge: Int,
-        val spell: Spell?
+        val armor: Int = 0,
+        val shield: Int = 0,
+        val poison: Int = 0,
+        val recharge: Int = 0,
+        val cost: Int = 0,
+        val hard: Boolean = false,
     ) {
-        val validSpells = Spell.entries.filter { it.cost <= mana }
+
+        fun isEnd() = didIWin() == true
+
+        fun neighbors() = when {
+            didIWin() == false -> emptyList()
+            cost == 0 -> validSpells.map { myTurn(it) }
+            else -> listOf(bossTurn())
+        }
+
+        private val validSpells = Spell.entries.filter { it.cost <= mana }
             .filter { shield <= 1 || it != Spell.Shield }
             .filter { poison <= 1 || it != Spell.Poison }
             .filter { recharge <= 1 || it != Spell.Recharge }
 
-        fun didIWin() = if (enemyHP <= 0) true else if (myHP <= 0) false else null
+        private fun didIWin() = if (enemyHP <= 0) true else if (myHP <= 0) false else null
 
-        fun myTurn(spell: Spell, hard: Boolean): State {
+        private fun myTurn(spell: Spell): State {
             val s = if (hard) copy(myHP = myHP - 1) else this
             if (s.myHP <= 0) return s
-            return with(s.startTurn(spell)) {
+            return with(s.initTurn(spell.cost)) {
                 when (spell) {
                     Spell.Missile -> copy(enemyHP = enemyHP - 4)
                     Spell.Drain -> copy(enemyHP = enemyHP - 2, myHP = myHP + 2)
@@ -66,16 +66,16 @@ class Day22(test: Int? = null) : Day(test) {
             }
         }
 
-        fun bossTurn() = with(startTurn(null)) { copy(myHP = myHP - (enemyDamage - armor).coerceAtLeast(1)) }
+        private fun bossTurn() = with(initTurn(0)) { copy(myHP = myHP - (enemyDamage - armor).coerceAtLeast(1)) }
 
-        private fun startTurn(spell: Spell?) = copy(
+        private fun initTurn(cost: Int) = copy(
             enemyHP = if (poison > 0) enemyHP - 3 else enemyHP,
-            mana = (if (recharge > 0) mana + 101 else mana) - (spell?.cost ?: 0),
+            mana = (if (recharge > 0) mana + 101 else mana) - cost,
             armor = if (shield == 1) armor - 7 else armor,
             shield = shield.decrement(),
             poison = poison.decrement(),
             recharge = recharge.decrement(),
-            spell = spell,
+            cost = cost,
         )
 
         private fun Int.decrement() = (this - 1).coerceAtLeast(0)

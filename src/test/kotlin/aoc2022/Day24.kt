@@ -11,8 +11,8 @@ class Day24(test: Int? = null) : Day(test) {
     override fun solvePart2() = solve(solve(solve(0, entrance, exit), exit, entrance), entrance, exit)
 
     private fun solve(initialTime: Int, start: Board.XY, end: Board.XY) =
-        shortPath(State(start, initialTime % boards.size), isEnd = { expedition == end }) {
-            nextStates()
+        shortPath(State(start, initialTime % boards.size), isEnd = { it.expedition == end }) {
+            it.nextStates()
         }.size - 1 + initialTime
 
     private fun State.nextStates(): List<State> {
