@@ -98,4 +98,7 @@ class Year2015 {
         Day24(1).check(99, 44)
         Day24().check(10439961859, 72050269)
     }
+
+    @Test
+    fun day25() = Day25().checkPart1(19980801)
 }
