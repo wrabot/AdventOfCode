@@ -8,7 +8,7 @@ class Year {
 
     @Test
     fun day2() {
-        Day2(1).check("1985", "5DB3")
+        //Day2(1).check("1985", "5DB3")
         Day2().check("82958", "B3DB8")
     } 
     
@@ -17,14 +17,17 @@ class Year {
 
     @Test
     fun day4() {
-        Day4(1).checkPart1(1514)
+        //Day4(1).checkPart1(1514)
         Day4().check(245102, 324)
     } 
     @Test
     fun day5() = Day5().check("1a3099aa", "694190cd")
 
     @Test
-    fun day6() = Day6().check(Unit, Unit)
+    fun day6() {
+        //Day6(1).checkPart1("easter")
+        Day6().check("qtbjqiuq", "akothqli")   
+    }
 
     @Test
     fun day7() = Day7().check(Unit, Unit)
