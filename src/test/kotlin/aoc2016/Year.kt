@@ -21,7 +21,7 @@ class Year {
         Day4().check(245102, 324)
     } 
     @Test
-    fun day5() = Day5().check(Unit, Unit)
+    fun day5() = Day5().check("1a3099aa", "694190cd")
 
     @Test
     fun day6() = Day6().check(Unit, Unit)
