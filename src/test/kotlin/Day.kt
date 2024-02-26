@@ -4,12 +4,14 @@ abstract class Day(resourceName: String) {
     constructor(test: Int? = null) : this(test?.let { "test$it" } ?: "input")
 
     val part1: Any by lazy {
-        solvePart1().apply { println("$info part 1: $this") }
+        solvePart1().apply { println("$info part 1: ${display()}") }
     }
 
     private val part2: Any by lazy {
-        solvePart2().apply { println("$info part 2: $this") }
+        solvePart2().apply { println("$info part 2: ${display()}") }
     }
+
+    private fun Any.display() = toString().run { if (lines.size == 1) this else "\n$this" }
 
     fun check(expectedPart1: Any, expectedPart2: Any) {
         checkPart1(expectedPart1)
