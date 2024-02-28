@@ -11,7 +11,7 @@ abstract class Day(resourceName: String) {
         solvePart2().apply { println("$info part 2: ${display()}") }
     }
 
-    private fun Any.display() = toString().run { if (lines.size == 1) this else "\n$this" }
+    private fun Any.display() = toString().let { if (it.lines().size == 1) it else "\n$it" }
 
     fun check(expectedPart1: Any, expectedPart2: Any) {
         checkPart1(expectedPart1)
