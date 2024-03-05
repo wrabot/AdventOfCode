@@ -5,8 +5,6 @@ import tools.log
 import java.security.MessageDigest
 
 class Day5(test: Int? = null) : Day(test) {
-    private val doorId = "uqwqemis"
-
     override fun solvePart1(): String {
         val password = StringBuilder()
         var index = 0
@@ -38,6 +36,6 @@ class Day5(test: Int? = null) : Day(test) {
     }
 
     @OptIn(ExperimentalStdlibApi::class)
-    private fun hash(index: Int): String = md5.digest("$doorId$index".toByteArray()).toHexString()
+    private fun hash(index: Int): String = md5.digest("$input$index".toByteArray()).toHexString()
     private val md5 = MessageDigest.getInstance("MD5")
 }
