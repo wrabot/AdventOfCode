@@ -87,7 +87,12 @@ class Year {
     fun day16() = Day16().check("10010110010011110", "01101011101100011")
 
     @Test
-    fun day17() = Day17().check(Unit, Unit)
+    fun day17() {
+        //Day17(1).check("DDRRRD", 370)
+        //Day17(2).check("DDUDRLRRUDRD", 492)
+        //Day17(3).check("DRURDRUDDLLDLUURRDULRLDUUDDDRR", 830)
+        Day17().check("RDRLDRDURD", 596)
+    }
 
     @Test
     fun day18() = Day18().check(Unit, Unit)
