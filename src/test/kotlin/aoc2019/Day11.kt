@@ -13,8 +13,8 @@ class Day11(test: Int? = null) : Day(test) {
         val xRange = keys.minOf { it.x }..keys.maxOf { it.x }
         val yRange = keys.minOf { it.y }..keys.maxOf { it.y }
         val registration = Board(
-            xRange.size(),
-            yRange.size(),
+            xRange.size,
+            yRange.size,
             yRange.flatMap { y ->
                 xRange.map { x ->
                     if (getOrDefault(XY(x - xRange.first, y - yRange.first), 0) == 0L) ' ' else 'X'

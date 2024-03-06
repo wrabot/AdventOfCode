@@ -15,7 +15,7 @@ class Day19(test: Int? = null) : Day(test) {
     override fun solvePart2() = PartRange(categories.associateWith { 1..4000 }).acceptedPart2("in")
 
     private fun PartRange.acceptedPart2(workflow: String): Long = when (workflow) {
-        "A" -> categories.values.fold(1L) { acc, intRange -> acc * intRange.size() }
+        "A" -> categories.values.fold(1L) { acc, intRange -> acc * intRange.size }
         "R" -> 0
         else -> {
             val rule = rules[workflow]!!
