@@ -2,7 +2,7 @@ package aoc20XX
 
 import kotlin.test.Test
 
-class Year {
+class Year20XX {
     @Test
     fun day1() = Day1().check(Unit, Unit)
 
