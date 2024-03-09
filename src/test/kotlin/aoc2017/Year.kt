@@ -4,7 +4,7 @@ import kotlin.test.Test
 
 class Year2017 {
     @Test
-    fun day1() = Day1().check(Unit, Unit)
+    fun day1() = Day1().check(1029, 1220)
 
     @Test
     fun day2() = Day2().check(Unit, Unit)
