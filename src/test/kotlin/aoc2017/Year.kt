@@ -19,7 +19,7 @@ class Year2017 {
     fun day5() = Day5().check(358131, 25558839)
 
     @Test
-    fun day6() = Day6().check(Unit, Unit)
+    fun day6() = Day6().check(14029, 2765)
 
     @Test
     fun day7() = Day7().check(Unit, Unit)
