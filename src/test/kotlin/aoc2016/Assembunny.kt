@@ -3,7 +3,7 @@ package aoc2016
 import tools.toWords
 
 // Day 12 / 23 / 25
-class Computer(input: String) {
+class Assembunny(input: String) {
     val registers: MutableMap<String, Int> = mutableMapOf()
     var offset: Int = 0
 
