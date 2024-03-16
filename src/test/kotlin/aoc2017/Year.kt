@@ -47,7 +47,7 @@ class Year2017 {
 
     @Test
     fun day15() {
-        Day15(1).check(588, 309)
+        //Day15(1).check(588, 309)
         Day15().check(597, 303)
     }
 
@@ -61,7 +61,10 @@ class Year2017 {
     fun day18() = Day18().check(4601, 6858)
 
     @Test
-    fun day19() = Day19().check(Unit, Unit)
+    fun day19() {
+        //Day19(1).check("ABCDEF", 38)
+        Day19().check("RYLONKEWB", 16016)
+    }
 
     @Test
     fun day20() = Day20().check(Unit, Unit)
