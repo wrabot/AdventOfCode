@@ -54,6 +54,6 @@ class Day12(test: Int? = null) : Day(test) {
 
     private val repeat = lines[0].toInt()
     private val initial = lines.drop(1).map { line ->
-        line.match("<x=(.*), y=(.*), z=(.*)>".toRegex())!!.joinToString(" ").toPoint()
+        line.match("<x=(.*), y=(.*), z=(.*)>".toRegex())!!.joinToString(" ").toPoint(" ")
     }.map { Line(it, Point.Zero) }
 }
