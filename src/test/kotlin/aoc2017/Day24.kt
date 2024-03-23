@@ -18,7 +18,7 @@ class Day24(test: Int? = null) : Day(test) {
     private fun longest(components: List<List<Int>>, current: Int, length: Int, strength: Int): Int =
         components.filter { current in it }.maxOfOrNull {
             longest(components - setOf(it), (it - current).single(), length + 1, strength + it.sum())
-        } ?: length * maxStrength + strength
+        } ?: (length * maxStrength + strength)
 
     private val components = lines.map { line -> line.split("/").map { it.toInt() } }
 }
