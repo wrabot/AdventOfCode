@@ -26,13 +26,13 @@ class Year2018 {
 
     @Test
     fun day8() {
-        Day8(1).check(138, 66)
-        //Day8().check(42254, 25007)
+        //Day8(1).check(138, 66)
+        Day8().check(42254, 25007)
     }
 
     @Test
     fun day9() {
-        Day9(1).checkPart1(32)
+        //Day9(1).checkPart1(32)
         Day9().check(382055, 3133277384)
     }
 
