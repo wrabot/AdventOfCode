@@ -33,7 +33,7 @@ class Day22(test: Int? = null) : Day(test) {
         return count
     }
 
-    data class Step(val mode: Boolean, val cuboid: Block)
+    private data class Step(val mode: Boolean, val cuboid: Block)
 
     private val regex = "(on|off) x=(-?\\d*)\\.\\.(-?\\d*),y=(-?\\d*)\\.\\.(-?\\d*),z=(-?\\d*)\\.\\.(-?\\d*)".toRegex()
 

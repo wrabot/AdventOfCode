@@ -22,9 +22,9 @@ class Day22(test: Int? = null) : Day(test) {
         mana = 500,
     )
 
-    enum class Spell(val cost: Int) { Missile(53), Drain(73), Shield(113), Poison(173), Recharge(229) }
+    private enum class Spell(val cost: Int) { Missile(53), Drain(73), Shield(113), Poison(173), Recharge(229) }
 
-    data class State(
+    private data class State(
         val enemyDamage: Int,
         val enemyHP: Int,
         val myHP: Int,

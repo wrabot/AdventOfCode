@@ -9,7 +9,7 @@ class Day12(test: Int? = null) : Day(test) {
         Row(List(5) { row.record }.joinToString("?"), List(5) { row.groups }.flatten())
     }.sumOf { it.arrangements(0, 0, 0) }
 
-    data class Row(var record: String, val groups: List<Int>) {
+    private data class Row(var record: String, val groups: List<Int>) {
         private val cache = mutableMapOf<Triple<Int, Int, Int>, Long>()
 
         fun arrangements(groupIndex: Int, offset: Int, prefix: Int): Long =

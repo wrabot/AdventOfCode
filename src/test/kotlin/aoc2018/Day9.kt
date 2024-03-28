@@ -9,7 +9,7 @@ class Day9(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = game.play(100)
 
-    data class Game(val players: Int, val lastMarble: Int) {
+    private data class Game(val players: Int, val lastMarble: Int) {
         fun play(factor: Int): Long {
             val scores = LongArray(players)
             val circle = LinkedList<Int>()

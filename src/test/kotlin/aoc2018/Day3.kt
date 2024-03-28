@@ -10,8 +10,8 @@ class Day3(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = rects.first { rect -> rect.points.all { board[it].count == 1 } }.id
 
-    data class Cell(var count: Int)
-    data class Rect(val id: Int, val topLeft: XY, val size: XY) {
+    private data class Cell(var count: Int)
+    private data class Rect(val id: Int, val topLeft: XY, val size: XY) {
         val points = (topLeft.y until topLeft.y + size.y).flatMap { y ->
             (topLeft.x until topLeft.x + size.x).map { x ->
                 XY(x, y)

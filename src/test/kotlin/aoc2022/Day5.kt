@@ -39,5 +39,5 @@ class Day5(test: Int? = null) : Day(test) {
         Move(quantity, source - 1, destination - 1)
     }
 
-    data class Move(val quantity: Int, val source: Int, val destination: Int)
+    private data class Move(val quantity: Int, val source: Int, val destination: Int)
 }

@@ -22,7 +22,7 @@ class Day20(test: Int? = null) : Day(test) {
             it.neighbors(graph[it.portal].orEmpty().keys)
         }.zipWithNext(::cost).sum() - 1
 
-    data class LevelPortal(val portal: Portal, val level: Int) {
+    private data class LevelPortal(val portal: Portal, val level: Int) {
         constructor(name: String) : this(Portal(name, true), 0)
 
         override fun toString() = "$portal$level"
@@ -43,7 +43,7 @@ class Day20(test: Int? = null) : Day(test) {
     sealed interface Cell
     data object Wall : Cell
     data object Empty : Cell
-    data class Portal(val name: String, val out: Boolean) : Cell {
+    private data class Portal(val name: String, val out: Boolean) : Cell {
         override fun toString() = "$name${if (out) '^' else 'v'}"
     }
 

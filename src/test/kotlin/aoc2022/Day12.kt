@@ -7,9 +7,9 @@ class Day12(test: Int? = null) : Day(test) {
     override fun solvePart1() = board[start].distance
     override fun solvePart2() = board.cells.filter { it.height == 0 }.minOf { it.distance }
 
-    data class Cell(val content: Char, val height: Int, var distance: Int)
+    private data class Cell(val content: Char, val height: Int, var distance: Int)
 
-    val board = Board(lines[0].length, lines.size, lines.joinToString("").toList().map {
+    private val board = Board(lines[0].length, lines.size, lines.joinToString("").toList().map {
         val height = when (it) {
             'S' -> 'a'
             'E' -> 'z'
@@ -17,8 +17,8 @@ class Day12(test: Int? = null) : Day(test) {
         } - 'a'
         Cell(content = it, height = height, distance = Int.MAX_VALUE)
     })
-    val start = board.xy.first { board[it].content == 'S' }
-    val end = board.xy.first { board[it].content == 'E' }
+    private val start = board.xy.first { board[it].content == 'S' }
+    private val end = board.xy.first { board[it].content == 'E' }
 
     init {
         board[end].distance = 0

@@ -33,7 +33,7 @@ class Day22(test: Int? = null) : Day(test) {
         cubes.count { it.offset != 0 }
     }
 
-    fun List<Cube>.move(): Boolean {
+    private fun List<Cube>.move(): Boolean {
         var isMoved = false
         forEach { cube ->
             while (cube.zRange.first > 1) {
@@ -48,7 +48,7 @@ class Day22(test: Int? = null) : Day(test) {
         return isMoved
     }
 
-    data class Cube(val block: Block) {
+    private data class Cube(val block: Block) {
         var offset = 0
             set(value) {
                 zRange = zRange.move(value - field)

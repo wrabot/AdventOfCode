@@ -41,8 +41,8 @@ class Day14(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Chemical(val name: String, val quantity: Long)
-    data class Reaction(val input: List<Chemical>, val output: Chemical)
+    private data class Chemical(val name: String, val quantity: Long)
+    private data class Reaction(val input: List<Chemical>, val output: Chemical)
 
     private val rules = lines.associate { line ->
         val (input, output) = line.split(" => ")

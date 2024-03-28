@@ -55,7 +55,7 @@ class Day20(test: Int? = null) : Day(test) {
         return imageWeight - count * patternWeight
     }
 
-    data class Block(
+    private data class Block(
         val id: Long,
         val image: List<String>,
         val top: String,

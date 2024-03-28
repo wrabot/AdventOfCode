@@ -83,7 +83,7 @@ class Day23(test: Int? = null) : Day(test) {
         ),
     )
 
-    data class Cell(var content: Char) {
+    private data class Cell(var content: Char) {
         fun isFree() = content == '.'
         fun setFree() {
             content = '.'

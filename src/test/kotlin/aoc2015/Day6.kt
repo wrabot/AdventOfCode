@@ -38,7 +38,7 @@ class Day6 : Day() {
         return lights.sum()
     }
 
-    data class LightOrder(val type: Type, val xRange: IntRange, val yRange: IntRange) {
+    private data class LightOrder(val type: Type, val xRange: IntRange, val yRange: IntRange) {
         @Suppress("EnumEntryName")
         enum class Type { toggle, on, off }
     }

@@ -36,7 +36,7 @@ class Day14(test: Int? = null) : Day(test) {
     private var sandCount = 0
     private val cave: Board<Cell>
 
-    data class Cell(var content: Char) {
+    private data class Cell(var content: Char) {
         override fun toString() = content.toString()
     }
 

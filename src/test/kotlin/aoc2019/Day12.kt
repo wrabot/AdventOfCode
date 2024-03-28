@@ -35,7 +35,7 @@ class Day12(test: Int? = null) : Day(test) {
         return axes.mapNotNull { it.period }.reduce { acc, l -> lcm(acc, l) }
     }
 
-    data class Axe(val axe: Point.() -> Double, val cache: MutableMap<List<Double>, Long>, var period: Long? = null)
+    private data class Axe(val axe: Point.() -> Double, val cache: MutableMap<List<Double>, Long>, var period: Long? = null)
 
     fun Array<Line>.key(axe: Point.() -> Double) = flatMap { listOf(it.origin.axe(), it.vector.axe()) }
 

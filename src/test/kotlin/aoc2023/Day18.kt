@@ -48,12 +48,12 @@ class Day18(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Cell(var c: Char) {
+    private data class Cell(var c: Char) {
         var size: Board.XY = Board.XY(1, 1)
         override fun toString() = c.toString()
     }
 
-    data class Instruction(val direction: Direction4, val length: Int)
+    private data class Instruction(val direction: Direction4, val length: Int)
 
     private val regex = "(.) (.*) \\(#(.*)\\)".toRegex()
     private val instructionsPart1 = lines.map { line ->

@@ -92,12 +92,12 @@ class Day10(test: Int? = null) : Day(test) {
         return newDirection?.let { Pipe(destination, it, direction) }
     }
 
-    data class Pipe(val origin: Board.XY, val direction: Direction4, val previousDirection: Direction4)
+    private data class Pipe(val origin: Board.XY, val direction: Direction4, val previousDirection: Direction4)
 
     // Parse input
 
-    enum class Type { Ground, Start, V, H, NW, NE, SW, SE }
-    data class Tile(val type: Type, var distance: Int? = null, var rightSide: Boolean? = null) {
+    private enum class Type { Ground, Start, V, H, NW, NE, SW, SE }
+    private data class Tile(val type: Type, var distance: Int? = null, var rightSide: Boolean? = null) {
 
         fun isClassified() = distance != null || rightSide != null
         override fun toString() = if (distance != null) "#" else when (rightSide) {

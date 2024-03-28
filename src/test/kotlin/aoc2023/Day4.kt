@@ -24,7 +24,7 @@ class Day4(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Card(val id: Int, val winning: Set<Int>, val mine: Set<Int>) {
+    private data class Card(val id: Int, val winning: Set<Int>, val mine: Set<Int>) {
         val myWinning = winning.intersect(mine).count()
         var count = 1
     }

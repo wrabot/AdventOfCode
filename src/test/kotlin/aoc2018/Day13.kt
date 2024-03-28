@@ -23,7 +23,7 @@ class Day13(test: Int? = null) : Day(test) {
         return carts.single().toResult()
     }
 
-    data class Cart(var xy: Board.XY, var direction: Direction4) {
+    private data class Cart(var xy: Board.XY, var direction: Direction4) {
         private var turn: Int = 0
 
         fun moveOn(tracks: Board<Char>) {

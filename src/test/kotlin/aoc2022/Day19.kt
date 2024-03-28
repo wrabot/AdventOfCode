@@ -75,14 +75,14 @@ class Day19(test: Int? = null) : Day(test) {
         if (choice in 0..3) robots[choice]++
     }
 
-    data class State(val minerals: List<Int>, val robots: List<Int>) : Comparable<State> {
+    private data class State(val minerals: List<Int>, val robots: List<Int>) : Comparable<State> {
         override fun compareTo(other: State) = (0..3).reversed().map { index ->
             robots[index].compareTo(other.robots[index]).takeIf { it != 0 }
                 ?: minerals[index].compareTo(other.minerals[index])
         }.dropWhile { it == 0 }.firstOrNull() ?: 0
     }
 
-    data class Blueprint(
+    private data class Blueprint(
         val id: Int,
         val oreRobotOreCost: Int,
         val clayRobotOreCost: Int,

@@ -7,7 +7,7 @@ class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = registers.values.max()
     override fun solvePart2() = max
 
-    data class Instruction(
+    private data class Instruction(
         val register: String,
         val value: Int,
         val testRegister: String,

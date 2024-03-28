@@ -11,7 +11,7 @@ class Day17(test: Int? = null) : Day(test) {
     private fun State.longestPath(): Int =
         if (isEnd) path.length else neighbors().maxOfOrNull { it.longestPath() } ?: -1
 
-    data class State(val path: String) {
+    private data class State(val path: String) {
         val x = path.count { it == 'R' } - path.count { it == 'L' }
         val y = path.count { it == 'D' } - path.count { it == 'U' }
         val isEnd = x == 3 && y == 3
@@ -23,7 +23,7 @@ class Day17(test: Int? = null) : Day(test) {
         )
     }
 
-    fun State.neighbors() = (openedDoors(path) - invalidDirections).map { State(path + it) }
+    private fun State.neighbors() = (openedDoors(path) - invalidDirections).map { State(path + it) }
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun openedDoors(path: String) =

@@ -13,7 +13,7 @@ class Day11(test: Int? = null) : Day(test) {
         neighbors = State::neighbors
     ).size - 1
 
-    data class State(val elevator: Int, val devices: List<Device>) { // devices must be sorted
+    private data class State(val elevator: Int, val devices: List<Device>) { // devices must be sorted
         val isEnd = devices.all { it.microchip == 4 && it.generator == 4 }
 
         fun neighbors(): List<State> {
@@ -33,7 +33,7 @@ class Day11(test: Int? = null) : Day(test) {
             }
         }
 
-        data class Move(val device: Device, val isMicrochip: Boolean?) // null means both
+        private data class Move(val device: Device, val isMicrochip: Boolean?) // null means both
 
         private fun List<Move>.oneOrTwo() =
             subLists().filter { it.size in 1..2 }.map { it.first() to it.getOrNull(1) }
@@ -48,7 +48,7 @@ class Day11(test: Int? = null) : Day(test) {
     }
 
     // The name is useless and must be ignored otherwise, combinatorics explodes
-    data class Device(val microchip: Int, val generator: Int)
+    private data class Device(val microchip: Int, val generator: Int)
 
     private val microchipRegex = " (\\w*?)-compatible microchip".toRegex()
     private val microchips = lines.flatMapIndexed { index, line ->

@@ -81,7 +81,7 @@ class Day14(test: Int? = null) : Day(test) {
         (height - y) * xRange.count { this[it, y].c == 'O' }
     }
 
-    data class Cell(var c: Char) {
+    private data class Cell(var c: Char) {
         override fun toString() = c.toString()
     }
 }

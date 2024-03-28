@@ -48,7 +48,7 @@ class Day22(test: Int? = null) : Day(test) {
         return count
     }
 
-    data class Node(val size: Int, val used: Int)
+    private data class Node(val size: Int, val used: Int)
 
     private val nodes = lines.drop(2).associate { line ->
         line.match("/dev/grid/node-x(\\d+)-y(\\d+)\\s*(\\d+)T\\s*(\\d+)T.*".toRegex())!!.let {

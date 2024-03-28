@@ -6,7 +6,7 @@ class Day18 : Day() {
     override fun solvePart1() = list.sumOf { Expr(it, false).eval() }
     override fun solvePart2() = list.sumOf { Expr(it, true).eval() }
 
-    data class Expr(val text: String, val part2: Boolean) {
+    private data class Expr(val text: String, val part2: Boolean) {
         fun eval(): Long {
             val stack = mutableListOf(operand())
             while (index < text.length) {

@@ -17,7 +17,7 @@ class Day15(test: Int? = null) : Day(test) {
         score()
     }
 
-    data class Ingredient(val name: String, val properties: List<Int>, val calories: Int) {
+    private data class Ingredient(val name: String, val properties: List<Int>, val calories: Int) {
         var quantity = 0
         override fun toString() = "$name $quantity"
     }

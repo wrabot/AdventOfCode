@@ -9,7 +9,7 @@ class Day8(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = code.toString()
 
-    sealed interface Instruction {
+    private sealed interface Instruction {
         data class Rect(val width: Int, val height: Int) : Instruction
         data class RotateRow(val row: Int, val pixels: Int) : Instruction
         data class RotateColumn(val column: Int, val pixels: Int) : Instruction
@@ -19,7 +19,7 @@ class Day8(test: Int? = null) : Day(test) {
     private val rowRegex = "rotate row y=(\\d+) by (\\d+)".toRegex()
     private val columnRegex = "rotate column x=(\\d+) by (\\d+)".toRegex()
 
-    val instructions = lines.map { line ->
+    private val instructions = lines.map { line ->
         val rect = line.match(rectRegex)
         val row = line.match(rowRegex)
         val column = line.match(columnRegex)

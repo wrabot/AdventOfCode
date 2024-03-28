@@ -19,7 +19,7 @@ class Day6(test: Int? = null) : Day(test) {
         lines[1].removePrefix("Distance:").replace(" ", "").toLong()
     )
 
-    data class Race(val time: Long, val distance: Long) {
+    private data class Race(val time: Long, val distance: Long) {
         fun records1() = (1..<time).count { (time - it) * it > distance }
         fun records2(): Double {
             val b = time.toDouble() / 2

@@ -12,7 +12,7 @@ class Day21(test: Int? = null) : Day(test) {
     private val enemyDamage = lines[1].toWords().last().toInt()
     private val enemyArmor = lines[2].toWords().last().toInt()
 
-    data class Item(val cost: Int = 0, val damage: Int = 0, val armor: Int = 0) {
+    private data class Item(val cost: Int = 0, val damage: Int = 0, val armor: Int = 0) {
         private constructor(list: List<Int>) : this(list[0], list[1], list[2])
         constructor(line: String) : this(line.toWords().takeLast(3).map { it.toInt() })
 

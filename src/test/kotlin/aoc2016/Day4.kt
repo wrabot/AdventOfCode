@@ -11,7 +11,7 @@ class Day4(test: Int? = null) : Day(test) {
             .joinToString("") { it.toString() }.contains("north")
     }.sectorId
 
-    data class Room(val name: String, val sectorId: Int, val checksum: String) {
+    private data class Room(val name: String, val sectorId: Int, val checksum: String) {
         fun check() = name.filter { it.isLowerCase() }.groupingBy { it }.eachCount().toList()
             .sortedBy { it.first }.sortedByDescending { it.second }.joinToString("") { it.first.toString() }
             .take(5) == checksum

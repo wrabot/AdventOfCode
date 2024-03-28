@@ -23,11 +23,11 @@ class Day25(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = Unit
 
-    data class Action(val set: Boolean, val right: Boolean, val next: String)
+    private data class Action(val set: Boolean, val right: Boolean, val next: String)
 
-    val start: String
-    val steps: Int
-    val states: Map<String, List<Action>>
+    private val start: String
+    private val steps: Int
+    private val states: Map<String, List<Action>>
 
     init {
         val blocks = input.split("\n\n").map { it.lines() }
@@ -41,7 +41,7 @@ class Day25(test: Int? = null) : Day(test) {
         }
     }
 
-    fun createAction(text: List<String>) = Action(
+    private fun createAction(text: List<String>) = Action(
         text[0].trim().match("- Write the value (.).".toRegex())!!.first() == "1",
         text[1].trim().match("- Move one slot to the (.*).".toRegex())!!.first() == "right",
         text[2].trim().match("- Continue with state (.).".toRegex())!!.first(),

@@ -45,7 +45,7 @@ class Day23 : Day() {
         return cups.find { it.value == 1 }!!.run { next.value * next.next.value }
     }
 
-    data class Cup(val value: Int) {
+    private data class Cup(val value: Int) {
         lateinit var next: Cup
     }
 

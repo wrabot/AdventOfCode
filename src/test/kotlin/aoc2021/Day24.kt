@@ -118,18 +118,18 @@ class Day24 : Day() {
         return program["z"]!!
     }
 
-    companion object {
+    private companion object {
         fun List<Int>.toRange() = minOf { it }..maxOf { it }
         fun div(a: Int, b: Int) = if (b == 0) Int.MAX_VALUE else a / b
     }
 
-    sealed class Instruction(val range: IntRange) {
-        data class Value(val value: Int) : Instruction(value..value)
-        data class Inp(val index: Int) : Instruction(1..9)
-        data class Add(val values: List<Instruction>, val value: Int = 0) :
+    private sealed class Instruction(val range: IntRange) {
+        class Value(val value: Int) : Instruction(value..value)
+        class Inp(val index: Int) : Instruction(1..9)
+        class Add(val values: List<Instruction>, val value: Int = 0) :
             Instruction((value + values.sumOf { it.range.first })..(value + values.sumOf { it.range.last }))
 
-        data class Mul(val a: Instruction, val b: Instruction) : Instruction(
+        class Mul(val a: Instruction, val b: Instruction) : Instruction(
             listOf(
                 a.range.first * b.range.first,
                 a.range.first * b.range.last,

@@ -7,12 +7,12 @@ class Day16(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = packets.map { it.evaluate() }
 
-    sealed class Packet {
+    private sealed class Packet {
         data class Literal(val version: Int, val value: Long) : Packet()
         data class Operator(val version: Int, val type: Int, val packets: List<Packet>) : Packet()
     }
 
-    data class ParseResult(val packet: Packet, val offset: Int)
+    private data class ParseResult(val packet: Packet, val offset: Int)
 
     private val packets = lines.map {
         val bits = it.map { digit ->

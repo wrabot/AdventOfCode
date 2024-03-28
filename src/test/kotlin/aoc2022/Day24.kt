@@ -23,7 +23,7 @@ class Day24(test: Int? = null) : Day(test) {
         }
     }
 
-    data class State(val expedition: Board.XY, val boardIndex: Int)
+    private data class State(val expedition: Board.XY, val boardIndex: Int)
 
     private val boards = mutableListOf<Board<Cell>>()
     private val entrance = Board.XY(1, 0)
@@ -54,7 +54,7 @@ class Day24(test: Int? = null) : Day(test) {
 
     private fun modulo(value: Int, size: Int) = (size + value - 3) % (size - 2) + 1
 
-    data class Cell(val content: Char, val winds: List<Direction4> = emptyList(), var expedition: Boolean = false) {
+    private data class Cell(val content: Char, val winds: List<Direction4> = emptyList(), var expedition: Boolean = false) {
         fun isEmpty() = content != '#' && winds.isEmpty()
 
         override fun toString() = when {

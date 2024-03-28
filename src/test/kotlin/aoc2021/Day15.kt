@@ -21,7 +21,7 @@ class Day15(test: Int? = null) : Day(test) {
             })
     )
 
-    data class Cell(val risk: Double) {
+    private data class Cell(val risk: Double) {
         override fun toString() = risk.toString()
     }
 

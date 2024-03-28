@@ -55,16 +55,16 @@ class Day17(test: Int? = null) : Day(test) {
         }
     }.size()
 
-    data class Rock(val width: Int, val height: Int, val content: String) {
+    private data class Rock(val width: Int, val height: Int, val content: String) {
         fun isRock(x: Int, y: Int) = x in 0 until width && y in 0 until height && content[y * width + x] == '#'
     }
 
-    data class Params(val rockStep: Int, val sizeStep: Int)
+    private data class Params(val rockStep: Int, val sizeStep: Int)
 
     private var params: Params? = null
     private val commands = input
 
-    class Board {
+    private class Board {
         val rockContent = listOf(
             Rock(4, 1, "####"),
             Rock(3, 3, ".#.###.#."),

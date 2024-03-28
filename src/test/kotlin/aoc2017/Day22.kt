@@ -10,7 +10,7 @@ class Day22(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = createBoard(300).solve(10000000, 1)
 
-    fun Board<Cell>.solve(repeat: Int, stateInc: Int): Int {
+    private fun Board<Cell>.solve(repeat: Int, stateInc: Int): Int {
         var count = 0
         var position = Board.XY(width / 2, height / 2)
         var direction = Direction4.North
@@ -25,7 +25,7 @@ class Day22(test: Int? = null) : Day(test) {
         return count
     }
 
-    enum class State(val text: String) {
+    private enum class State(val text: String) {
         Clean("."), Weakened("W"), Infected("#"), Flagged("F");
 
         fun nextState(inc: Int) = State.entries[(ordinal + inc) % State.entries.size]
@@ -37,7 +37,7 @@ class Day22(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Cell(var state: State) {
+    private data class Cell(var state: State) {
         constructor(infected: Boolean) : this(if (infected) State.Infected else State.Clean)
 
         override fun toString() = state.text
@@ -52,5 +52,5 @@ class Day22(test: Int? = null) : Day(test) {
         )
     }
 
-    val start = lines.toBoard { it == '#' }
+    private val start = lines.toBoard { it == '#' }
 }

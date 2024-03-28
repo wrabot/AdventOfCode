@@ -21,9 +21,9 @@ class Day11(test: Int? = null) : Day(test) {
         false
     }
 
-    data class Seat(var current: Char, var next: Char = current)
+    private data class Seat(var current: Char, var next: Char = current)
 
-    fun count(min: Int, occupied: Board<Seat>.(Board.XY, Direction8) -> Boolean): Int {
+    private fun count(min: Int, occupied: Board<Seat>.(Board.XY, Direction8) -> Boolean): Int {
         val plane = lines.toBoard(::Seat)
         while (true) {
             var modified = false

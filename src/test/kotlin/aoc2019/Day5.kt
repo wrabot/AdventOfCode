@@ -9,7 +9,7 @@ class Day5 : Day() {
 
     private val code = lines.first().split(",").map { it.toInt() }
 
-    data class Runtime(val memory: MutableList<Int>, val input: Int) {
+    private data class Runtime(val memory: MutableList<Int>, val input: Int) {
         private var offset = 0
 
         fun execute(): Int {

@@ -19,8 +19,8 @@ class Day7(test: Int? = null) : Day(test) {
             acc + (index + 1) * hand.bid
         }
 
-    enum class HandType { HighCard, OnePair, TwoPair, ThreeKind, FullHouse, FourKind, FiveKind }
-    data class Hand(val cards: List<Int>, val bid: Int) : Comparable<Hand> {
+    private enum class HandType { HighCard, OnePair, TwoPair, ThreeKind, FullHouse, FourKind, FiveKind }
+    private data class Hand(val cards: List<Int>, val bid: Int) : Comparable<Hand> {
         private val type = cards.groupingBy { it }.eachCount().let { counts ->
             val joker = counts[0] ?: 0
             val others = counts.filter { it.key != 0 }.values.sortedDescending()

@@ -39,7 +39,7 @@ class Day5(test: Int? = null) : Day(test) {
         }
     }
 
-    data class MapItem(val destination: Long, val source: Long, val length: Long) {
+    private data class MapItem(val destination: Long, val source: Long, val length: Long) {
         val sourceRange = source..<source + length
 
         fun move(s: Long) = s - source + destination

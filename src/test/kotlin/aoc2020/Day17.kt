@@ -10,7 +10,7 @@ class Day17(test: Int? = null) : Day(test) {
         s.mapIndexedNotNull { x, c -> if (c == '#') Position(x, y, 0, w) else null }
     }.flatten().toSet()
 
-    data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null) {
+    private data class Position(val x: Int, val y: Int, val z: Int, val w: Int? = null) {
         fun neighbors(): List<Position> = mutableListOf<Position>().apply {
             for (dx in -1..1) {
                 for (dy in -1..1) {

@@ -54,12 +54,12 @@ class Day21(test: Int? = null) : Day(test) {
     private fun StringBuilder.move(s: Int, d: Int) = insert(d, get(s).apply { deleteCharAt(s) })
 
     sealed interface Instruction
-    data class SwapPosition(val a: Int, val b: Int) : Instruction
-    data class SwapLetter(val a: Char, val b: Char) : Instruction
-    data class Rotate(val a: Int) : Instruction
-    data class RotateLetter(val a: Char) : Instruction
-    data class ReversePositions(val r: IntRange) : Instruction
-    data class MovePosition(val s: Int, val d: Int) : Instruction
+    private data class SwapPosition(val a: Int, val b: Int) : Instruction
+    private data class SwapLetter(val a: Char, val b: Char) : Instruction
+    private data class Rotate(val a: Int) : Instruction
+    private data class RotateLetter(val a: Char) : Instruction
+    private data class ReversePositions(val r: IntRange) : Instruction
+    private data class MovePosition(val s: Int, val d: Int) : Instruction
 
     private val instructions = lines.map { line ->
         line.match("swap position (\\d+) with position (\\d+)".toRegex())?.let {

@@ -54,7 +54,7 @@ class Day17(test: Int? = null) : Day(test) {
         return map[end].fromStartHeatLoss.mapNotNull { it.value.filterNotNull().minOrNull() }.min()
     }
 
-    data class Cell(val heatLoss: Int, val fromStartHeatLoss: Map<Direction4, Array<Int?>>) {
+    private data class Cell(val heatLoss: Int, val fromStartHeatLoss: Map<Direction4, Array<Int?>>) {
         override fun toString(): String {
             return "[$heatLoss ${
                 fromStartHeatLoss.map { entry ->

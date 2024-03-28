@@ -50,9 +50,9 @@ class Day20(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Pulse(val source: String, val destination: String, val value: Boolean)
+    private data class Pulse(val source: String, val destination: String, val value: Boolean)
 
-    data class Module(val type: Char, val name: String, val outputs: List<String>) {
+    private data class Module(val type: Char, val name: String, val outputs: List<String>) {
         val inputs = mutableMapOf<String, Boolean>()
         var output: Boolean = false
         operator fun invoke(input: Pulse) = when (type) {

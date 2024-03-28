@@ -31,9 +31,9 @@ class Day23(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Packet(val address: Int, val x: Long, val y: Long)
+    private data class Packet(val address: Int, val x: Long, val y: Long)
 
-    class Computer(address: Int, code: List<Long>) {
+    private class Computer(address: Int, code: List<Long>) {
         private val runtime = Runtime(code).apply { input.add(address.toLong()) }
         private val output = mutableListOf<Long>()
 
@@ -54,7 +54,7 @@ class Day23(test: Int? = null) : Day(test) {
     // - one step execute with input list 
     // - default input is -1
     // - idle is when default input is used
-    class Runtime(code: List<Long>) {
+    private class Runtime(code: List<Long>) {
         private var offset: Long = 0
         private var relative: Long = 0
         val input = mutableListOf<Long>()

@@ -91,9 +91,9 @@ class Day22(test: Int? = null) : Day(test) {
         }
     }
 
-    data class State(val position: XY, val direction: Direction4)
+    private data class State(val position: XY, val direction: Direction4)
 
-    data class Cell(val content: Char, var move: Char? = null) {
+    private data class Cell(val content: Char, var move: Char? = null) {
         override fun toString() = (move ?: content).toString()
     }
 

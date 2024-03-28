@@ -29,7 +29,7 @@ class Day22(var test: Int? = null) : Day(test) {
 
     // common
 
-    sealed interface Technique {
+    private sealed interface Technique {
         fun move(card: Int, size: Int): Int
 
         // each technique is modulo operation

@@ -24,7 +24,7 @@ class Day16(test: Int? = null) : Day(test) {
             )
         }.maxOrNull() ?: (total + release * time)
 
-    data class Valve(val name: String, val rate: Int, val neighbors: List<String>)
+    private data class Valve(val name: String, val rate: Int, val neighbors: List<String>)
 
     private val valves = lines.associate { line ->
         line.split("Valve ", " has flow rate=", "; tunnels lead to valves ", "; tunnel leads to valve ", ", ").let {

@@ -18,7 +18,7 @@ class Day25(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = Unit
 
-    data class Cell(var content: Char) {
+    private data class Cell(var content: Char) {
         override fun toString() = content.toString()
     }
 

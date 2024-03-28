@@ -25,7 +25,7 @@ class Day7(test: Int? = null) : Day(test) {
         return time
     }
 
-    data class Task(val name: Char, val constraints: List<Char>, var end: Int? = null) {
+    private data class Task(val name: Char, val constraints: List<Char>, var end: Int? = null) {
         val duration = name - 'A' + 61
         fun isDone(time: Int) = end?.let { it <= time } ?: false
         fun inProgress(time: Int) = end?.let { it > time } ?: false

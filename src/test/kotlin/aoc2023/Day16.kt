@@ -29,9 +29,9 @@ class Day16(test: Int? = null) : Day(test) {
         return map.cells.count { it.incomingBeams.isNotEmpty() }
     }
 
-    data class Beam(val point: Board.XY, val direction: Direction4)
+    private data class Beam(val point: Board.XY, val direction: Direction4)
 
-    data class Cell(val c: Char) {
+    private data class Cell(val c: Char) {
         val incomingBeams = mutableSetOf<Direction4>()
 
         override fun toString() = when {

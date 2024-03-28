@@ -19,7 +19,7 @@ class Day11(test: Int? = null) : Day(test) {
         return step
     }
 
-    data class Cell(var level: Int) {
+    private data class Cell(var level: Int) {
         constructor(init: Char) : this(init.toString().toInt())
 
         var flash = false

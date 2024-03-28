@@ -59,7 +59,7 @@ class Day11(test: Int? = null) : Day(test) {
     //private val monkeys = testMonkeys
     private val monkeys = inputMonkeys
 
-    data class Monkey(
+    private data class Monkey(
         val startingItems: List<Long>,
         val operation: (Long) -> Long,
         val modulo: Long,

@@ -3,7 +3,7 @@ package aoc2021
 import Day
 
 class Day21(test: Int? = null) : Day(test) {
-    data class Player(var position: Int, var score: Int = 0) {
+    private data class Player(var position: Int, var score: Int = 0) {
         fun move(dice: Int) {
             position = (position + dice - 1) % 10 + 1
             score += position
@@ -24,8 +24,8 @@ class Day21(test: Int? = null) : Day(test) {
         }
     }
 
-    data class PlayerState(val position: Int, val score: Int = 0)
-    data class GameState(val players: List<PlayerState>)
+    private data class PlayerState(val position: Int, val score: Int = 0)
+    private data class GameState(val players: List<PlayerState>)
 
     override fun solvePart2(): Any {
         var universes = mapOf(GameState(listOf(PlayerState(player1Init), PlayerState(player2Init))) to 1L)

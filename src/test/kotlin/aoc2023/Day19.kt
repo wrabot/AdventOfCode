@@ -28,17 +28,17 @@ class Day19(test: Int? = null) : Day(test) {
         }
     }
 
-    data class PartRange(val categories: Map<Char, IntRange>)
+    private data class PartRange(val categories: Map<Char, IntRange>)
 
-    data class Rule(val steps: List<Step>, val defaultAction: String) {
+    private data class Rule(val steps: List<Step>, val defaultAction: String) {
         operator fun invoke(part: Part) = steps.firstNotNullOfOrNull { it(part) } ?: defaultAction
     }
 
-    data class Step(val test: Test, val action: String) {
+    private data class Step(val test: Test, val action: String) {
         operator fun invoke(part: Part) = if (test(part)) action else null
     }
 
-    data class Test(val category: Char, val operator: Char, val limit: Int) {
+    private data class Test(val category: Char, val operator: Char, val limit: Int) {
         operator fun invoke(part: Part): Boolean {
             val value = part.categories[category]!!
             return when (operator) {
@@ -64,7 +64,7 @@ class Day19(test: Int? = null) : Day(test) {
         }
     }
 
-    data class Part(val categories: Map<Char, Int>)
+    private data class Part(val categories: Map<Char, Int>)
 
     private val categories = listOf('x', 'm', 'a', 's')
     private val rules: Map<String, Rule>

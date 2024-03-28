@@ -16,7 +16,7 @@ class Day16(test: Int? = null) : Day(test) {
         }
     }.name
 
-    data class Aunt(val name: String, val properties: Map<String, Int>)
+    private data class Aunt(val name: String, val properties: Map<String, Int>)
 
     private val aunts = lines.map { line ->
         val (name, properties) = line.split(": ", limit = 2)

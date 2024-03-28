@@ -11,7 +11,7 @@ class Day18(test: Int? = null) : Day(test) {
         }
     }
 
-    data class ParseResult(val number: NumberPart, val offset: Int)
+    private data class ParseResult(val number: NumberPart, val offset: Int)
 
     private fun parseNumber(input: String): ParseResult = when (input.first()) {
         '[' -> {
@@ -23,7 +23,7 @@ class Day18(test: Int? = null) : Day(test) {
         else -> ParseResult(NumberValue(input.first().toString().toInt()), 2)
     }
 
-    abstract class NumberPart {
+    private abstract class NumberPart {
         var updateParent: (NumberPart) -> Unit = {}
 
         abstract fun magnitude(): Int
@@ -44,7 +44,7 @@ class Day18(test: Int? = null) : Day(test) {
         abstract fun updateRightNeighbor(outsideRight: NumberValue? = null): NumberValue?
     }
 
-    data class NumberValue(var value: Int) : NumberPart() {
+    private data class NumberValue(var value: Int) : NumberPart() {
         override fun toString() = value.toString()
         override fun magnitude() = value
 
@@ -60,7 +60,7 @@ class Day18(test: Int? = null) : Day(test) {
         override fun updateRightNeighbor(outsideRight: NumberValue?) = this
     }
 
-    class NumberPair(private var left: NumberPart, private var right: NumberPart) : NumberPart() {
+    private class NumberPair(private var left: NumberPart, private var right: NumberPart) : NumberPart() {
         private var leftNeighbor: NumberValue? = null
         private var rightNeighbor: NumberValue? = null
 

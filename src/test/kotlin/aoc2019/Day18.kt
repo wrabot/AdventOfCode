@@ -48,7 +48,7 @@ class Day18(test: Int? = null) : Day(test) {
 
     // common
 
-    data class Link(val distance: Int, val keys: List<Char>) {
+    private data class Link(val distance: Int, val keys: List<Char>) {
         constructor(path: List<Char>) : this(path.size, path.filter { it.isUpperCase() }.map { it.lowercase().first() })
     }
 }

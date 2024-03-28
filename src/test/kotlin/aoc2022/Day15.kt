@@ -16,7 +16,7 @@ class Day15(test: Int? = null) : Day(test) {
         if (ranges.sumOf { it.size } == size.toLong()) (ranges.first().last + 1) * 4000000 + y else null
     }
 
-    data class Couple(val sensor: Point, val beacon: Point, val distance: Double = (sensor - beacon).manhattan()) {
+    private data class Couple(val sensor: Point, val beacon: Point, val distance: Double = (sensor - beacon).manhattan()) {
         fun scan(y: Double, range: LongRange) = (distance - abs(y - sensor.y)).takeIf { it >= 0 }?.let {
             (sensor.x - it).toLong().coerceAtLeast(range.first)..(sensor.x + it).toLong().coerceAtMost(range.last)
         }

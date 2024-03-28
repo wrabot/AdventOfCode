@@ -22,7 +22,7 @@ class Day8 : Day() {
         error("not found")
     }
 
-    data class Ins(var op: String, val arg: Int, var used: Boolean = false)
+    private data class Ins(var op: String, val arg: Int, var used: Boolean = false)
 
     private val code = lines.map { it.split(" ") }.map { (op, arg) -> Ins(op, arg.toInt()) }
 

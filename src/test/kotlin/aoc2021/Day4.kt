@@ -7,7 +7,7 @@ class Day4(test: Int? = null) : Day(test) {
     override fun solvePart1() = firstWinningScore
     override fun solvePart2() = lastWinningScore
 
-    data class Cell(val value: Int, var marked: Boolean = false)
+    private data class Cell(val value: Int, var marked: Boolean = false)
 
     private val numbers = lines[0].split(",").map { it.toInt() }
 

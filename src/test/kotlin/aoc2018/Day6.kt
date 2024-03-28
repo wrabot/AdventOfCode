@@ -43,7 +43,7 @@ class Day6(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = board.xy.count { l -> locations.sumOf { (it - l).manhattan() } < 10000 }
 
-    data class Cell(var i: Int = -1, var d: Int = Int.MAX_VALUE) {
+    private data class Cell(var i: Int = -1, var d: Int = Int.MAX_VALUE) {
         override fun toString() = when (i) {
             -1 -> "!"
             Int.MAX_VALUE -> "."

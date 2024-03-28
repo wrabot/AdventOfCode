@@ -27,8 +27,8 @@ class Day2(test: Int? = null) : Day(test) {
         })
     }
 
-    data class Game(val id: Int, val subsets: List<Subset>)
-    data class Subset(val red: Int, val green: Int, val blue: Int)
+    private data class Game(val id: Int, val subsets: List<Subset>)
+    private data class Subset(val red: Int, val green: Int, val blue: Int)
 
     private fun String.getColor(color: String) = if (endsWith(color)) removeSuffix(color).trim().toInt() else 0
 }

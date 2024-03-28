@@ -23,7 +23,7 @@ class Day14(test: Int? = null) : Day(test) {
         return index
     }
 
-    data class State(val scores: StringBuilder = StringBuilder("37")) {
+    private data class State(val scores: StringBuilder = StringBuilder("37")) {
         private var first: Int = 0
         private var second: Int = 1
 

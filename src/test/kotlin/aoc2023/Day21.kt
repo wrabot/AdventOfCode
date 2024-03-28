@@ -34,7 +34,7 @@ class Day21(test: Int? = null) : Day(test) {
 
     private fun Board.XY.mod() = Board.XY(x.mod(garden.width), y.mod(garden.height))
 
-    data class Cell(val c: Char) {
+    private data class Cell(val c: Char) {
         var step = false
         override fun toString() = if (step) "O" else c.toString()
     }

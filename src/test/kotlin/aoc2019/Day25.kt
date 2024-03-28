@@ -66,7 +66,7 @@ class Day25(test: Int? = null) : Day(test) {
 
     private fun List<String>.items() = takeWhile { it.startsWith("- ") }.map { it.removePrefix("- ") }
 
-    data class Room(
+    private data class Room(
         val name: String,
         val description: String,
         val directions: MutableMap<String, String?>,

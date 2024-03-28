@@ -21,7 +21,7 @@ class Day18(test: Int? = null) : Day(test) {
         return board.cells.count { it.current }
     }
 
-    data class Cell(var current: Boolean, var next: Boolean = false) {
+    private data class Cell(var current: Boolean, var next: Boolean = false) {
         override fun toString() = if (current) "#" else "."
     }
 

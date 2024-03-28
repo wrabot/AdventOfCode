@@ -16,7 +16,7 @@ class Day7(test: Int? = null) : Day(test) {
         ko.first().first().run { weight - total!! } + ok.first().first().total!!
     }
 
-    data class Node(val weight: Int, val children: List<String>) {
+    private data class Node(val weight: Int, val children: List<String>) {
         var total: Int? = null
     }
 

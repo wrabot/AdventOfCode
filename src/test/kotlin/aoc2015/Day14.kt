@@ -13,7 +13,7 @@ class Day14(test: Int? = null) : Day(test) {
         return reindeer.maxOf { it.points }
     }
 
-    data class Reindeer(val name: String, val speed: Int, val running: Int, val resting: Int) {
+    private data class Reindeer(val name: String, val speed: Int, val running: Int, val resting: Int) {
         private val cycle = running + resting
         var points = 0
         var position = 0
