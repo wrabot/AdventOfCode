@@ -53,7 +53,7 @@ class Day21(test: Int? = null) : Day(test) {
     private fun StringBuilder.reverse(r: IntRange) = replace(r.first, r.last + 1, substring(r).reversed())
     private fun StringBuilder.move(s: Int, d: Int) = insert(d, get(s).apply { deleteCharAt(s) })
 
-    sealed interface Instruction
+    private sealed interface Instruction
     private data class SwapPosition(val a: Int, val b: Int) : Instruction
     private data class SwapLetter(val a: Char, val b: Char) : Instruction
     private data class Rotate(val a: Int) : Instruction
