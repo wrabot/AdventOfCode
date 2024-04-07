@@ -73,8 +73,8 @@ class Year2018 {
         //Day11(1).check("33,45", "90,269,16")
         //Day11(2).check("21,61", "232,251,12")
         Day11().check("21,93", "231,108,14")
-    } 
-    
+    }
+
     @Test
     fun day12() {
         //Day12(1).checkPart1(325)
@@ -87,7 +87,7 @@ class Year2018 {
         //Day13(2).checkPart2("6,4")
         Day13().check("118,112", "50,21")
     }
-    
+
     @Test
     fun day14() = Day14().check("3718110721", 20298300)
 
@@ -127,9 +127,9 @@ class Year2018 {
     fun day22() {
         Day22(1).check(114, 45)
         Day22().check(8575, 999)
-    } 
-    
-    
+    }
+
+
     @Test
     fun day23() {
         //Day23(1).checkPart1(7)
@@ -137,7 +137,10 @@ class Year2018 {
     }
 
     @Test
-    fun day24() = Day24().check(Unit, Unit)
+    fun day24() {
+        //Day24(1).check(5216, 51)
+        Day24().check(22676, 4510)
+    }
 
     @Test
     fun day25() = Day25().check(Unit, Unit)
