@@ -9,7 +9,8 @@ class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(graph.size)
     override fun solvePart2() = solve(graph.size + 1)
 
-    private val graph = lines.toBoard { it }.toGraph(
+    private val board = lines.toBoard { it }
+    private val graph = board.toGraph(
         isStart = Char::isDigit,
         isEnd = Char::isDigit,
         isWall = { this == '#' }

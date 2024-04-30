@@ -3,16 +3,15 @@ package aoc2019
 import Day
 import tools.board.toBoard
 import tools.board.toGraph
-import tools.log
 
 class Day18(test: Int? = null) : Day(test) {
-    override fun solvePart1() = lines.toBoard { it }.run {
-        toGraph(
-            isStart = { this == '@' || isLowerCase() },
-            isEnd = { isLowerCase() },
-            isWall = { this == '#' },
-        ) { Link(it.map(cells::get)) }
-    }.getKeysPart1('@')
+    private val board = lines.toBoard { it }
+
+    override fun solvePart1() = board.toGraph(
+        isStart = { this == '@' || isLowerCase() },
+        isEnd = { isLowerCase() },
+        isWall = { this == '#' },
+    ) { Link(it.map(board.cells::get)) }.getKeysPart1('@')
 
     private val cachePart1 = mutableMapOf<Pair<Char, Set<Char>>, Int>()
     private fun Map<Char, Map<Char, Link>>.getKeysPart1(

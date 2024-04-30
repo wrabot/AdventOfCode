@@ -40,37 +40,40 @@ class Day20(test: Int? = null) : Day(test) {
 
     // common
 
-    sealed interface Cell
-    data object Wall : Cell
-    data object Empty : Cell
+    private sealed interface Cell
+    private data object Wall : Cell
+    private data object Empty : Cell
     private data class Portal(val name: String, val out: Boolean) : Cell {
         override fun toString() = "$name${if (out) '^' else 'v'}"
     }
 
-    private val board = lines.toBoard { it }
+    private val board: Board<Cell>
 
-    private val portals = board.cells.indices.mapNotNull { i ->
-        val c = board.cells[i]
-        if (!c.isLetter()) return@mapNotNull null
-        val xy = board.xy[i]
-        val d = Direction4.entries.find { board.getOrNull(xy + it.xy) == '.' } ?: return@mapNotNull null
-        val s = board[xy - d.xy]
-        val name = when (d) {
-            East, South -> "$s$c"
-            West, North -> "$c$s"
-        }
-        val out = board.getOrNull(xy - d.xy * 2) == null
-        i to Portal(name, out)
-    }.toMap()
+    init {
+        val rawBoard = lines.toBoard { it }
+        val portals = rawBoard.cells.indices.mapNotNull { i ->
+            val c = rawBoard.cells[i]
+            if (!c.isLetter()) return@mapNotNull null
+            val xy = rawBoard.xy[i]
+            val d = Direction4.entries.find { rawBoard.getOrNull(xy + it.xy) == '.' } ?: return@mapNotNull null
+            val s = rawBoard[xy - d.xy]
+            val name = when (d) {
+                East, South -> "$s$c"
+                West, North -> "$c$s"
+            }
+            val out = rawBoard.getOrNull(xy - d.xy * 2) == null
+            i to Portal(name, out)
+        }.toMap()
 
-    private val graph = Board(board.width, board.height, board.cells.mapIndexed { index, c ->
-        if (c == '.') Empty else portals[index] ?: Wall
-    }).toGraph(
+        board = Board(rawBoard.width, rawBoard.height, rawBoard.cells.mapIndexed { index, c ->
+            if (c == '.') Empty else portals[index] ?: Wall
+        })
+    }
+
+    private val graph: Map<Portal, Map<Portal, Int>> = board.toGraph(
         isStart = { this is Portal },
         isEnd = { this is Portal },
         isWall = { this is Wall },
     ) { (it.size - 1).coerceAtLeast(0) }
         .mapKeys { it.key as Portal }.mapValues { e -> e.value.mapKeys { it.key as Portal } }
 }
-
-

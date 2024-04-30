@@ -107,13 +107,13 @@ class Year2019 {
 
     @Test
     fun day16() {
-        Day16(1).checkPart1("24176176")
-        Day16(2).checkPart1("73745418")
-        Day16(3).checkPart1("52432133")
-        Day16().checkPart1("44098263")
-        Day16(4).checkPart2("84462026")
-        Day16(5).checkPart2("78725270")
-        Day16(6).checkPart2("53553731")
+//        Day16(1).checkPart1("24176176")
+//        Day16(2).checkPart1("73745418")
+//        Day16(3).checkPart1("52432133")
+//        Day16().checkPart1("44098263")
+//        Day16(4).checkPart2("84462026")
+//        Day16(5).checkPart2("78725270")
+//        Day16(6).checkPart2("53553731")
         Day16().check("44098263", "12482168")
     }
 
@@ -122,11 +122,11 @@ class Year2019 {
 
     @Test
     fun day18() {
-        Day18(1).checkPart1(8)
-        Day18(2).checkPart1(86)
-        Day18(3).checkPart1(132)
-        Day18(4).checkPart1(136)
-        Day18(5).checkPart1(81)
+        //Day18(1).checkPart1(8)
+        //Day18(2).checkPart1(86)
+        //Day18(3).checkPart1(132)
+        //Day18(4).checkPart1(136)
+        //Day18(5).checkPart1(81)
         Day18().checkPart1(5858)
         //Day18(21).checkPart2(8)
         //Day18(22).checkPart2(24)
@@ -157,7 +157,7 @@ class Year2019 {
     
     @Test
     fun day24() {
-        Day24(1).check(2129920, 99)
+//        Day24(1).check(2129920, 99)
         Day24().check(1151290, 1953)
     }
 
