@@ -23,6 +23,6 @@ class Day9(test: Int? = null) : Day(test) {
         }
         lengths = cities.toList().combinations().map {
             it.zipWithNext { a, b -> distances[a to b]!! }.sum()
-        }
+        }.toList()
     }
 }
