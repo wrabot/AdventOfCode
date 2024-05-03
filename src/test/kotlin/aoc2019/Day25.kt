@@ -45,7 +45,7 @@ class Day25(test: Int? = null) : Day(test) {
     }
 
     private fun Room.nextDirection() = directions.firstNotNullOfOrNull { if (it.value == null) it.key else null }
-    
+
     private fun Room.leave(direction: String): Room {
         items.filterNot { it in forbiddenItems }.forEach { runtime.write("take $it") }
         return room(runtime.write(direction)).also { directions.getOrPut(direction) { it.name } }

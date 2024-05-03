@@ -1,7 +1,6 @@
 package aoc2016
 
 import Day
-import tools.log
 import java.security.MessageDigest
 
 class Day5(test: Int? = null) : Day(test) {

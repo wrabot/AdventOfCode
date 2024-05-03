@@ -81,8 +81,8 @@ class Day17(test: Int? = null) : Day(test) {
         var todo = false
     }
 
-    private val map = lines.toBoard { 
-        Cell(it.toString().toInt(), Direction4.entries.associateWith { arrayOfNulls(10) }) 
+    private val map = lines.toBoard {
+        Cell(it.toString().toInt(), Direction4.entries.associateWith { arrayOfNulls(10) })
     }
     private val start = map.xy.first()
     private val end = map.xy.last()

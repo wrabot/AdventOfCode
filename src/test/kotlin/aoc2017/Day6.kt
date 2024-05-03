@@ -8,6 +8,7 @@ class Day6(test: Int? = null) : Day(test) {
     override fun solvePart2() = cache.lastIndex - cache.indexOf(cache.last())
 
     private val cache = mutableListOf(input.toWords().map { it.toInt() })
+
     init {
         var steps = 0
         val memory = cache.first().toIntArray()

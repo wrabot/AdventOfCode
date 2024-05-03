@@ -1,7 +1,6 @@
 package aoc2019
 
 import Day
-import tools.log
 
 class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1() = Day9.Runtime(code).run {

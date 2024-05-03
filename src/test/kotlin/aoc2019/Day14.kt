@@ -1,7 +1,6 @@
 package aoc2019
 
 import Day
-import tools.log
 
 class Day14(test: Int? = null) : Day(test) {
     override fun solvePart1(): Long {

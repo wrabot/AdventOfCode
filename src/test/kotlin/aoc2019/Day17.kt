@@ -3,7 +3,6 @@ package aoc2019
 import Day
 import tools.board.Direction4
 import tools.board.toBoard
-import tools.log
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = board.xy.filter { xy ->

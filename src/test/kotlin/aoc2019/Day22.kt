@@ -9,7 +9,7 @@ import java.math.BigInteger.ZERO
 
 class Day22(var test: Int? = null) : Day(test) {
     override fun solvePart1() = techniques.fold(2019) { acc, technique -> technique.move(acc, 10007) }
-    
+
     override fun solvePart2(): Long {
         val size = 119315717514047.bi
         val reduceTechniques = techniques.foldRight(ONE to ZERO) { technique, acc -> technique.reduce(acc, size) }

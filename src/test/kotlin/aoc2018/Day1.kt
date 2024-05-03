@@ -4,7 +4,7 @@ import Day
 
 class Day1(test: Int? = null) : Day(test) {
     override fun solvePart1() = values.sum()
-    
+
     val cache = mutableSetOf(0)
     override fun solvePart2(): Int {
         var current = 0

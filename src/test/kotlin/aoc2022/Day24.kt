@@ -54,7 +54,11 @@ class Day24(test: Int? = null) : Day(test) {
 
     private fun modulo(value: Int, size: Int) = (size + value - 3) % (size - 2) + 1
 
-    private data class Cell(val content: Char, val winds: List<Direction4> = emptyList(), var expedition: Boolean = false) {
+    private data class Cell(
+        val content: Char,
+        val winds: List<Direction4> = emptyList(),
+        var expedition: Boolean = false
+    ) {
         fun isEmpty() = content != '#' && winds.isEmpty()
 
         override fun toString() = when {

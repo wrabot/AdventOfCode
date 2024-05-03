@@ -97,8 +97,8 @@ class Year2016 {
     @Test
     fun day18() {
         //Day18(1).checkPart1(38)
-        Day18().check(1951, 20002936)  
-    } 
+        Day18().check(1951, 20002936)
+    }
 
     @Test
     fun day19() = Day19().check(1830117, 1417887)

@@ -27,6 +27,6 @@ class Day19(test: Int? = null) : Day(test) {
         val b = 10551383
         return (1..b).sumOf { if (b % it == 0) it else 0 }
     }
-    
+
     private val wristDevice = WristDevice(input)
 }

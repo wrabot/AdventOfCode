@@ -15,7 +15,7 @@ class Day24(test: Int? = null) : Day(test) {
         isEnd = Char::isDigit,
         isWall = { this == '#' }
     ) { it.size }
-    
+
     private fun solve(size: Int) = shortPath(
         start = "0",
         isEnd = { it.length == size },

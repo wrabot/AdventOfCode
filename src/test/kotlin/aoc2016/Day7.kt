@@ -1,7 +1,6 @@
 package aoc2016
 
 import Day
-import tools.log
 
 class Day7(test: Int? = null) : Day(test) {
     override fun solvePart1() = lines.count {

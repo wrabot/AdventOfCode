@@ -11,7 +11,7 @@ class Day13(test: Int? = null) : Day(test) {
         while (cycles.any { (it.key + delay) % it.value == 0 }) delay++
         return delay
     }
-    
+
     private val scanners = lines.associate { line ->
         val (k, v) = line.split(": ")
         k.toInt() to v.toInt()

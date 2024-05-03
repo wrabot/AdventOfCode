@@ -2,7 +2,6 @@ package aoc2017
 
 import Day
 import tools.geometry.toPoint
-import tools.log
 import tools.match
 
 class Day20(test: Int? = null) : Day(test) {
@@ -16,7 +15,7 @@ class Day20(test: Int? = null) : Day(test) {
         val a = particles.map { it[2] }
         repeat(100) { _ ->
             i = i.filterNot { collide[it] }
-            i.forEach { 
+            i.forEach {
                 v[it] += a[it]
                 p[it] += v[it]
             }
@@ -24,7 +23,7 @@ class Day20(test: Int? = null) : Day(test) {
                 i.drop(index + 1).forEach { i2 ->
                     if (p[i1] == p[i2]) {
                         collide[i1] = true
-                        collide[i2] = true                        
+                        collide[i2] = true
                     }
                 }
             }

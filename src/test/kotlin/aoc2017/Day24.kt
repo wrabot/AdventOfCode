@@ -10,7 +10,7 @@ class Day24(test: Int? = null) : Day(test) {
             strongest(components - setOf(it), (it - current).single(), strength + it.sum())
         } ?: strength
 
-    
+
     // strength < 10000
     override fun solvePart2() = longest(components, 0, 0, 0) % maxStrength
 

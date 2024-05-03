@@ -3,7 +3,6 @@ package aoc2019
 import Day
 import tools.board.Board
 import tools.board.toBoard
-import tools.log
 
 class Day24(var test: Int? = null) : Day(test) {
     override fun solvePart1(): Long {
@@ -38,7 +37,7 @@ class Day24(var test: Int? = null) : Day(test) {
     }
 
     private val grid = lines.toBoard { it }
-    
+
     // part 2
 
     private fun Array<Board<Char>>.next() = Array(size) { level ->

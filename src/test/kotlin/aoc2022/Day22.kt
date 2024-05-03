@@ -83,7 +83,7 @@ class Day22(test: Int? = null) : Day(test) {
             }
             state = State(state.position, state.direction.turn(move.second))
         }
-        return (state.position.y + 1) * 1000 + 4 * (state.position.x + 1) + when(state.direction) {
+        return (state.position.y + 1) * 1000 + 4 * (state.position.x + 1) + when (state.direction) {
             East -> 0
             North -> 3
             West -> 2

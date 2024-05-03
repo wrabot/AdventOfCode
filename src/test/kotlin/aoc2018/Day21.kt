@@ -5,7 +5,7 @@ import Day
 class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1() = cache.first()
     override fun solvePart2() = cache.last()
-    
+
     private val cache = mutableListOf<Int>()
 
     init {

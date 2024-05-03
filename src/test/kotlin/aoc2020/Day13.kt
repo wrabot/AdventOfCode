@@ -3,7 +3,6 @@ package aoc2020
 import Day
 import tools.math.Modular
 import tools.math.bi
-import java.math.BigInteger
 
 class Day13(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {

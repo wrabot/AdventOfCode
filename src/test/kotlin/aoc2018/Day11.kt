@@ -2,7 +2,6 @@ package aoc2018
 
 import Day
 import tools.board.Board
-import tools.log
 
 class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = power3.xy.maxBy { power3[it] }.run { "$x,$y" }

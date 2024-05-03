@@ -4,7 +4,6 @@ import Day
 import tools.board.Board.XY
 import tools.board.Direction4
 import tools.board.Direction8
-import tools.log
 import kotlin.math.sqrt
 
 class Day3(test: Int? = null) : Day(test) {
