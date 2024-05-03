@@ -3,9 +3,9 @@ package aoc2023
 import Day
 import tools.geometry.Block
 import tools.geometry.Point
-import tools.hasIntersection
-import tools.intRange
-import tools.move
+import tools.range.hasIntersection
+import tools.range.intRange
+import tools.range.move
 
 class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() = cubes.count { cube ->

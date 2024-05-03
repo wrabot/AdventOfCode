@@ -2,8 +2,8 @@ package aoc2022
 
 import Day
 import tools.geometry.Point
-import tools.intRange
-import tools.contains
+import tools.range.contains
+import tools.range.intRange
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = faces.size

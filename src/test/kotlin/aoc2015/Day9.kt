@@ -1,7 +1,7 @@
 package aoc2015
 
 import Day
-import tools.combinations
+import tools.sequence.combinations
 
 class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = lengths.minOrNull()!!

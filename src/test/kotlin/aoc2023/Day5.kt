@@ -1,7 +1,7 @@
 package aoc2023
 
 import Day
-import tools.splitWith
+import tools.range.splitWith
 
 class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1() = seeds.minOfOrNull { seed ->

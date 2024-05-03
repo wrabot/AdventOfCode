@@ -4,12 +4,12 @@ import Day
 
 
 import tools.match
-import tools.size
+import tools.range.size
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 class Day4(test: Int? = null) : Day(test) {
-    override fun solvePart1() = guards.maxBy { it.value.sumOf(IntRange::size) }.run { key * value.maxMinute()!!.first  }
+    override fun solvePart1() = guards.maxBy { it.value.sumOf(IntRange::size) }.run { key * value.maxMinute()!!.first }
 
     override fun solvePart2() =
         guards.mapValues { it.value.maxMinute() }.maxBy { it.value?.second ?: 0 }.run { key * value!!.first }

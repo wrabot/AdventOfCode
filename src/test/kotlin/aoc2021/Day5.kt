@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 import tools.geometry.Point
-import tools.rangeMinMax
+import tools.range.rangeMinMax
 
 class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {

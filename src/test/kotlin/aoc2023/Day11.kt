@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.rangeMinMax
+import tools.range.rangeMinMax
 
 class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(2)

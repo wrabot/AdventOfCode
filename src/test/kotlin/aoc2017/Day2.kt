@@ -1,7 +1,7 @@
 package aoc2017
 
 import Day
-import tools.select
+import tools.sequence.select
 import tools.toWords
 
 class Day2(test: Int? = null) : Day(test) {

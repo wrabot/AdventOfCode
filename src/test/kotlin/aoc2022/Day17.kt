@@ -6,7 +6,7 @@ import kotlin.math.max
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = Board().solve(2022)
-    override fun solvePart2() : Long = Board().run {
+    override fun solvePart2(): Long = Board().run {
         solve(0)
         val rocks = 1000000000000 - rockIndex
         with(params!!) { (rocks / rockStep) * sizeStep + solve(rockIndex + (rocks % rockStep).toInt()) }

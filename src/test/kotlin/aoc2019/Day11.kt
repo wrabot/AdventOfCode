@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Board.XY
 import tools.board.Direction4.North
-import tools.size
+import tools.range.size
 
 class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = mutableMapOf<XY, Long>().apply { solve(this) }.size

@@ -1,7 +1,7 @@
 package aoc2023
 
 import Day
-import tools.size
+import tools.range.size
 
 class Day19(test: Int? = null) : Day(test) {
     override fun solvePart1() = parts.sumOf { it.countPart1("in") }

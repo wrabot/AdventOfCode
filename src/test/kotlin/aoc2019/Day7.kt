@@ -1,7 +1,7 @@
 package aoc2019
 
 import Day
-import tools.combinations
+import tools.sequence.combinations
 
 class Day7(test: Int? = null) : Day(test) {
     override fun solvePart1() = (0..4).toList().combinations().maxOf { phases ->

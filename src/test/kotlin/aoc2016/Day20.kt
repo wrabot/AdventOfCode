@@ -1,7 +1,7 @@
 package aoc2016
 
 import Day
-import tools.merge
+import tools.range.merge
 
 class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1() = blacklist.first().last + 1

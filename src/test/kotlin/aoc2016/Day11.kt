@@ -2,7 +2,7 @@ package aoc2016
 
 import Day
 import tools.graph.shortPath
-import tools.subLists
+import tools.sequence.select
 
 class Day11(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(startPart1)
@@ -35,8 +35,8 @@ class Day11(test: Int? = null) : Day(test) {
 
         private data class Move(val device: Device, val isMicrochip: Boolean?) // null means both
 
-        private fun List<Move>.oneOrTwo() =
-            subLists().filter { it.size in 1..2 }.map { it.first() to it.getOrNull(1) }
+        private fun List<Move>.oneOrTwo() = map { it to null } + 
+                if (size > 1) select(2).map { it.first() to it.last() } else emptySequence() 
 
         private fun move(move: Pair<Move, Move?>, floor: Int) =
             move.second.move(move.first.move(devices, floor), floor).sortedBy { it.microchip }.sortedBy { it.generator }
