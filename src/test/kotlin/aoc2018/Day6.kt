@@ -2,7 +2,7 @@ package aoc2018
 
 import Day
 import tools.board.Board
-import tools.board.Board.XY
+import tools.board.XY
 import tools.board.toXY
 
 class Day6(test: Int? = null) : Day(test) {

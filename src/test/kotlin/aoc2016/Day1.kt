@@ -1,17 +1,17 @@
 package aoc2016
 
 import Day
-import tools.board.Board
 import tools.board.Direction4
+import tools.board.XY
 
 class Day1(test: Int? = null) : Day(test) {
-    override fun solvePart1() = instructions.fold(Board.XY(0, 0) to Direction4.North) { (xy, dir), (turn, blocks) ->
+    override fun solvePart1() = instructions.fold(XY(0, 0) to Direction4.North) { (xy, dir), (turn, blocks) ->
         dir.turn(turn).let { xy + it.xy * blocks to it }
     }.first.manhattan()
 
     override fun solvePart2(): Int {
-        val set = mutableSetOf<Board.XY>()
-        var position = Board.XY(0, 0)
+        val set = mutableSetOf<XY>()
+        var position = XY(0, 0)
         var direction = Direction4.North
         instructions.forEach { (turn, blocks) ->
             direction = direction.turn(turn)

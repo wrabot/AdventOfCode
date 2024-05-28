@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.XY
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()
@@ -11,7 +12,7 @@ class Day18(test: Int? = null) : Day(test) {
     override fun solvePart2() = instructionsPart2.solve()
 
     private fun List<Instruction>.solve(): Long {
-        val xyList = runningFold(Board.XY(0, 0)) { acc, instruction ->
+        val xyList = runningFold(XY(0, 0)) { acc, instruction ->
             acc + instruction.direction.xy * instruction.length
         }
         val columns = xyList.map { it.x }.sorted().distinct()
@@ -19,10 +20,10 @@ class Day18(test: Int? = null) : Day(test) {
         val width = columns.size * 2 - 1
         val height = rows.size * 2 - 1
         val map = Board(width, height, List(width * height) { Cell('.') })
-        val origin = Board.XY(2 * columns.indexOf(0), 2 * rows.indexOf(0))
+        val origin = XY(2 * columns.indexOf(0), 2 * rows.indexOf(0))
 
         map.xy.forEach { xy ->
-            map[xy].size = Board.XY(
+            map[xy].size = XY(
                 if (xy.x % 2 == 0) 1 else columns[xy.x / 2 + 1] - columns[xy.x / 2] - 1,
                 if (xy.y % 2 == 0) 1 else rows[xy.y / 2 + 1] - rows[xy.y / 2] - 1
             )
@@ -43,13 +44,13 @@ class Day18(test: Int? = null) : Day(test) {
             }
         }
 
-        return (map.zone4(origin + Board.XY(1, 1)) { map[it].c == '.' } + map.xy.filter { map[it].c == '#' }).sumOf {
+        return (map.zone4(origin + XY(1, 1)) { map[it].c == '.' } + map.xy.filter { map[it].c == '#' }).sumOf {
             map[it].size.run { x.toLong() * y }
         }
     }
 
     private data class Cell(var c: Char) {
-        var size: Board.XY = Board.XY(1, 1)
+        var size: XY = XY(1, 1)
         override fun toString() = c.toString()
     }
 

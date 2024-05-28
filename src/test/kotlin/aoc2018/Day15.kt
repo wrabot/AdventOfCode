@@ -1,7 +1,7 @@
 package aoc2018
 
 import Day
-import tools.board.Board.XY
+import tools.board.XY
 import tools.board.toBoard
 import tools.graph.shortPath
 

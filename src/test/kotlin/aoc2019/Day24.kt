@@ -2,6 +2,7 @@ package aoc2019
 
 import Day
 import tools.board.Board
+import tools.board.XY
 import tools.board.toBoard
 
 class Day24(var test: Int? = null) : Day(test) {
@@ -65,7 +66,7 @@ class Day24(var test: Int? = null) : Day(test) {
         return neighbors.count { cells[it] == '#' }
     }
 
-    private fun indexOf(x: Int, y: Int) = grid.indexOf(Board.XY(x, y))
+    private fun indexOf(x: Int, y: Int) = grid.indexOf(XY(x, y))
     private fun List<Char>.countCell() = count { it == '#' }
 
     private val center = indexOf(2, 2)

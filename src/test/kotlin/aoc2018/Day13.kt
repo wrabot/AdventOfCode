@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.XY
 import tools.board.toBoard
 
 class Day13(test: Int? = null) : Day(test) {
@@ -23,7 +24,7 @@ class Day13(test: Int? = null) : Day(test) {
         return carts.single().toResult()
     }
 
-    private data class Cart(var xy: Board.XY, var direction: Direction4) {
+    private data class Cart(var xy: XY, var direction: Direction4) {
         private var turn: Int = 0
 
         fun moveOn(tracks: Board<Char>) {

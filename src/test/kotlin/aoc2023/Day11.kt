@@ -2,6 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
+import tools.board.XY
 import tools.range.rangeMinMax
 
 class Day11(test: Int? = null) : Day(test) {
@@ -15,7 +16,7 @@ class Day11(test: Int? = null) : Day(test) {
         }
     } / 2
 
-    fun distance(a: Board.XY, b: Board.XY, factor: Long) =
+    fun distance(a: XY, b: XY, factor: Long) =
         (a - b).manhattan() + (factor - 1) * (emptyColumn.emptyCount(a.x, b.x) + emptyRows.emptyCount(a.y, b.y))
 
     private fun List<Int>.emptyCount(a: Int, b: Int) = count { it in rangeMinMax(a, b) }

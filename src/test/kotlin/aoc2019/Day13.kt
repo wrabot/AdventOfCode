@@ -1,7 +1,7 @@
 package aoc2019
 
 import Day
-import tools.board.Board.XY
+import tools.board.XY
 import kotlin.math.sign
 
 class Day13(test: Int? = null) : Day(test) {

@@ -3,6 +3,7 @@ package aoc2020
 import Day
 import tools.board.Board
 import tools.board.Direction8
+import tools.board.XY
 import tools.board.toBoard
 
 class Day11(test: Int? = null) : Day(test) {
@@ -23,7 +24,7 @@ class Day11(test: Int? = null) : Day(test) {
 
     private data class Seat(var current: Char, var next: Char = current)
 
-    private fun count(min: Int, occupied: Board<Seat>.(Board.XY, Direction8) -> Boolean): Int {
+    private fun count(min: Int, occupied: Board<Seat>.(XY, Direction8) -> Boolean): Int {
         val plane = lines.toBoard(::Seat)
         while (true) {
             var modified = false

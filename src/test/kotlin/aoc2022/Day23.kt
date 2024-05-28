@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction8
 import tools.board.Direction8.*
+import tools.board.XY
 
 class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -52,7 +53,7 @@ class Day23(test: Int? = null) : Day(test) {
         return true
     }
 
-    private fun Board<Cell>.areFree(origin: Board.XY, directions: List<Direction8>) =
+    private fun Board<Cell>.areFree(origin: XY, directions: List<Direction8>) =
         directions.all { this[origin + it.xy].isFree() }
 
 

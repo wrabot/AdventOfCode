@@ -2,6 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
+import tools.board.XY
 import tools.math.PolynomialInterpolation
 
 class Day21(test: Int? = null) : Day(test) {
@@ -28,11 +29,11 @@ class Day21(test: Int? = null) : Day(test) {
         return PolynomialInterpolation(periodicValues)((target / size - periodicValuesSize + 1).toDouble()).toLong()
     }
 
-    fun Set<Board.XY>.next() = flatMap { tile ->
+    fun Set<XY>.next() = flatMap { tile ->
         Board.xy4dir.map { tile + it }.filter { garden[it.mod()].c != '#' }
     }.toSet()
 
-    private fun Board.XY.mod() = Board.XY(x.mod(garden.width), y.mod(garden.height))
+    private fun XY.mod() = XY(x.mod(garden.width), y.mod(garden.height))
 
     private data class Cell(val c: Char) {
         var step = false

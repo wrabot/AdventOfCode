@@ -5,6 +5,7 @@ import aoc2023.Day10.Type.*
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.XY
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -37,7 +38,7 @@ class Day10(test: Int? = null) : Day(test) {
             .first { zone -> zone.all { it.notOnBorder() } }.count()
     }
 
-    private fun setZone(origin: Board.XY, direction: Direction4, rightSide: Boolean) {
+    private fun setZone(origin: XY, direction: Direction4, rightSide: Boolean) {
         val point = origin + (if (rightSide) direction.right else direction.left).xy
         val tile = board.getOrNull(point) ?: return
         if (tile.distance != null || tile.rightSide == rightSide) return
@@ -45,11 +46,11 @@ class Day10(test: Int? = null) : Day(test) {
             .forEach { board[it].rightSide = rightSide }
     }
 
-    private fun Board.XY.notOnBorder() = x in 1..<board.width - 1 && y in 1..<board.height - 1
+    private fun XY.notOnBorder() = x in 1..<board.width - 1 && y in 1..<board.height - 1
 
     // common
 
-    private fun nextPipe(origin: Board.XY, direction: Direction4): Pipe? {
+    private fun nextPipe(origin: XY, direction: Direction4): Pipe? {
         val destination = origin + direction.xy
         val destinationTile = board.getOrNull(destination) ?: return null
         val newDirection = when (destinationTile.type) {
@@ -92,7 +93,7 @@ class Day10(test: Int? = null) : Day(test) {
         return newDirection?.let { Pipe(destination, it, direction) }
     }
 
-    private data class Pipe(val origin: Board.XY, val direction: Direction4, val previousDirection: Direction4)
+    private data class Pipe(val origin: XY, val direction: Direction4, val previousDirection: Direction4)
 
     // Parse input
 

@@ -1,7 +1,7 @@
 package aoc2019
 
 import Day
-import tools.board.Board.XY
+import tools.board.XY
 import tools.board.Direction4
 import tools.board.Direction4.*
 

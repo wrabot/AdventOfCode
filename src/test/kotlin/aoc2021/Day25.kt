@@ -2,6 +2,7 @@ package aoc2021
 
 import Day
 import tools.board.Board
+import tools.board.XY
 import tools.board.toBoard
 
 class Day25(test: Int? = null) : Day(test) {
@@ -24,7 +25,7 @@ class Day25(test: Int? = null) : Day(test) {
 
     private fun Board<Cell>.move(c: Char, dx: Int, dy: Int): Boolean {
         val moves = xy.filter { this[it].content == c }.mapNotNull {
-            val next = Board.XY((it.x + dx) % width, (it.y + dy) % height)
+            val next = XY((it.x + dx) % width, (it.y + dy) % height)
             if (this[next].content == '.') it to next else null
         }
         moves.forEach {

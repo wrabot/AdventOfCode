@@ -3,11 +3,12 @@ package aoc2023
 import Day
 import tools.board.Board
 import tools.board.Direction4
+import tools.board.XY
 
 class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1() = findPathMaxSizePart1()
 
-    private fun findPathMaxSizePart1(path: List<Board.XY> = listOf(start)): Int {
+    private fun findPathMaxSizePart1(path: List<XY> = listOf(start)): Int {
         val last = path.last()
         if (last == end) return path.size - 1
         return Direction4.entries.maxOf {
@@ -21,7 +22,7 @@ class Day23(test: Int? = null) : Day(test) {
 
     override fun solvePart2() = reducedMap().findPathMaxSizePart2(listOf(start), 0)
 
-    private fun Board.XY.neighbors() = map.neighbors4(this).filter { map[it] != '#' }
+    private fun XY.neighbors() = map.neighbors4(this).filter { map[it] != '#' }
 
     private fun reducedMap() = map.xy.filter { map[it] != '#' }.flatMap { intersection ->
         intersection.neighbors().takeIf { it.size != 2 }.orEmpty().map { first ->
@@ -31,7 +32,7 @@ class Day23(test: Int? = null) : Day(test) {
         }
     }.groupBy({ it.first().second }, { Pair(it.last().first, it.count()) })
 
-    private fun Map<Board.XY, List<Pair<Board.XY, Int>>>.findPathMaxSizePart2(path: List<Board.XY>, size: Int): Int =
+    private fun Map<XY, List<Pair<XY, Int>>>.findPathMaxSizePart2(path: List<XY>, size: Int): Int =
         if (path.last() == end) size else getValue(path.last()).filter { it.first !in path }
             .maxOfOrNull { findPathMaxSizePart2(path + it.first, size + it.second) } ?: 0
 

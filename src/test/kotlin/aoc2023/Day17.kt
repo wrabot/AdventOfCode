@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.XY
 import tools.board.toBoard
 
 class Day17(test: Int? = null) : Day(test) {
@@ -12,7 +13,7 @@ class Day17(test: Int? = null) : Day(test) {
 
     private fun findCost(min: Int, max: Int): Int {
         map.cells.forEach { it.clear() }
-        val todo = mutableListOf<Board.XY>()
+        val todo = mutableListOf<XY>()
         Direction4.entries.forEach {
             val next = start + it.xy
             val cell = map.getOrNull(next)

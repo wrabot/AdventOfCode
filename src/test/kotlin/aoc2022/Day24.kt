@@ -3,6 +3,7 @@ package aoc2022
 import Day
 import tools.board.Board
 import tools.board.Direction4
+import tools.board.XY
 import tools.board.toBoard
 import tools.graph.shortPath
 
@@ -10,7 +11,7 @@ class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1() = solve(0, entrance, exit)
     override fun solvePart2() = solve(solve(solve(0, entrance, exit), exit, entrance), entrance, exit)
 
-    private fun solve(initialTime: Int, start: Board.XY, end: Board.XY) =
+    private fun solve(initialTime: Int, start: XY, end: XY) =
         shortPath(State(start, initialTime % boards.size), isEnd = { it.expedition == end }) {
             it.nextStates()
         }.size - 1 + initialTime
@@ -23,11 +24,11 @@ class Day24(test: Int? = null) : Day(test) {
         }
     }
 
-    private data class State(val expedition: Board.XY, val boardIndex: Int)
+    private data class State(val expedition: XY, val boardIndex: Int)
 
     private val boards = mutableListOf<Board<Cell>>()
-    private val entrance = Board.XY(1, 0)
-    private val exit: Board.XY
+    private val entrance = XY(1, 0)
+    private val exit: XY
 
     init {
         var board = createBoard()
@@ -35,7 +36,7 @@ class Day24(test: Int? = null) : Day(test) {
             boards.add(board)
             board = board.nextBoard()
         } while (board.cells != boards.first().cells)
-        exit = Board.XY(board.width - 2, board.height - 1)
+        exit = XY(board.width - 2, board.height - 1)
     }
 
     private fun createBoard() = lines.toBoard { c ->
@@ -46,7 +47,7 @@ class Day24(test: Int? = null) : Day(test) {
     private fun Board<Cell>.nextBoard(): Board<Cell> {
         val nextWinds = xy.flatMap { xy ->
             this[xy].winds.map {
-                it to Board.XY(modulo(xy.x + it.xy.x, width), modulo(xy.y + it.xy.y, height))
+                it to XY(modulo(xy.x + it.xy.x, width), modulo(xy.y + it.xy.y, height))
             }
         }.groupBy({ it.second }, { it.first })
         return Board(width, height, xy.map { Cell(this[it].content, nextWinds[it].orEmpty()) })

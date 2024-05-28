@@ -4,6 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
+import tools.board.XY
 import kotlin.math.max
 
 class Day16(test: Int? = null) : Day(test) {
@@ -16,7 +17,7 @@ class Day16(test: Int? = null) : Day(test) {
 
     private fun countBeams(x: Int, y: Int, direction: Direction4): Int {
         map.cells.forEach { it.incomingBeams.clear() }
-        val todo = mutableListOf(Beam(Board.XY(x, y), direction))
+        val todo = mutableListOf(Beam(XY(x, y), direction))
         while (true) {
             val beam = todo.removeFirstOrNull() ?: break
             val cell = map.getOrNull(beam.point) ?: continue
@@ -29,7 +30,7 @@ class Day16(test: Int? = null) : Day(test) {
         return map.cells.count { it.incomingBeams.isNotEmpty() }
     }
 
-    private data class Beam(val point: Board.XY, val direction: Direction4)
+    private data class Beam(val point: XY, val direction: Direction4)
 
     private data class Cell(val c: Char) {
         val incomingBeams = mutableSetOf<Direction4>()

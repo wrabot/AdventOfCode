@@ -3,6 +3,7 @@ package aoc2017
 import Day
 import tools.board.Board
 import tools.board.Direction4
+import tools.board.XY
 import tools.board.toBoard
 
 class Day22(test: Int? = null) : Day(test) {
@@ -12,7 +13,7 @@ class Day22(test: Int? = null) : Day(test) {
 
     private fun Board<Cell>.solve(repeat: Int, stateInc: Int): Int {
         var count = 0
-        var position = Board.XY(width / 2, height / 2)
+        var position = XY(width / 2, height / 2)
         var direction = Direction4.North
         repeat(repeat) {
             val state = this[position].state
