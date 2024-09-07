@@ -14,32 +14,35 @@ class Day20(test: Int? = null) : Day(test) {
         input.drop(1).dropLast(1).parse()
     }
 
-    private fun String.parse(offset: Int = 0, last: XY = XY(0, 0)): Pair<Set<XY>, Int> {
-        return when (val c = getOrNull(offset) ?: return Pair(setOf(last), offset)) {
-            '(' -> {
-                var i = offset + 1
-                val set = mutableSetOf<XY>()
-                do {
-                    val (l, n) = parse(i, last)
-                    set.addAll(l)
-                    i = n + 1
-                } while (get(n) == '|')
-                set.map { parse(i, it) }.run { flatMap { it.first }.toSet() to map { it.second }.distinct().single() }
-            }
-
-            '|', ')' -> return setOf(last) to offset
-            else -> last.move(c).let {
-                distances.putIfAbsent(it, distances[last]!! + 1)
-                parse(offset + 1, it)
-            }
-        }
+    private fun String.parse(offset: Int = 0, current: XY = XY(0, 0)): Pair<Set<XY>, Int> {
+        val (xy, start) = parseDirections(current, offset)
+        if (getOrNull(start) != '(') return Pair(setOf(xy), start)
+        val set = mutableSetOf<XY>()
+        var i = start + 1
+        do {
+            val (list, next) = parse(i, xy)
+            set.addAll(list)
+            val c = get(next)
+            i = next + 1
+        } while (c != ')')
+        return set.map { parse(i, it) }.run { flatMap { it.first }.toSet() to map { it.second }.distinct().single() }
     }
 
-    private fun XY.move(c: Char) = this + when (c) {
+    private fun String.parseDirections(current: XY, offset: Int): Pair<XY, Int> {
+        var xy = current
+        for (i in offset until length) {
+            val next = xy.move(get(i)) ?: return xy to i
+            distances.putIfAbsent(next, distances[xy]!! + 1)
+            xy = next
+        }
+        return xy to length
+    }
+
+    private fun XY.move(c: Char) = when (c) {
         'N' -> Direction4.North.xy
         'S' -> Direction4.South.xy
         'W' -> Direction4.West.xy
         'E' -> Direction4.East.xy
-        else -> error("!!!")
-    }
+        else -> null
+    }?.let { this + it }
 }
