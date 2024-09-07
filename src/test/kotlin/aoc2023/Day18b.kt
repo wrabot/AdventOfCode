@@ -3,7 +3,7 @@ package aoc2023
 import Day
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.geometry.Point
+import tools.Point
 import tools.geometry.Polygon
 
 class Day18b(test: Int? = null) : Day(test) {

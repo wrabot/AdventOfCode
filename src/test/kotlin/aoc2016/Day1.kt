@@ -1,8 +1,8 @@
 package aoc2016
 
 import Day
+import tools.XY
 import tools.board.Direction4
-import tools.board.XY
 
 class Day1(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructions.fold(XY(0, 0) to Direction4.North) { (xy, dir), (turn, blocks) ->

@@ -3,7 +3,7 @@ package aoc2022
 import Day
 import tools.board.Board
 import tools.board.Direction8.*
-import tools.board.XY
+import tools.XY
 import kotlin.math.max
 import kotlin.math.min
 

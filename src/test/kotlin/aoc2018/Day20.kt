@@ -1,7 +1,7 @@
 package aoc2018
 
 import Day
-import tools.board.XY
+import tools.XY
 import tools.board.Direction4
 
 class Day20(test: Int? = null) : Day(test) {

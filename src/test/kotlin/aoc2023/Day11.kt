@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 import tools.board.Board
-import tools.board.XY
+import tools.XY
 import tools.range.rangeMinMax
 
 class Day11(test: Int? = null) : Day(test) {

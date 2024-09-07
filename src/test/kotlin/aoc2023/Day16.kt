@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.board.XY
+import tools.XY
 import kotlin.math.max
 
 class Day16(test: Int? = null) : Day(test) {

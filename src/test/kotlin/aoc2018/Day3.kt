@@ -2,7 +2,7 @@ package aoc2018
 
 import Day
 import tools.board.Board
-import tools.board.XY
+import tools.XY
 import tools.match
 
 class Day3(test: Int? = null) : Day(test) {

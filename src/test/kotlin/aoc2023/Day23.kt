@@ -3,7 +3,7 @@ package aoc2023
 import Day
 import tools.board.Board
 import tools.board.Direction4
-import tools.board.XY
+import tools.XY
 
 class Day23(test: Int? = null) : Day(test) {
     override fun solvePart1() = findPathMaxSizePart1()

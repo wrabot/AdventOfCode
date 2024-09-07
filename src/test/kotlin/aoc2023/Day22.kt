@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 import tools.geometry.Block
-import tools.geometry.Point
+import tools.Point
 import tools.range.hasIntersection
 import tools.range.intRange
 import tools.range.move

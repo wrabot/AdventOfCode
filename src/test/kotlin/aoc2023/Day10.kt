@@ -5,7 +5,7 @@ import aoc2023.Day10.Type.*
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.board.XY
+import tools.XY
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {

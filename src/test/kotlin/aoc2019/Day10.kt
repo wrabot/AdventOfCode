@@ -1,7 +1,7 @@
 package aoc2019
 
 import Day
-import tools.geometry.Point
+import tools.Point
 import kotlin.math.atan2
 
 class Day10(test: Int? = null) : Day(test) {

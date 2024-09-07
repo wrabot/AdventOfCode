@@ -2,7 +2,7 @@ package aoc2023
 
 import Day
 import tools.geometry.Line
-import tools.geometry.Point
+import tools.Point
 import tools.math.gcd
 import kotlin.math.abs
 

@@ -2,7 +2,7 @@ package aoc2016
 
 import Day
 import tools.board.Board
-import tools.board.XY
+import tools.XY
 import tools.log
 import tools.match
 

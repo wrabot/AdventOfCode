@@ -1,7 +1,7 @@
 package aoc2018
 
 import Day
-import tools.geometry.Point
+import tools.Point
 import tools.match
 import kotlin.math.round
 

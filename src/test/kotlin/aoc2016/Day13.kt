@@ -1,7 +1,7 @@
 package aoc2016
 
 import Day
-import tools.board.XY
+import tools.XY
 import tools.board.Direction4
 import tools.graph.shortPath
 import java.math.BigInteger

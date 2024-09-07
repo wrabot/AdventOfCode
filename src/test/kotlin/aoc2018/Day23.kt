@@ -1,8 +1,8 @@
 package aoc2018
 
 import Day
-import tools.geometry.Point
-import tools.geometry.toPoint
+import tools.Point
+import tools.toPoint
 import tools.match
 
 

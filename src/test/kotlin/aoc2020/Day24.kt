@@ -1,7 +1,7 @@
 package aoc2020
 
 import Day
-import tools.geometry.Point
+import tools.Point
 
 class Day24(test: Int? = null) : Day(test) {
     override fun solvePart1(): Any {

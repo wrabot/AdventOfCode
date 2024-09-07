@@ -1,11 +1,11 @@
 package aoc2018
 
 import Day
-import tools.board.XY
+import tools.XY
 import tools.board.Direction4
-import tools.board.toXY
 import tools.graph.shortPath
 import tools.toWords
+import tools.toXY
 
 class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() = (0..target.x).sumOf { x -> (0..target.y).sumOf { y -> getType(x, y) } }

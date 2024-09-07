@@ -2,8 +2,8 @@ package aoc2019
 
 import Day
 import tools.geometry.Line
-import tools.geometry.Point
-import tools.geometry.toPoint
+import tools.Point
+import tools.toPoint
 import tools.match
 import tools.math.lcm
 import kotlin.math.sign

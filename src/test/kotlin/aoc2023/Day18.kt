@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.board.XY
+import tools.XY
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()

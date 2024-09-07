@@ -2,7 +2,7 @@ package aoc2022
 
 import Day
 import tools.board.Board
-import tools.board.XY
+import tools.XY
 
 class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = board.xy.count { xy ->

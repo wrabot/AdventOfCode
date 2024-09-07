@@ -1,7 +1,7 @@
 package aoc2021
 
 import Day
-import tools.geometry.Point
+import tools.Point
 import tools.range.rangeMinMax
 
 class Day5(test: Int? = null) : Day(test) {

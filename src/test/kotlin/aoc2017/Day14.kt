@@ -2,7 +2,7 @@ package aoc2017
 
 import Day
 import tools.board.Board
-import tools.board.XY
+import tools.XY
 import java.math.BigInteger
 
 class Day14(test: Int? = null) : Day(test) {

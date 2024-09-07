@@ -2,7 +2,7 @@ package aoc2021
 
 import Day
 import tools.geometry.Block
-import tools.geometry.Point
+import tools.Point
 import tools.range.intRange
 
 class Day22(test: Int? = null) : Day(test) {

@@ -1,7 +1,7 @@
 package aoc2022
 
 import Day
-import tools.geometry.Point
+import tools.Point
 
 class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = mutableSetOf(Point.Zero).apply {

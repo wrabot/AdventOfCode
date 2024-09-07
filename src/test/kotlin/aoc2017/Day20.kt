@@ -1,8 +1,8 @@
 package aoc2017
 
 import Day
-import tools.geometry.toPoint
 import tools.match
+import tools.toPoint
 
 class Day20(test: Int? = null) : Day(test) {
     override fun solvePart1() = particles.withIndex().minBy { it.value.last().manhattan() }.index

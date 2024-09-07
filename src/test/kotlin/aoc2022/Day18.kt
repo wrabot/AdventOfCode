@@ -1,7 +1,7 @@
 package aoc2022
 
 import Day
-import tools.geometry.Point
+import tools.Point
 import tools.range.contains
 import tools.range.intRange
 
