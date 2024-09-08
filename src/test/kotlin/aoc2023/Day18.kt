@@ -1,10 +1,11 @@
 package aoc2023
 
 import Day
+import tools.XY
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.XY
+import tools.graph.zone
 
 class Day18(test: Int? = null) : Day(test) {
     override fun solvePart1() = instructionsPart1.solve()
@@ -43,10 +44,9 @@ class Day18(test: Int? = null) : Day(test) {
                 map[position].c = '#'
             }
         }
-
-        return (map.zone4(origin + XY(1, 1)) { map[it].c == '.' } + map.xy.filter { map[it].c == '#' }).sumOf {
-            map[it].size.run { x.toLong() * y }
-        }
+        val zone = zone(origin + XY(1, 1)) { xy -> map.neighbors4(xy).filter { map[it].c == '.' } } +
+                map.xy.filter { map[it].c == '#' }
+        return zone.sumOf { map[it].size.run { x.toLong() * y } }
     }
 
     private data class Cell(var c: Char) {

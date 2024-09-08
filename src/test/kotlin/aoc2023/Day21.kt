@@ -1,8 +1,8 @@
 package aoc2023
 
 import Day
-import tools.board.Board
 import tools.XY
+import tools.board.Board
 import tools.math.PolynomialInterpolation
 
 class Day21(test: Int? = null) : Day(test) {
@@ -30,7 +30,7 @@ class Day21(test: Int? = null) : Day(test) {
     }
 
     fun Set<XY>.next() = flatMap { tile ->
-        Board.xy4dir.map { tile + it }.filter { garden[it.mod()].c != '#' }
+        XY.xy4dir.map { tile + it }.filter { garden[it.mod()].c != '#' }
     }.toSet()
 
     private fun XY.mod() = XY(x.mod(garden.width), y.mod(garden.height))

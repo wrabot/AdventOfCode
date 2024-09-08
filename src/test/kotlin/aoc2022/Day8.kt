@@ -7,12 +7,12 @@ import tools.XY
 class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = board.xy.count { xy ->
         val height = board[xy]
-        Board.xy4dir.any { xy.isVisible(height, it) }
+        XY.xy4dir.any { xy.isVisible(height, it) }
     }
 
     override fun solvePart2() = board.xy.maxOf { point ->
         val height = board[point]
-        Board.xy4dir.map { point.score(height, it, 0) }.reduce { acc, b -> acc * b }
+        XY.xy4dir.map { point.score(height, it, 0) }.reduce { acc, b -> acc * b }
     }
 
     private fun XY.isVisible(height: Int, direction: XY): Boolean = (this + direction).let { next ->

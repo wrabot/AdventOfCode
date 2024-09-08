@@ -2,10 +2,11 @@ package aoc2023
 
 import Day
 import aoc2023.Day10.Type.*
+import tools.XY
 import tools.board.Board
 import tools.board.Direction4
 import tools.board.Direction4.*
-import tools.XY
+import tools.graph.zone
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
@@ -42,8 +43,9 @@ class Day10(test: Int? = null) : Day(test) {
         val point = origin + (if (rightSide) direction.right else direction.left).xy
         val tile = board.getOrNull(point) ?: return
         if (tile.distance != null || tile.rightSide == rightSide) return
-        board.zone4(point) { board[it].distance == null && tile.rightSide == null }
-            .forEach { board[it].rightSide = rightSide }
+        zone(point) { xy -> 
+            board.neighbors4(xy).filter { board[it].distance == null }
+        }.forEach { board[it].rightSide = rightSide }
     }
 
     private fun XY.notOnBorder() = x in 1..<board.width - 1 && y in 1..<board.height - 1
