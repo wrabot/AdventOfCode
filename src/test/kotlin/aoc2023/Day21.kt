@@ -30,7 +30,7 @@ class Day21(test: Int? = null) : Day(test) {
     }
 
     fun Set<XY>.next() = flatMap { tile ->
-        XY.xy4dir.map { tile + it }.filter { garden[it.mod()].c != '#' }
+        tile.neighbors4().filter { garden[it.mod()].c != '#' }
     }.toSet()
 
     private fun XY.mod() = XY(x.mod(garden.width), y.mod(garden.height))
