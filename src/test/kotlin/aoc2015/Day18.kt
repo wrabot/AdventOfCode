@@ -1,6 +1,7 @@
 package aoc2015
 
 import Day
+import tools.XY
 import tools.board.Board
 import tools.board.toBoard
 
@@ -26,10 +27,10 @@ class Day18(test: Int? = null) : Day(test) {
     }
 
     private fun Board<Cell>.forceCorners() {
-        this[0, 0].current = true
-        this[width - 1, 0].current = true
-        this[0, height - 1].current = true
-        this[width - 1, height - 1].current = true
+        this[xy.first()].current = true
+        this[XY(xRange.last, 0)].current = true
+        this[XY(0, yRange.last)].current = true
+        this[xy.last()].current = true
     }
 
     private fun Board<Cell>.step() {

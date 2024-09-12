@@ -1,7 +1,7 @@
 package aoc2018
 
 import Day
-import tools.match
+import tools.text.match
 
 class Day7(test: Int? = null) : Day(test) {
     override fun solvePart1(): StringBuilder {

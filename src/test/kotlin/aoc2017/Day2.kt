@@ -2,7 +2,7 @@ package aoc2017
 
 import Day
 import tools.sequence.select
-import tools.toWords
+import tools.text.toWords
 
 class Day2(test: Int? = null) : Day(test) {
     override fun solvePart1() = rows.sumOf { it.last() - it.first() }

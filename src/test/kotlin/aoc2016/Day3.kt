@@ -1,7 +1,7 @@
 package aoc2016
 
 import Day
-import tools.toWords
+import tools.text.toWords
 
 class Day3(test: Int? = null) : Day(test) {
     override fun solvePart1() = triangles.count { it.isTriangle() }

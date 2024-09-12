@@ -1,7 +1,7 @@
 package aoc2017
 
 import Day
-import tools.toWords
+import tools.text.toWords
 
 class Day4(test: Int? = null) : Day(test) {
     override fun solvePart1() = passphrases.count { it.distinct().size == it.size }

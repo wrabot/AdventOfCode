@@ -4,7 +4,7 @@ import Day
 import tools.board.Board
 import tools.XY
 import tools.board.Direction4
-import tools.match
+import tools.text.match
 
 class Day17(test: Int? = null) : Day(test) {
     override fun solvePart1() = underground.cells.count { it.c in listOf('|', '~') }

@@ -1,7 +1,7 @@
 package aoc2016
 
 import Day
-import tools.match
+import tools.text.match
 import tools.math.bi
 import tools.math.chineseRemainder
 

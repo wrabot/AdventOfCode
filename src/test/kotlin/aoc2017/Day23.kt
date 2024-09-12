@@ -1,7 +1,7 @@
 package aoc2017
 
 import Day
-import tools.toWords
+import tools.text.toWords
 import kotlin.math.sqrt
 
 class Day23(test: Int? = null) : Day(test) {

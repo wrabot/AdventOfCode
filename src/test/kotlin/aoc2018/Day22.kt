@@ -4,7 +4,7 @@ import Day
 import tools.XY
 import tools.board.Direction4
 import tools.graph.shortPath
-import tools.toWords
+import tools.text.toWords
 import tools.toXY
 
 class Day22(test: Int? = null) : Day(test) {

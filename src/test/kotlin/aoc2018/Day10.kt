@@ -2,7 +2,7 @@ package aoc2018
 
 import Day
 import tools.Point
-import tools.match
+import tools.text.match
 import kotlin.math.round
 
 class Day10(test: Int? = null) : Day(test) {

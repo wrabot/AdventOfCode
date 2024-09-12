@@ -2,7 +2,7 @@ package aoc2016
 
 import Day
 import tools.board.Board
-import tools.match
+import tools.text.match
 
 class Day8(test: Int? = null) : Day(test) {
     override fun solvePart1() = code.cells.count { it == '#' }

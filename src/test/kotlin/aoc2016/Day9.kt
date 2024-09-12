@@ -1,7 +1,7 @@
 package aoc2016
 
 import Day
-import tools.match
+import tools.text.match
 
 class Day9(test: Int? = null) : Day(test) {
     override fun solvePart1() = input.decompress1()

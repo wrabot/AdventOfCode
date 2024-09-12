@@ -1,6 +1,6 @@
 package aoc2016
 
-import tools.toWords
+import tools.text.toWords
 
 // Day 12 / 23 / 25
 class Assembunny(input: String) {

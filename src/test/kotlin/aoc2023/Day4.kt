@@ -1,8 +1,8 @@
 package aoc2023
 
 import Day
-import tools.match
-import tools.toWords
+import tools.text.match
+import tools.text.toWords
 
 class Day4(test: Int? = null) : Day(test) {
     override fun solvePart1() = cards.sumOf { card ->

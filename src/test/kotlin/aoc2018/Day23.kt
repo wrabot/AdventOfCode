@@ -3,7 +3,7 @@ package aoc2018
 import Day
 import tools.Point
 import tools.toPoint
-import tools.match
+import tools.text.match
 
 
 class Day23(test: Int? = null) : Day(test) {

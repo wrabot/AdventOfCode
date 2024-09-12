@@ -3,7 +3,7 @@ package aoc2018
 import Day
 
 
-import tools.match
+import tools.text.match
 import tools.range.size
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit

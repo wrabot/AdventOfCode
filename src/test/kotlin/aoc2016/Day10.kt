@@ -1,8 +1,8 @@
 package aoc2016
 
 import Day
-import tools.match
-import tools.toWords
+import tools.text.match
+import tools.text.toWords
 
 class Day10(test: Int? = null) : Day(test) {
     override fun solvePart1() = botPart1

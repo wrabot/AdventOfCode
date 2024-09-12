@@ -2,7 +2,7 @@ package aoc2015
 
 import Day
 import tools.graph.shortPath
-import tools.toWords
+import tools.text.toWords
 
 class Day22(test: Int? = null) : Day(test) {
     override fun solvePart1() = minCost(initialState)

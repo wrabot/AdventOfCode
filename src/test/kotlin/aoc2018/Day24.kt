@@ -1,7 +1,7 @@
 package aoc2018
 
 import Day
-import tools.match
+import tools.text.match
 import kotlin.math.abs
 
 class Day24(test: Int? = null) : Day(test) {

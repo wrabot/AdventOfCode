@@ -1,7 +1,7 @@
 package aoc2015
 
 import Day
-import tools.toWords
+import tools.text.toWords
 
 class Day21(test: Int? = null) : Day(test) {
     override fun solvePart1() = equipments.first.minOf { it.cost }

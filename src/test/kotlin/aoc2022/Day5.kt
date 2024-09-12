@@ -1,7 +1,7 @@
 package aoc2022
 
 import Day
-import tools.toWords
+import tools.text.toWords
 
 class Day5(test: Int? = null) : Day(test) {
     override fun solvePart1() = crates.map { it.toMutableList() }.apply {
