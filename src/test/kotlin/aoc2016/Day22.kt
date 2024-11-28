@@ -3,7 +3,7 @@ package aoc2016
 import Day
 import tools.board.Board
 import tools.XY
-import tools.log
+import tools.debug
 import tools.text.match
 
 class Day22(test: Int? = null) : Day(test) {
@@ -32,7 +32,7 @@ class Day22(test: Int? = null) : Day(test) {
                     }
                 }
             }.flatten()
-        ).log()
+        ).debug()
         // the "heavy" are on one line with "door" on left side 
 
         // compute empty to width-2, 0
