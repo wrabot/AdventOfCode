@@ -1,15 +1,15 @@
 package aoc2023
 
 import Day
-import tools.graph.EdmondsKarp
+import tools.graph.MaxFlow
 import tools.graph.bfs
 
 class Day25(test: Int? = null) : Day(test) {
     override fun solvePart1(): Int {
-        val edmondsKarp = EdmondsKarp(nodes.size, wires.flatMap {
+        val edmondsKarp = MaxFlow(nodes.size, wires.flatMap {
             listOf(
-                EdmondsKarp.Edge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1),
-                EdmondsKarp.Edge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1),
+                MaxFlow.Edge(nodes.indexOf(it.first()), nodes.indexOf(it.last()), 1),
+                MaxFlow.Edge(nodes.indexOf(it.last()), nodes.indexOf(it.first()), 1),
             )
         })
         val source = 0
