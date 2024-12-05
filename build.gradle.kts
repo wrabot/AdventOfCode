@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("wrabot.competitive:CompetitiveTools:0.42")
+    testImplementation("wrabot.competitive:CompetitiveTools:0.44")
     // to test new CompetitiveTools
     //testImplementation("wrabot.competitive:CompetitiveTools") { version { branch = "main" } }
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.2")
