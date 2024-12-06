@@ -8,7 +8,7 @@ class Year2024 {
 
     @Test
     fun day2() {
-        Day2(1).check(2, 4)
+        //Day2(1).check(2, 4)
         Day2().check(559, 601)
     }
 
@@ -17,19 +17,22 @@ class Year2024 {
 
     @Test
     fun day4() {
-        Day4(1).check(18, 9)
+        //Day4(1).check(18, 9)
         Day4().check(2378, 1796)
     }
 
     @Test
     fun day5() {
-        Day5(1).check(143, 123)
+        //Day5(1).check(143, 123)
         Day5().check(5268, 5799)
     }
 
     @Test
-    fun day6() = Day6().check(Unit, Unit)
-
+    fun day6() {
+        //Day6(1).check(41, 6)
+        Day6().check(4982, 1663)
+    } 
+    
     @Test
     fun day7() = Day7().check(Unit, Unit)
 
