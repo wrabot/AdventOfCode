@@ -34,7 +34,10 @@ class Year2024 {
     } 
     
     @Test
-    fun day7() = Day7().check(Unit, Unit)
+    fun day7() {
+        //Day7(1).check(3749, 11387)
+        Day7().check(28730327770375, 424977609625985)
+    }
 
     @Test
     fun day8() = Day8().check(Unit, Unit)
