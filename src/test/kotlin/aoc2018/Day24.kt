@@ -15,8 +15,8 @@ class Day24(test: Int? = null) : Day(test) {
     }
 
     private fun fight(boost: Int): Int? {
-        val immuneSystem = input.split("\n\n")[0].parseArmy("Immune System", boost)
-        val infection = input.split("\n\n")[1].parseArmy("Infection", 0)
+        val immuneSystem = input.split("\n\n")[0].parseArmy(boost)
+        val infection = input.split("\n\n")[1].parseArmy( 0)
         while (true) {
             val sortedImmuneSystem = immuneSystem.filter { it.isAlive }.sortedByDescending { it.effectivePower }
             val sortedInfection = infection.filter { it.isAlive }.sortedByDescending { it.effectivePower }
@@ -91,7 +91,7 @@ class Day24(test: Int? = null) : Day(test) {
         )
     }
 
-    private fun String.parseArmy(name: String, boost: Int) = lines().drop(1)
-        .mapIndexed { index, line -> createUnits(line, boost) }
+    private fun String.parseArmy(boost: Int) = lines().drop(1)
+        .map { createUnits(it, boost) }
         .sortedByDescending { it.initiative }
 }
