@@ -1,4 +1,4 @@
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 
 abstract class Day(resourceName: String) {
     constructor(test: Int? = null) : this(test?.let { "test$it" } ?: "input")
@@ -19,11 +19,11 @@ abstract class Day(resourceName: String) {
     }
 
     fun checkPart1(expectedPart1: Any) {
-        Assert.assertEquals(expectedPart1.toString(), part1.toString())
+        Assertions.assertEquals(expectedPart1.toString(), part1.toString())
     }
 
     fun checkPart2(expectedPart2: Any) {
-        Assert.assertEquals(expectedPart2.toString(), part2.toString())
+        Assertions.assertEquals(expectedPart2.toString(), part2.toString())
     }
 
     private val path = javaClass.name.replace('.', '/').lowercase()

@@ -14,3 +14,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.20")
 }
+
+tasks.test {
+    useJUnitPlatform()
+}
