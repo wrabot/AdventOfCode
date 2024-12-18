@@ -3,6 +3,7 @@ package aoc2024
 import Day
 import tools.XY
 import tools.board.Board
+import tools.board.CharCell
 import tools.board.Direction4
 import tools.board.toBoard
 
@@ -13,7 +14,7 @@ class Day15(test: Int? = null) : Day(test) {
     }
 
     override fun solvePart1(): Int {
-        val map = parts[0].lines().toBoard { Cell(it) }
+        val map = parts[0].lines().toBoard { CharCell(it) }
         val start = map.xy.first { map[it].c == '@' }
 
         var current = start
@@ -39,7 +40,7 @@ class Day15(test: Int? = null) : Day(test) {
                 .replace(".", "..")
                 .replace("O", "[]")
                 .replace("@", "@.")
-        }.toBoard { Cell(it) }
+        }.toBoard { CharCell(it) }
         val start = map.xy.first { map[it].c == '@' }
 
         var current = start
@@ -65,7 +66,7 @@ class Day15(test: Int? = null) : Day(test) {
         return map.xy.filter { map[it].c == '[' }.sumOf { it.x + 100 * it.y }
     }
 
-    private fun canMoveY(map: Board<Cell>, position: XY, direction: XY): Boolean {
+    private fun canMoveY(map: Board<CharCell>, position: XY, direction: XY): Boolean {
         val next = position + direction
         return when (val c = map[next].c) {
             '.' -> true
@@ -77,7 +78,7 @@ class Day15(test: Int? = null) : Day(test) {
         }
     }
 
-    private fun moveY(map: Board<Cell>, position: XY, direction: XY) {
+    private fun moveY(map: Board<CharCell>, position: XY, direction: XY) {
         val next = position + direction
         val w = when (map[next].c) {
             '[' -> Direction4.East.xy
@@ -90,9 +91,5 @@ class Day15(test: Int? = null) : Day(test) {
         }
         map[next].c = map[position].c
         map[position].c = '.'
-    }
-
-    private data class Cell(var c: Char) {
-        override fun toString() = c.toString()
     }
 }

@@ -3,6 +3,7 @@ package aoc2024
 import Day
 import tools.XY
 import tools.board.Board
+import tools.board.CharCell
 import tools.debug
 import tools.toXY
 
@@ -24,7 +25,7 @@ class Day14(test: Int? = null) : Day(test) {
         var minSafetyFactor = bots.safetyFactor()
         var minCount = 0
         var count = 1
-        while(true) {
+        while (true) {
             bots = bots.mapIndexed { index, p -> p.addMod(pv[index][1], wh) }
             val safetyFactor = bots.safetyFactor()
             if (safetyFactor == minSafetyFactor) break
@@ -53,13 +54,9 @@ class Day14(test: Int? = null) : Day(test) {
 
     private fun List<XY>.debug() {
         debug("---------------------")
-        val board = Board(wh.x, wh.y, List(wh.x * wh.y) { Cell('.') })
+        val board = Board(wh.x, wh.y, List(wh.x * wh.y) { CharCell('.') })
         forEach { board[it].c = 'X' }
         board.debug()
-    }
-
-    data class Cell(var c: Char) {
-        override fun toString() = c.toString()
     }
 }
 
