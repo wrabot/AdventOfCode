@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Assertions
+import tools.debug
+import kotlin.time.measureTime
 
 abstract class Day(resourceName: String) {
     constructor(test: Int? = null) : this(test?.let { "test$it" } ?: "input")
@@ -19,11 +21,15 @@ abstract class Day(resourceName: String) {
     }
 
     fun checkPart1(expectedPart1: Any) {
-        Assertions.assertEquals(expectedPart1.toString(), part1.toString())
+        measureTime {
+            Assertions.assertEquals(expectedPart1.toString(), part1.toString())
+        }.debug()
     }
 
     fun checkPart2(expectedPart2: Any) {
-        Assertions.assertEquals(expectedPart2.toString(), part2.toString())
+        measureTime {
+            Assertions.assertEquals(expectedPart2.toString(), part2.toString())
+        }.debug()
     }
 
     private val path = javaClass.name.replace('.', '/').lowercase()
