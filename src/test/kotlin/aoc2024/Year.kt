@@ -140,11 +140,16 @@ class Year2024 {
     fun day23() {
         //Day23(1).check(7, "co,de,ka,ta")
         Day23().check(1327, "df,kg,la,mp,pb,qh,sk,th,vn,ww,xp,yp,zk")
-    } 
+    }
 
     @Test
-    fun day24() = Day24().check(Unit, Unit)
+    fun day24() {
+        //Day24(1).checkPart1(2024)
+        Day24().check(51715173446832, "dpg,kmb,mmf,tvp,vdk,z10,z15,z25")
+    }
 
     @Test
-    fun day25() = Day25().check(Unit, Unit)
+    fun day25() {
+        Day25().checkPart1(Unit)
+    }
 }
