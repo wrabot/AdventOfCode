@@ -150,6 +150,7 @@ class Year2024 {
 
     @Test
     fun day25() {
-        Day25().checkPart1(Unit)
+        Day25(1).checkPart1(3)
+        Day25().checkPart1(3397)
     }
 }
